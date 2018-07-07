@@ -4,14 +4,16 @@ const express=                require('express'),
       passportLocalMongoose=  require('passport-local-mongoose'),
       localStrategy=          require('passport-local'),
       mongoose=               require('./server/db/mongoose.js'),
-      user=                   require('./server/models/user.js');
-      const _=require('lodash');
-      const axios=require('axios');
-    const   enAddressUrl='http://admin:admin@35.200.173.47/api/positions';
+      user=                   require('./server/models/user.js'),
+      _=require('lodash'),
+      axios=require('axios');
+     const   enAddressUrl='http://admin:admin@35.200.173.47/api/positions';
 
-      let {school}= require('./server/models/schools.js');
-var path = require("path");
-var app=express();
+let {school}= require('./server/models/schools.js');
+let path = require("path");
+let cors=require('cors');
+let app=express();
+app.use(cors());
 app.use(require('express-session')({
  secret: "hey you,yes you!",
  resave:false,
@@ -20,7 +22,7 @@ app.use(require('express-session')({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname+'/public'));
- app.set('viewengine','ejs');
+app.set('viewengine','ejs');
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -91,8 +93,8 @@ app.get('/menupage',(req,res)=>{
   res.render('maindashboard.ejs');
 });
 app.post('/addSchool',isLoggedIn,(req,res)=>{
-  var body=_.pick(req.body,['name','username','address','password','number','email']);
-  var newSchool=new school({name:body.name,password:body.password,username:body.username,address:body.address,contactNumber:body.number,emailAddress:body.email,parents:[],buses:[]
+  let body=_.pick(req.body,['name','username','address','password','number','email']);
+  let newSchool=new school({name:body.name,password:body.password,username:body.username,address:body.address,contactNumber:body.number,emailAddress:body.email,parents:[],buses:[]
 });
 // newSchool.parents.push({mobileNumber:2222,parentName:'ganga',childName:'sita'});
 newSchool.save((err,doc)=>{
@@ -105,7 +107,7 @@ app.get('/schoolloginpage',(req,res)=>{
   res.render('schoolloginpage.ejs');
 });
 app.post('/schoollogin',(req,res)=>{
-  var body=_.pick(req.body,['username','password']);
+  let body=_.pick(req.body,['username','password']);
   school.findByCredentials(body.username,body.password).then((user)=>{
     res.render('schooldashboard.ejs');
   }).catch((e)=>{
@@ -118,7 +120,7 @@ app.get('/addparentpage',(req,res)=>{
   res.render('addparentpage.ejs');
 });//
 app.post('/addParent',(req,res)=>{
-  var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber']);
+  let body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber']);
   console.log(body);
   school.findOne({name:body.schoolname},(err,doc)=>{
     doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,children:{childName:body.childname,busNumber:body.busnumber}});
@@ -136,7 +138,7 @@ res.render('addbus.ejs');
 //associate a deviceId with the busNumber provided the school name
 //--------------------------
 app.post('/busNumberWithDevice',(req,res)=>{
-  var body=_.pick(req.body,['deviceid','busnumber','schoolname']);
+  let body=_.pick(req.body,['deviceid','busnumber','schoolname']);
   // school.find({buses.deviceId:deviceId,'buses.busNumber':busNumber}).then((result)=>{
   //   if (!_.size(result)){
   //     res.status(400).send('Bus number with the selected device id is already assigned');
@@ -154,8 +156,8 @@ app.post('/busNumberWithDevice',(req,res)=>{
 //Get all info about which device Id is matched with which busnumber of particular schools
 //------------------
 app.get('/getAllDevicesState',(req,res)=>{
-  var result=[];
-  var livedevices=[];
+  let result=[];
+  let livedevices=[];
   school.find({service:"GST"}).then((docs)=>{
     _.forEach(docs,function(school){
       _.forEach(school.buses,function(bus){
@@ -164,10 +166,10 @@ app.get('/getAllDevicesState',(req,res)=>{
       });
     });
     axios.get(enAddressUrl).then((response)=>{
-      var allDevices=response.data;
+      let allDevices=response.data;
       _.forEach(allDevices,function(device){
-        if (!(_.includes(livedevices,device.deviceId))) {
-          result.push({name:null,busno:0,deviceId:device.deviceId});
+        if (!(_.includes(livedevices,device.id))) {
+          result.push({name:null,busno:0,deviceId:device.id});
         }
       });
       res.send(result);
@@ -208,6 +210,6 @@ app.get('/mappage',(req,res)=>{
 //-----------
 //port listenners
 //--------------
-app.listen(3000,()=>{
+app.listen(8080,()=>{
   console.log("server is up");
 });
