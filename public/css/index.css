@@ -1,0 +1,126 @@
+#shadow {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+#card-1,
+#card-2,
+#card-3,
+#card-4 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+
+    border: none;
+
+}
+
+#card-1 {
+    background: linear-gradient(135deg, #c3ec52 0%, #0ba29d 100%);
+}
+
+#card-2 {
+    background: linear-gradient(135deg, #13f1fc 0%, #0470dc 100%);
+}
+
+#card-3 {
+    background: linear-gradient(135deg, #f02fc2 0%, #6094ea 100%);
+}
+
+#card-4 {
+    background: linear-gradient(135deg, #fcdf8a 0%, #f38381 100%);
+}
+
+#card-1:hover,
+#card-2:hover,
+#card-3:hover,
+#card-4:hover {
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+}
+
+#addSchool,
+#addParent {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+#addSchool input[type="text"],
+#addSchool input[type="email"],
+#addParent input[type="text"],
+#addParent input[type="email"] {
+    padding: 8px;
+    margin: 10px auto;
+    display: inline-block;
+    text-align: left;
+    font-size: 15px;
+    color: black;
+
+    width: 100%;
+}
+
+.modal-lg {
+    width: 80% !important;
+}
+
+form {
+    width: 100%;
+}
+
+#taHead {
+    background: lightblue;
+}
+
+#overflowControl {
+    overflow-y: scroll;
+}
+
+#modifySchool,
+#removeSchool,
+#modifyParent,
+#removeParent {
+    padding: 20px;
+    display: none;
+    overflow-y: scroll;
+    max-height: 400px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#schoolsInfoList {
+    padding: 20px;
+    overflow-y: scroll;
+    max-height: 400px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#modifySchool tbody tr:hover,
+#removeSchool tbody tr:hover,
+#modifyParent tbody tr:hover,
+#removeParent tbody tr:hover {
+    background: lightyellow;
+    cursor: pointer;
+}
+
+#footerContent {
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+
+#footerContent span {
+    display: inline-block;
+}
+
+@media (min-width: 992px) {
+    .modal-dialog {
+        max-width: 53%;
+    }
+}
+@media (max-width:800px){
+    .modal-dialog{
+        max-width:80%;
+    }
+}

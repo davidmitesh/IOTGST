@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>Dashboard 2</title>
+
+    <!-- Fontfaces CSS-->
+    <link href="css/font-face.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+
+    <!-- Bootstrap CSS-->
+    <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="vendor/vector-map/jqvmap.min.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="css/theme.css" rel="stylesheet" media="all">
+    <link href="css/index.css" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar2" id="shadow">
+            <div class="logo">
+                <span style="color:white;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span>
+            </div>
+            <div class="menu-sidebar2__content js-scrollbar1">
+                <div class="account2">
+                    <div class="image img-cir img-120">
+                        <img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
+                    </div>
+                    <h4 class="name">Alex Bhattarai</h4>
+                    <a href="#">Sign out</a>
+                </div>
+                <nav class="navbar-sidebar2">
+                    <ul class="list-unstyled navbar__list">
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-institution"></i><span data-target="#listSchools" data-toggle="modal" role="button">ALL SCHOOLS
+                                </span></a>
+
+                        </li>
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-building"></i><span data-target="#editSchool" data-toggle="modal" role="button">Edit School Info</span>
+
+                            </a>
+
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Edit Parent Info
+                             </span>
+                            </a>
+
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container2">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop2" id="shadow">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap2">
+                            <div class="logo d-block d-lg-none">
+                                <span style="color:white;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span>
+                            </div>
+                            <div class="header-button2">
+
+                                <div class="header-button-item has-noti js-item-menu">
+                                    <i class="zmdi zmdi-notifications"></i>
+                                    <div class="notifi-dropdown js-dropdown">
+                                        <div class="notifi__title">
+                                            <p>You have 3 Notifications</p>
+                                        </div>
+                                        <div class="notifi__item">
+                                            <div class="bg-c1 img-cir img-40">
+                                                <i class="zmdi zmdi-email-open"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>You got a email notification</p>
+                                                <span class="date">April 12, 2018 06:50</span>
+                                            </div>
+                                        </div>
+                                        <div class="notifi__item">
+                                            <div class="bg-c2 img-cir img-40">
+                                                <i class="zmdi zmdi-account-box"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>Your account has been blocked</p>
+                                                <span class="date">April 12, 2018 06:50</span>
+                                            </div>
+                                        </div>
+                                        <div class="notifi__item">
+                                            <div class="bg-c3 img-cir img-40">
+                                                <i class="zmdi zmdi-file-text"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>You got a new file</p>
+                                                <span class="date">April 12, 2018 06:50</span>
+                                            </div>
+                                        </div>
+                                        <div class="notifi__footer">
+                                            <a href="#">All notifications</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-button-item mr-0 js-sidebar-btn">
+                                    <i class="zmdi zmdi-menu"></i>
+                                </div>
+                                <div class="setting-menu js-right-sidebar d-none d-lg-block" id="shadow">
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-account"></i>Account</a>
+                                        </div>
+
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="fa fa-comment"></i>Feedback</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="fa fa-fighter-jet"></i>Log Out</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
+                <div class="row text-center justify-content-center" style="width:100%;">
+                    <div class="col-12" style="width:100%;">
+                        <center> <span class="text-center" style="padding-left:40px;display:inline-block;color:black;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span></center>
+                    </div>
+                </div>
+                <div class="menu-sidebar2__content js-scrollbar2">
+                    <div class="account2">
+                        <div class="image img-cir img-120">
+                            <img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
+                        </div>
+                        <h4 class="name">Alex Bhattaraii</h4>
+                        <a href="#">Sign out</a>
+                    </div>
+                    <nav class="navbar-sidebar2">
+                        <ul class="list-unstyled navbar__list">
+                            <li class="active has-sub">
+                                <a class="js-arrow" href="#">
+                                <i class="fas fa-institution"></i><span data-target="#listSchools" data-toggle="modal" role="button">All Schools
+                                </span></a>
+                            </li>
+
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                <i class="fas fa-building"></i><span data-target="#editSchool" data-toggle="modal" role="button">Edit School Info</span>
+
+                            </a>
+
+                            </li>
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Edit Parent Info
+                             </span>
+                            </a>
+
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <!-- END HEADER DESKTOP-->
+
+            <!-- BREADCRUMB-->
+
+            <!-- END BREADCRUMB-->
+
+            <!-- STATISTIC-->
+            <section class="statistic" style="margin-top:40px;">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <div id="card-1" class="statistic__item card-1">
+                                    <h2 class="number" style="color:white;">1000</h2>
+                                    <span class="desc" style="color:white;">Schools</span>
+                                    <div class="icon">
+                                        <i class="fas fa-building"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item card-1" id="card-2">
+                                    <h2 class="number" style="color:white;">300</h2>
+                                    <span class="desc" style="color:white;">Buses</span>
+                                    <div class="icon">
+                                        <i class="fa fa-bus"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item card-1" id="card-3">
+                                    <h2 class="number" style="color:white;">100</h2>
+                                    <span class="desc" style="color:white;">Parents</span>
+                                    <div class="icon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="statistic__item card-1" id="card-4">
+                                    <h2 class="number" style="color:white;">100</h2>
+                                    <span class="desc" style="color:white;">Children</span>
+                                    <div class="icon">
+                                        <i class="fa fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END STATISTIC-->
+
+
+            <section>
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!-- USER DATA-->
+                                <div class="user-data m-b-40" id="shadow">
+                                    <h3 class="title-3 m-b-30">
+                                        <i class="zmdi zmdi-account-calendar"></i>School Data</h3>
+
+                                    <div class="table-responsive table-data" style="height:525px;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+
+                                                    <td>School</td>
+                                                    <td>Buses</td>
+                                                    <td>Children</td>
+                                                    <td>Parents</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6>Pulchowk Campus</h6>
+                                                            <span>
+                                                                <a href="#">Swayambhu</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">9863696695</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">info@pcampus.edu.np</a>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">25</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="">
+                                                            3000
+                                                        </span>
+                                                    </td>
+                                                    <td><span>100</span></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6>Pulchowk Campus</h6>
+                                                            <span>
+                                                                <a href="#">Swayambhu</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">9863696695</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">info@pcampus.edu.np</a>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">25</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="">
+                                                            3000
+                                                        </span>
+                                                    </td>
+                                                    <td><span>100</span></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6>Pulchowk Campus</h6>
+                                                            <span>
+                                                                <a href="#">Swayambhu</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">9863696695</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">info@pcampus.edu.np</a>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">25</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="">
+                                                            3000
+                                                        </span>
+                                                    </td>
+                                                    <td><span>100</span></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6>Pulchowk Campus</h6>
+                                                            <span>
+                                                                <a href="#">Swayambhu</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">9863696695</a>
+                                                            </span>
+                                                            <br />
+                                                            <span>
+                                                                <a href="#">info@pcampus.edu.np</a>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="">25</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="">
+                                                            3000
+                                                        </span>
+                                                    </td>
+                                                    <td><span>100</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <!-- END USER DATA-->
+                            </div>
+                            <div class="col-xl-6">
+                                <!-- MAP DATA-->
+                                <div class="map-data m-b-40" style="height:630px;" id="shadow">
+                                    <h3 class="title-3 m-b-30">
+                                        <i class="zmdi zmdi-map"></i>Map Data</h3>
+                                    <div class="filters">
+                                        <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                                            <select class="js-select2" name="property">
+                                                <option selected="selected">Schools</option>
+                                                <option value="">Pulchowk Campus</option>
+                                                <option value="">KMC</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                        <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+                                            <select class="js-select2 au-select-dark" name="time">
+                                                <option selected="selected">Buses</option>
+                                                <option value="">Bus 12</option>
+                                                <option value="">Bus 11</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="map-wrap m-t-45 m-b-80">
+                                        <div id="vmap" style="height: 410px;"></div>
+                                    </div>
+
+                                </div>
+                                <!-- END MAP DATA-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Modal Boxes (Edit School)-->
+            <div class="modal fade" id="editSchool">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" id="shadow">
+                        <div class="modal-header"><span style="font-size:18px;">Edit School Info</span></div>
+                        <div class="modal-body text-center" id="overflowControl">
+                            <div class="row justify-content-center">
+                                <div class="col"><button class="btn btn-success" onclick="addSchool()">+ Add </button></div>
+                                <div class="col"><button class="btn btn-danger" onclick="removeSchool()">+ Remove </button></div>
+                                <div class="col"><button class="btn btn-warning" onclick="modifySchool()">+ Modify </button></div>
+                            </div>
+                            <div class="row" id="addSchool">
+                                <form role="form text-center" action='/addSchool' method='POST'>
+                                    <input type="text" name="name" class="form-control" placeholder="Enter School Name">
+                                    <input type="text" name="username" class="form-control" placeholder="Enter School Username">
+                                    <input type="password" name="password" name=class="form-control" placeholder="Enter School Password">
+                                    <input type="text" name="number" class="form-control" placeholder="Enter Contact Number">
+                                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                                    <div class="form-group">
+                                        <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Submit</button>
+                                </form>
+                            </div>
+                            <div class="row" id="removeSchool">
+                                <table class="table table-striped" id="makeEditable">
+                                    <thead id="taHead">
+                                        <tr>
+                                            <th scope="col">S.N.</th>
+                                            <th scope="col">School</th>
+                                            <th scope="col">Buses</th>
+                                            <th scope="col">Children</th>
+                                            <th scope="col">Parents</th>
+                                            <th scope="col"><span style="float:right"><button class="btn btn-primary pull-right" id="but_add">Add New Row</button></span></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" id="modifySchool">
+                                <table class="table table-striped" id="makeEditable">
+                                    <thead id="taHead">
+                                        <tr>
+                                            <th scope="col">S.N.</th>
+                                            <th scope="col">School</th>
+                                            <th scope="col">Buses</th>
+                                            <th scope="col">Children</th>
+                                            <th scope="col">Parents </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">4</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">5</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">6</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+            <!--End Modal Boxes (Edit School)-->
+            <!--Modal Boxes (Edit Parents Info)-->
+            <div class="modal fade" id="editParent">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" id="shadow">
+                        <div class="modal-header"><span style="font-size:18px;">Edit Parent Info</span></div>
+                        <div class="modal-body text-center" id="overflowControl">
+                            <div class="row justify-content-center">
+                                <div class="col"><button class="btn btn-success" onclick="addParent()">+ Add </button></div>
+                                <div class="col"><button class="btn btn-danger" onclick="removeParent()">+ Remove </button></div>
+                                <div class="col"><button class="btn btn-warning" onclick="modifyParent()">+ Modify </button></div>
+                            </div>
+                            <div class="row text-center" id="addParent">
+                                <form role="form text-center">
+                                    <input type="text" class="form-control" placeholder="Enter Parent Name">
+                                    <input type="text" class="form-control" placeholder="Enter Contact Number">
+                                    <input type="text" class="form-control" placeholder="Enter Address">
+                                    <input type="email" class="form-control" placeholder="Enter Email Address">
+
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Submit</button>
+                                </form>
+                            </div>
+                            <div class="row" id="removeParent">
+                                <table class="table table-striped" id="makeEditable">
+                                    <thead id="taHead">
+                                        <tr>
+                                            <th scope="col">S.N.</th>
+                                            <th scope="col">Parents</th>
+                                            <th scope="col">Schools</th>
+                                            <th scope="col">Children</th>
+                                            <th scope="col">Contact Number</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Address </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" id="modifyParent">
+                                <table class="table table-striped" id="makeEditable">
+                                    <thead id="taHead">
+                                        <tr>
+                                            <th scope="col">S.N.</th>
+                                            <th scope="col">Parents</th>
+                                            <th scope="col">Schools</th>
+                                            <th scope="col">Children</th>
+                                            <th scope="col">Contact Number</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal Boxes (Edit Parents Info)-->
+
+            <!--Modal Boxes (List Schools)-->
+            <div class="modal fade" id="listSchools">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content schoolsList">
+                        <div class="modal-header">
+                            <span>List of Schools</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" id="schoolsInfoList">
+                                <table class="table table-striped" id="makeEditable">
+                                    <thead id="taHead">
+                                        <tr>
+                                            <th scope="col">S.N.</th>
+                                            <th scope="col">Schools</th>
+                                            <th scope="col">Buses</th>
+                                            <th scope="col">Parents</th>
+                                            <th scope="col">Children</th>
+                                            <th scope="col">Contact Number</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Eden National Secondary Boarding School</td>
+                                            <td>5</td>
+                                            <td>1500</td>
+                                            <td>4000</td>
+                                            <td>9863696695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Eden National Secondary Boarding School</td>
+                                            <td>5</td>
+                                            <td>1500</td>
+                                            <td>4000</td>
+                                            <td>9863696695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Eden National Secondary Boarding School</td>
+                                            <td>5</td>
+                                            <td>1500</td>
+                                            <td>4000</td>
+                                            <td>9863696695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Modal Boxes (List Schools)-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+
+    </div>
+    <footer class="footer" id="shadow">
+        <div class="container text-center" id="footerContent">
+            <span class="text-center">@copyright reserved 2018</span>
+        </div>
+    </footer>
+
+    <!-- Jquery JS-->
+    <script src="vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="vendor/slick/slick.min.js">
+
+
+    </script>
+    <script src="vendor/wow/wow.min.js"></script>
+    <script src="vendor/animsition/animsition.min.js"></script>
+    <script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+
+
+    </script>
+    <script src="vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendor/counter-up/jquery.counterup.min.js">
+
+
+    </script>
+    <script src="vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="vendor/select2/select2.min.js">
+
+
+    </script>
+    <script src="vendor/vector-map/jquery.vmap.js"></script>
+    <script src="vendor/vector-map/jquery.vmap.min.js"></script>
+    <script src="vendor/vector-map/jquery.vmap.sampledata.js"></script>
+    <script src="vendor/vector-map/jquery.vmap.world.js"></script>
+
+    <!-- Main JS-->
+    <script src="js/main.js"></script>
+    <script src="js/bootstable.min.js"></script>
+    <script>
+        function addSchool() {
+            document.getElementById('addSchool').style.display = "inline-block";
+            document.getElementById('removeSchool').style.display = "none";
+            document.getElementById('modifySchool').style.display = "none";
+            document.getElementsByTagName('form').style.width = "100%";
+        }
+
+        function removeSchool() {
+            document.getElementById('addSchool').style.display = "none";
+            document.getElementById('removeSchool').style.display = "inline-block";
+            document.getElementById('modifySchool').style.display = "none";
+        }
+
+        function modifySchool() {
+            document.getElementById('addSchool').style.display = "none";
+            document.getElementById('removeSchool').style.display = "none";
+            document.getElementById('modifySchool').style.display = "inline-block";
+        }
+
+        function addParent() {
+            document.getElementById('addParent').style.display = "inline-block";
+            document.getElementById('removeParent').style.display = "none";
+            document.getElementById('modifyParent').style.display = "none";
+            document.getElementsByTagName('form').style.width = "100%";
+        }
+
+        function removeParent() {
+            document.getElementById('addParent').style.display = "none";
+            document.getElementById('removeParent').style.display = "inline-block";
+            document.getElementById('modifyParent').style.display = "none";
+        }
+
+        function modifyParent() {
+            document.getElementById('addParent').style.display = "none";
+            document.getElementById('removeParent').style.display = "none";
+            document.getElementById('modifyParent').style.display = "inline-block";
+        }
+
+    </script>
+    <script>
+        $('#makeEditable').SetEditable({
+            $addButton: $('#but_add')
+        });
+
+    </script>
+</body>
+
+</html>
+<!-- end document-->

@@ -25,7 +25,8 @@ var notificationSchema=new mongoose.Schema({
     type:String
   },
   seen:{
-    type:Boolean
+    type:Boolean,
+    default:false
   }
 });
 var parentSchema=new mongoose.Schema({
@@ -51,6 +52,12 @@ var schoolSchema=new mongoose.Schema({
   },
   address:{
     type:String
+  },
+  emailAddress:{
+    type:String
+  },
+  contactNumber:{
+    type:Number
   },
   service:{
     type:String,
@@ -101,6 +108,7 @@ schoolSchema.statics.findByCredentials=function(username,password){
     });
   });
 }
+var notification=mongoose.model('notification',notificationSchema);
 schoolSchema.methods.addParentNotice=function(text){
   var docs=this.parentnotification;
   docs.push({text,seen:false});
@@ -108,9 +116,31 @@ schoolSchema.methods.addParentNotice=function(text){
   this.save();
 };
 schoolSchema.statics.addSchoolNotice=function(text,schools){
-  this.find(schools,(docs)=>{})
-  this.updateMany(schools,{schoolnotification:docs});
+  var newnotification=new notification({text:text});
+  var user=this;
+  console.log(schools);
+  _.forEach(schools,function(school){
+   // console.log(school);
+    user.findOneAndUpdate({name:school},{$push:{schoolnotification:newnotification}},(err,result)=>{
+
+    });
+  });
+  return 1;
+};
+
+schoolSchema.statics.addParentNotice=function(text,schools){
+  var newnotification=new notification({text:text});
+  var user=this;
+  console.log(schools);
+  _.forEach(schools,function(school){
+   // console.log(school);
+    user.findOneAndUpdate({name:school},{$push:{parentnotification:newnotification}},(err,result)=>{
+
+    });
+  });
+  return 1;
 }
+
 
 var school=mongoose.model('school',schoolSchema);
 

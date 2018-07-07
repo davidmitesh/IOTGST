@@ -37,9 +37,6 @@ app.get('/',isLoggedIn,(req,res)=>{
   res.render('menupage.ejs');
 });
 
-app.get('/secret',isLoggedIn,(req,res)=>{
-  res.render('secret.ejs');
-});
 
 //---------
 //Auth-routes--
@@ -91,11 +88,11 @@ app.get('/addschoolpage',isLoggedIn,(req,res)=>{
   res.render('addschool.ejs');
 });
 app.get('/menupage',(req,res)=>{
-  res.render('menupage.ejs');
+  res.render('maindashboard.ejs');
 });
 app.post('/addSchool',isLoggedIn,(req,res)=>{
-  var body=_.pick(req.body,['name','username','address','password']);
-  var newSchool=new school({name:body.name,password:body.password,username:body.username,address:body.address,parents:[],buses:[]
+  var body=_.pick(req.body,['name','username','address','password','number','email']);
+  var newSchool=new school({name:body.name,password:body.password,username:body.username,address:body.address,contactNumber:body.number,emailAddress:body.email,parents:[],buses:[]
 });
 // newSchool.parents.push({mobileNumber:2222,parentName:'ganga',childName:'sita'});
 newSchool.save((err,doc)=>{
@@ -176,12 +173,41 @@ app.get('/getAllDevicesState',(req,res)=>{
       res.send(result);
     });
   });
-
 });
+//--------------------------------
+//Notification section---
+//--------------------------------
+//route for opening the notification page for school and school
+app.get('/formpage',(req,res)=>{
+  res.render('multipleformpage.ejs');
+});
+//adding school notification
+app.post('/sendSchoolNotification',(req,res)=>{
+  if (school.addSchoolNotice(req.body.text,req.body.schools)){
+    res.send('added notice');
+  };
+});
+//adding parent notification
+app.post('/sendParentNotification',(req,res)=>{
+  if (school.addParentNotice(req.body.text,req.body.schools)){
+    res.send('added notice');
+  };
+});
+//fetching school notification
+app.get('/getSchoolNotification',(req,res)=>{
+
+})
+//----------------------------
+//Map Routes
+//---------------------
 
 app.get('/mappage',(req,res)=>{
   res.render('map.ejs');
 });
+
+//-----------
+//port listenners
+//--------------
 app.listen(3000,()=>{
   console.log("server is up");
 });
