@@ -34,6 +34,7 @@ passport.deserializeUser(user.deserializeUser());
 //Routes
 //------------
 app.get('/',isLoggedIn,(req,res)=>{
+  console.log(req);
   res.render('menupage.ejs');
 });
 
@@ -83,12 +84,43 @@ function isLoggedIn(req,res,next){
     res.redirect('/loginpage');
   }
 };
+//------------------
+//middleware to count number of records in the database i.e number of children,schools,parents,buses
+//-------------
+function countDetails(req,res,next){
+  var c=0,
+      b=0,
+      p=0,
+      s=0,
+      schoolchildnumber=[];
+  school.find({service:'GST'},(err,schools)=>{
+    console.log(schools);
+    _.map(schools,function(school){
+      c+=school.childrenNumber;
+      b+=school.buses.length;
+      p+=school.parents.length;
+      s+=1;
+    });
+    var countRecord={children:c,buses:b,parents:p,schoolno:s};
+    req.count=countRecord;
+    next();
+  });
+};
+//---------------------------------------------------------
+//middleware that returns the total schools array--
+//----------------
+function getSchools(req,res,next){
+  school.find({service:'GST'},(err,schools)=>{
+    req.schools=schools;
+    next();
+  });
+};
 // ROUTE to load the addschool page
 app.get('/addschoolpage',isLoggedIn,(req,res)=>{
   res.render('addschool.ejs');
 });
-app.get('/menupage',(req,res)=>{
-  res.render('maindashboard.ejs');
+app.get('/menupage',getSchools,countDetails,(req,res)=>{
+  res.render('maindashboard.ejs',{schools:req.schools,children:req.count.children,buses:req.count.buses,parents:req.count.parents,schoolno:req.count.schoolno});
 });
 app.post('/addSchool',isLoggedIn,(req,res)=>{
   var body=_.pick(req.body,['name','username','address','password','number','email']);
@@ -118,11 +150,11 @@ app.get('/addparentpage',(req,res)=>{
   res.render('addparentpage.ejs');
 });//
 app.post('/addParent',(req,res)=>{
-  var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber']);
+  var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
   console.log(body);
   school.findOne({name:body.schoolname},(err,doc)=>{
-    doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,children:{childName:body.childname,busNumber:body.busnumber}});
-    // doc.parents.children.push({childName:body.childname,busNumber:body.busnumber});
+    doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:{childName:body.childname,busNumber:body.busnumber}});
+    doc.childrenNumber+=1;
     school.findOneAndUpdate({name:body.schoolname},doc,()=>{
       console.log("successfully updated");
         res.redirect('/menupage');
@@ -196,7 +228,9 @@ app.post('/sendParentNotification',(req,res)=>{
 //fetching school notification
 app.get('/getSchoolNotification',(req,res)=>{
 
-})
+});
+
+
 //----------------------------
 //Map Routes
 //---------------------

@@ -36,6 +36,12 @@ var parentSchema=new mongoose.Schema({
   parentName:{
     type:String
   },
+  address:{
+    type:String
+  },
+  emailAddress:{
+    type:String
+  },
   children:[childSchema]
 });
 
@@ -62,6 +68,10 @@ var schoolSchema=new mongoose.Schema({
   service:{
     type:String,
     default:"GST"
+  },
+  childrenNumber:{
+    type:Number,
+    default:0
   },
 
   parents:[parentSchema],

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html
 <html lang="en">
 
 <head>
@@ -196,7 +196,11 @@
                                 <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Edit Parent Info
                              </span>
                             </a>
-
+                            </li>
+                            <li class="active has-sub">
+                                <a class="js-arrow" href="#">
+                                <i class="fas fa-institution"></i><span data-target="#allDevicesDetails" data-toggle="modal" role="button">Get all devices Details
+                                </span></a>
                             </li>
 
                         </ul>
@@ -216,7 +220,7 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-3">
                                 <div id="card-1" class="statistic__item card-1">
-                                    <h2 class="number" style="color:white;">1000</h2>
+                                    <h2 class="number" style="color:white;"><%=schoolno %></h2>
                                     <span class="desc" style="color:white;">Schools</span>
                                     <div class="icon">
                                         <i class="fas fa-building"></i>
@@ -226,7 +230,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item card-1" id="card-2">
-                                    <h2 class="number" style="color:white;">300</h2>
+                                    <h2 class="number" style="color:white;"><%=buses %></h2>
                                     <span class="desc" style="color:white;">Buses</span>
                                     <div class="icon">
                                         <i class="fa fa-bus"></i>
@@ -235,7 +239,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item card-1" id="card-3">
-                                    <h2 class="number" style="color:white;">100</h2>
+                                    <h2 class="number" style="color:white;"><%=parents %></h2>
                                     <span class="desc" style="color:white;">Parents</span>
                                     <div class="icon">
                                         <i class="fa fa-user"></i>
@@ -244,7 +248,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item card-1" id="card-4">
-                                    <h2 class="number" style="color:white;">100</h2>
+                                    <h2 class="number" style="color:white;"><%=children %></h2>
                                     <span class="desc" style="color:white;">Children</span>
                                     <div class="icon">
                                         <i class="fa fa-users"></i>
@@ -280,122 +284,39 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                              <%schools.forEach(function(school){%>
                                                 <tr>
 
                                                     <td>
                                                         <div class="table-data__info">
-                                                            <h6>Pulchowk Campus</h6>
+                                                            <h6><%=school.name%></h6>
                                                             <span>
-                                                                <a href="#">Swayambhu</a>
+                                                                <a href="#"><%=school.address%></a>
                                                             </span>
                                                             <br />
                                                             <span>
-                                                                <a href="#">9863696695</a>
+                                                                <a href="#"><%=school.contactNumber%></a>
                                                             </span>
                                                             <br />
                                                             <span>
-                                                                <a href="#">info@pcampus.edu.np</a>
+                                                                <a href="#"><%=school.emailAddress%></a>
                                                             </span>
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <span class="">25</span>
+                                                        <span class=""><%=buses%></span>
                                                     </td>
 
                                                     <td>
                                                         <span class="">
-                                                            3000
+                                                            <%=children%>
                                                         </span>
                                                     </td>
-                                                    <td><span>100</span></td>
+                                                    <td><span><%=parents%></span></td>
                                                 </tr>
-                                                <tr>
 
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6>Pulchowk Campus</h6>
-                                                            <span>
-                                                                <a href="#">Swayambhu</a>
-                                                            </span>
-                                                            <br />
-                                                            <span>
-                                                                <a href="#">9863696695</a>
-                                                            </span>
-                                                            <br />
-                                                            <span>
-                                                                <a href="#">info@pcampus.edu.np</a>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="">25</span>
-                                                    </td>
+                                            <%  })  %>
 
-                                                    <td>
-                                                        <span class="">
-                                                            3000
-                                                        </span>
-                                                    </td>
-                                                    <td><span>100</span></td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6>Pulchowk Campus</h6>
-                                                            <span>
-                                                                <a href="#">Swayambhu</a>
-                                                            </span>
-                                                            <br />
-                                                            <span>
-                                                                <a href="#">9863696695</a>
-                                                            </span>
-                                                            <br />
-                                                            <span>
-                                                                <a href="#">info@pcampus.edu.np</a>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="">25</span>
-                                                    </td>
-
-                                                    <td>
-                                                        <span class="">
-                                                            3000
-                                                        </span>
-                                                    </td>
-                                                    <td><span>100</span></td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6>Pulchowk Campus</h6>
-                                                            <span>
-                                                                <a href="#">Swayambhu</a>
-                                                            </span>
-                                                            <br />
-                                                            <span>
-                                                                <a href="#">9863696695</a>
-                                                            </span>
-                                                            <br />
-                                                            <span>
-                                                                <a href="#">info@pcampus.edu.np</a>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="">25</span>
-                                                    </td>
-
-                                                    <td>
-                                                        <span class="">
-                                                            3000
-                                                        </span>
-                                                    </td>
-                                                    <td><span>100</span></td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -574,11 +495,14 @@
                                 <div class="col"><button class="btn btn-warning" onclick="modifyParent()">+ Modify </button></div>
                             </div>
                             <div class="row text-center" id="addParent">
-                                <form role="form text-center">
-                                    <input type="text" class="form-control" placeholder="Enter Parent Name">
-                                    <input type="text" class="form-control" placeholder="Enter Contact Number">
-                                    <input type="text" class="form-control" placeholder="Enter Address">
-                                    <input type="email" class="form-control" placeholder="Enter Email Address">
+                                <form role="form text-center" action='/addParent' method='POST' >
+                                    <input type="text" name="parentname" class="form-control" placeholder="Enter Parent Name">
+                                    <input type="text" name="mobilenumber" class="form-control" placeholder="Enter Phone Number">
+                                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                                    <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
+                                    <input type="text" name="childname" class="form-control" placeholder="Enter childname">
+                                    <input type="text" name="schoolname" class="form-control" placeholder="Enter school name">
+                                    <input type="number" name="busnumber" class="form-control" placeholder="Enter bus number">
 
                                     <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Submit</button>
                                 </form>
@@ -701,36 +625,23 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow">
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Eden National Secondary Boarding School</td>
-                                            <td>5</td>
-                                            <td>1500</td>
-                                            <td>4000</td>
-                                            <td>9863696695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
+
+                                        <% schools.forEach(function(school){ %>
+                                          <tr>
+                                          <th scope="row"><%=1+schools.findIndex(function(sch){return sch===school})%></th>
+
+                                          <td><%= school.name%></td>
+                                          <td><%= school.buses.length %></td>
+                                          <td><%= school.parents.length%></td>
+                                          <td><%= school.childrenNumber%>
+                                        </td>
+                                          <td><%= school.contactNumber %></td>
+                                          <td><%= school.emailAddress%></td>
+                                          <td><%= school.address%></td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Eden National Secondary Boarding School</td>
-                                            <td>5</td>
-                                            <td>1500</td>
-                                            <td>4000</td>
-                                            <td>9863696695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Eden National Secondary Boarding School</td>
-                                            <td>5</td>
-                                            <td>1500</td>
-                                            <td>4000</td>
-                                            <td>9863696695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
+                                          <% }) %>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -839,4 +750,4 @@
 </body>
 
 </html>
-<!-- end document-->
+<!-- end document--> -->
