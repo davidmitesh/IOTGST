@@ -7,6 +7,25 @@ const passportLocalMongoose=require('passport-local-mongoose');
 var busSchema=new mongoose.Schema({
   busNumber:{
     type:Number
+  },
+  deviceId:{
+    type:Number
+  }
+});
+var childSchema=new mongoose.Schema({
+  childName:{
+    type:String
+  },
+  busNumber:{
+    type:Number
+  }
+});
+var notificationSchema=new mongoose.Schema({
+  text:{
+    type:String
+  },
+  seen:{
+    type:Boolean
   }
 });
 var parentSchema=new mongoose.Schema({
@@ -16,16 +35,11 @@ var parentSchema=new mongoose.Schema({
   parentName:{
     type:String
   },
-  childName:{
-    type:String
-  },
-  busNumber:{
-    type:Number
-  }
+  children:[childSchema]
 });
 
-var schoolSchema=new mongoose.Schema({
 
+var schoolSchema=new mongoose.Schema({
   name:{
     type:String
   },
@@ -38,8 +52,15 @@ var schoolSchema=new mongoose.Schema({
   address:{
     type:String
   },
+  service:{
+    type:String,
+    default:"GST"
+  },
+
   parents:[parentSchema],
-  buses:[busSchema]
+  buses:[busSchema],
+  parentnotification:[notificationSchema],
+  schoolnotification:[notificationSchema]
 });
 
 
@@ -65,7 +86,6 @@ schoolSchema.pre('save',function(next){  //this middleware runs prior to every s
   }
 });
 schoolSchema.statics.findByCredentials=function(username,password){
-
   return this.findOne({username}).then((user)=>{
     if (!user){
       return Promise.reject();
@@ -80,6 +100,16 @@ schoolSchema.statics.findByCredentials=function(username,password){
       });
     });
   });
+}
+schoolSchema.methods.addParentNotice=function(text){
+  var docs=this.parentnotification;
+  docs.push({text,seen:false});
+  this.set('parentnotification',docs);
+  this.save();
+};
+schoolSchema.statics.addSchoolNotice=function(text,schools){
+  this.find(schools,(docs)=>{})
+  this.updateMany(schools,{schoolnotification:docs});
 }
 
 var school=mongoose.model('school',schoolSchema);

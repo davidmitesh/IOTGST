@@ -6,6 +6,9 @@ const express=                require('express'),
       mongoose=               require('./server/db/mongoose.js'),
       user=                   require('./server/models/user.js');
       const _=require('lodash');
+      const axios=require('axios');
+    const   enAddressUrl='http://admin:admin@35.200.173.47/api/positions';
+
       let {school}= require('./server/models/schools.js');
 var path = require("path");
 var app=express();
@@ -55,7 +58,7 @@ console.log(req.body);
     }
     passport.authenticate('local')(req,res,function(){
       console.log('hey');
-      res.redirect('/secret');
+      res.redirect('/menupage');
     });
   });
 });
@@ -118,26 +121,67 @@ app.get('/addparentpage',(req,res)=>{
   res.render('addparentpage.ejs');
 });//
 app.post('/addParent',(req,res)=>{
-  var body=_.pick(req.body,['mobile','childname','parentname','name','busnumber']);
+  var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber']);
   console.log(body);
-  school.findOne({name:body.name},(err,doc)=>{
-    doc.parents.push({mobileNumber:body.mobile,parentName:body.parentname,childName:body.childname,busNumber:body.busnumber});
-    school.findOneAndUpdate({name:body.name},doc,()=>{
+  school.findOne({name:body.schoolname},(err,doc)=>{
+    doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,children:{childName:body.childname,busNumber:body.busnumber}});
+    // doc.parents.children.push({childName:body.childname,busNumber:body.busnumber});
+    school.findOneAndUpdate({name:body.schoolname},doc,()=>{
       console.log("successfully updated");
         res.redirect('/menupage');
     });
   });
 });
-app.post('/addBus',(req,res)=>{
-  school.findOne({name:req.body.schoolname},(err,doc)=>{
-    doc.buses.push({busNumber:req.body.busnumber});
-    school.findOneAndUpdate({name:req.body.schoolname},doc,()=>{
-      console.log("successfully updated");
-        res.send(doc);
+app.get('/addBuspage',(req,res)=>{
+res.render('addbus.ejs');
+});
+//------------------------
+//associate a deviceId with the busNumber provided the school name
+//--------------------------
+app.post('/busNumberWithDevice',(req,res)=>{
+  var body=_.pick(req.body,['deviceid','busnumber','schoolname']);
+  // school.find({buses.deviceId:deviceId,'buses.busNumber':busNumber}).then((result)=>{
+  //   if (!_.size(result)){
+  //     res.status(400).send('Bus number with the selected device id is already assigned');
+  //   }
+    school.findOne({name:body.schoolname}).then((doc)=>{
+      doc.buses.push({busNumber:body.busnumber,deviceId:body.deviceid});
+      school.findOneAndUpdate({name:body.schoolname},doc,(err,result)=>{
+        res.send("succesfully updated");
+      });
+    });
+  // });
+
+});
+//------------------
+//Get all info about which device Id is matched with which busnumber of particular schools
+//------------------
+app.get('/getAllDevicesState',(req,res)=>{
+  var result=[];
+  var livedevices=[];
+  school.find({service:"GST"}).then((docs)=>{
+    _.forEach(docs,function(school){
+      _.forEach(school.buses,function(bus){
+        result.push({name:school.name,busno:bus.busNumber,deviceId:bus.deviceId});
+        livedevices.push(bus.deviceId);
+      });
+    });
+    axios.get(enAddressUrl).then((response)=>{
+      var allDevices=response.data;
+      _.forEach(allDevices,function(device){
+        if (!(_.includes(livedevices,device.deviceId))) {
+          result.push({name:null,busno:0,deviceId:device.deviceId});
+        }
+      });
+      res.send(result);
     });
   });
+
 });
 
+app.get('/mappage',(req,res)=>{
+  res.render('map.ejs');
+});
 app.listen(3000,()=>{
   console.log("server is up");
 });
