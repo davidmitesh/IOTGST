@@ -5,12 +5,12 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
+    <meta name="description" content="Main admin dashboard for Girl Safety Transport">
+    <meta name="keywords" content="gst">
 
     <!-- Title Page-->
-    <title>Dashboard 2</title>
+    <title>Admin Dashboard | GST</title>
+	<link rel="shortcut icon" type="image/x-icon" href="images/icon/prologo.png" />
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -30,12 +30,11 @@
     <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-    <link href="vendor/vector-map/jqvmap.min.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
     <link href="css/index.css" rel="stylesheet" media="all">
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CTkkgRzwcS21LzhOAQti-IHrg0sXkN0"></script>
 </head>
 
 <body class="animsition">
@@ -48,9 +47,9 @@
             <div class="menu-sidebar2__content js-scrollbar1">
                 <div class="account2">
                     <div class="image img-cir img-120">
-                        <img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
+                        <img src="images/icon/girl.jpg" class="img responsive" alt="Admin Logo" />
                     </div>
-                    <h4 class="name">Alex Bhattarai</h4>
+                    <h4 class="name">Main Admin Panel</h4>
                     <a href="#">Sign out</a>
                 </div>
                 <nav class="navbar-sidebar2">
@@ -142,7 +141,6 @@
                                             <a href="#">
                                                 <i class="zmdi zmdi-account"></i>Account</a>
                                         </div>
-
                                         <div class="account-dropdown__item">
                                             <a href="#">
                                                 <i class="zmdi zmdi-money-box"></i>Billing</a>
@@ -162,54 +160,7 @@
                     </div>
                 </div>
             </header>
-            <aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
-                <div class="row text-center justify-content-center" style="width:100%;">
-                    <div class="col-12" style="width:100%;">
-                        <center> <span class="text-center" style="padding-left:40px;display:inline-block;color:black;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span></center>
-                    </div>
-                </div>
-                <div class="menu-sidebar2__content js-scrollbar2">
-                    <div class="account2">
-                        <div class="image img-cir img-120">
-                            <img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
-                        </div>
-                        <h4 class="name">Alex Bhattaraii</h4>
-                        <a href="#">Sign out</a>
-                    </div>
-                    <nav class="navbar-sidebar2">
-                        <ul class="list-unstyled navbar__list">
-                            <li class="active has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fas fa-institution"></i><span data-target="#listSchools" data-toggle="modal" role="button">All Schools
-                                </span></a>
-                            </li>
-
-                            <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fas fa-building"></i><span data-target="#editSchool" data-toggle="modal" role="button">Edit School Info</span>
-
-                            </a>
-
-                            </li>
-                            <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Edit Parent Info
-                             </span>
-                            </a>
-
-                            </li>
-
-                        </ul>
-                    </nav>
-                </div>
-            </aside>
-            <!-- END HEADER DESKTOP-->
-
-            <!-- BREADCRUMB-->
-
-            <!-- END BREADCRUMB-->
-
-            <!-- STATISTIC-->
+    
             <section class="statistic" style="margin-top:40px;">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
@@ -262,7 +213,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <!-- USER DATA-->
                                 <div class="user-data m-b-40" id="shadow">
                                     <h3 class="title-3 m-b-30">
@@ -403,7 +354,7 @@
                                 </div>
                                 <!-- END USER DATA-->
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <!-- MAP DATA-->
                                 <div class="map-data m-b-40" style="height:630px;" id="shadow">
                                     <h3 class="title-3 m-b-30">
@@ -427,7 +378,7 @@
                                         </div>
                                     </div>
                                     <div class="map-wrap m-t-45 m-b-80">
-                                        <div id="vmap" style="height: 410px;"></div>
+                                        <div id="map" style="height: 370px; width:100%;" class="text-center"></div>
                                     </div>
 
                                 </div>
@@ -439,26 +390,26 @@
             </section>
             <!--Modal Boxes (Edit School)-->
             <div class="modal fade" id="editSchool">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-lg" id="f1">
                     <div class="modal-content" id="shadow">
                         <div class="modal-header"><span style="font-size:18px;">Edit School Info</span></div>
                         <div class="modal-body text-center" id="overflowControl">
                             <div class="row justify-content-center">
-                                <div class="col"><button class="btn btn-success" onclick="addSchool()">+ Add </button></div>
+                                <div class="col"><button class="btn btn-success active" onclick="addSchool()">+ Add </button></div>
                                 <div class="col"><button class="btn btn-danger" onclick="removeSchool()">+ Remove </button></div>
                                 <div class="col"><button class="btn btn-warning" onclick="modifySchool()">+ Modify </button></div>
                             </div>
                             <div class="row" id="addSchool">
                                 <form role="form text-center" action='/addSchool' method='POST'>
-                                    <input type="text" name="name" class="form-control" placeholder="Enter School Name">
-                                    <input type="text" name="username" class="form-control" placeholder="Enter School Username">
-                                    <input type="password" name="password" name=class="form-control" placeholder="Enter School Password">
-                                    <input type="text" name="number" class="form-control" placeholder="Enter Contact Number">
-                                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                                    <input type="text" name="name" class="form-control" placeholder="Enter School Name"/>
+                                    <input type="text" name="username" class="form-control" placeholder="Enter School Username"/>
+                                    <input type="password" name="password" class="form-control" style="margin-top:5px; margin-bottom:5px;" placeholder="Enter School Password"/>
+                                    <input type="text" name="number" class="form-control" placeholder="Enter School Contact Number"/>
+                                    <input type="text" name="address" class="form-control" placeholder="Enter School Address"/>
                                     <div class="form-group">
-                                        <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
+                                        <input type="email" name="email" class="form-control" placeholder="Enter School Email Address"/>
                                     </div>
-                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Submit</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Add</button>
                                 </form>
                             </div>
                             <div class="row" id="removeSchool">
@@ -750,7 +701,12 @@
     </div>
     <footer class="footer" id="shadow">
         <div class="container text-center" id="footerContent">
-            <span class="text-center">@copyright reserved 2018</span>
+            <span class="text-center">Copyright reserved
+			  <script>
+			     var date=new Date();
+				 document.write(date.getFullYear());
+			  </script>
+			</span>
         </div>
     </footer>
 
@@ -782,10 +738,6 @@
 
 
     </script>
-    <script src="vendor/vector-map/jquery.vmap.js"></script>
-    <script src="vendor/vector-map/jquery.vmap.min.js"></script>
-    <script src="vendor/vector-map/jquery.vmap.sampledata.js"></script>
-    <script src="vendor/vector-map/jquery.vmap.world.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
@@ -834,8 +786,7 @@
         $('#makeEditable').SetEditable({
             $addButton: $('#but_add')
         });
-
-    </script>
+   </script>
 </body>
 
 </html>
