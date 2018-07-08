@@ -339,3 +339,32 @@ function showmapnow(){
     console.log(error);
   }
 })(jQuery);
+
+
+function deletedata(name){
+   $.post("/deleteSchool",{schoolname:name});
+   window.location.reload();
+}
+
+function editdata(name,uname,address,email,number){
+    $("#sform").trigger('reset');
+   //$('#sform').attr('action',
+   $("#z1").val(name);
+   $("#z2").val(uname);
+   $("#z3").attr("placeholder","Enter New School Password");
+   $("#z4").val(number);
+   $("#z5").val(address);
+   $("#z6").val(email);
+   $("#headis").text("Edit School Data Below");
+   $("#adds").text("Edit");
+   $("#editSchool").modal('show');
+}
+
+function newschool(){
+    $("#sform").trigger('reset');
+   $('#sform').attr('action','/addSchool');
+   $("#headis").text("Add New School");
+   $("#z3").attr("placeholder","Enter School Password");
+   $("#adds").text("Add");
+   $("#editSchool").modal('show');
+}
