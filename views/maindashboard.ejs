@@ -390,9 +390,13 @@
             </div>
             <!--End Modal Boxes (Edit School)-->
 			<div class="modal fade" id="devicestates">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content schoolsList">
+                                 <div class="modal-dialog modal-lg" style="height:450px;" id="f1">
+                                    <div class="modal-content" id="shadow">
                                         <div class="modal-header">
+										<div class="row justify-content-center">
+                                <div class="col"><button class="btn btn-success active" onclick="addDevice()">+ Associate device with bus </button></div>
+                                
+                            </div>
                                             <span>List of Available Devices</span>
                                         </div>
                                         <div class="modal-body">
@@ -433,8 +437,19 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+											
                                         </div>
-                                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+										 <div class="row" id="addDevice">
+                                <form role="form text-center" action='/busNumberWithDevice' method='POST'>
+                                    <input type="text" name="deviceid" class="form-control" placeholder="Enter deviceID here"/>
+                                    <input type="text" name="schoolname" class="form-control" placeholder="Enter School name"/>
+                                   
+                                    <input type="number" name="busnumber" class="form-control" placeholder="Enter Bus Number"/>
+                                   
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Associate</button>
+                                </form>
+                            </div>
+                                        
 
                                     </div>
 
@@ -669,6 +684,11 @@
             document.getElementById('addParent').style.display = "none";
             document.getElementById('removeParent').style.display = "none";
             document.getElementById('modifyParent').style.display = "inline-block";
+        }
+		 function addDevice() {
+            document.getElementById('addParent').style.display = "none";
+            document.getElementById('removeParent').style.display = "none";
+            document.getElementById('addDevice').style.display = "inline-block";
         }
 
     </script>

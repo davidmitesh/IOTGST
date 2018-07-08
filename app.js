@@ -199,7 +199,7 @@ app.post('/busNumberWithDevice',(req,res)=>{
     school.findOne({name:body.schoolname}).then((doc)=>{
       doc.buses.push({busNumber:body.busnumber,deviceId:body.deviceid});
       school.findOneAndUpdate({name:body.schoolname},doc,(err,result)=>{
-        res.send("succesfully updated");
+        res.redirect('/menupage');
       });
     });
   // });
