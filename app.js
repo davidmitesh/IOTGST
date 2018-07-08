@@ -106,6 +106,28 @@ function countDetails(req,res,next){
     next();
   });
 };
+function devicestates(req,res,next){
+  var result=[];
+  var livedevices=[];
+  school.find({service:"GST"}).then((docs)=>{
+    _.forEach(docs,function(school){
+      _.forEach(school.buses,function(bus){
+        result.push({name:school.name,busno:bus.busNumber,deviceId:bus.deviceId});
+        livedevices.push(bus.deviceId);
+      });
+    });
+    axios.get(enAddressUrl).then((response)=>{
+      var allDevices=response.data;
+      _.forEach(allDevices,function(device){
+        if (!(_.includes(livedevices,device.deviceId))) {
+          result.push({name:null,busno:0,deviceId:device.deviceId});
+        }
+      });
+      req.result=result;
+      next();
+    });
+  });
+}
 //---------------------------------------------------------
 //middleware that returns the total schools array--
 //----------------
@@ -119,8 +141,8 @@ function getSchools(req,res,next){
 app.get('/addschoolpage',isLoggedIn,(req,res)=>{
   res.render('addschool.ejs');
 });
-app.get('/menupage',getSchools,countDetails,(req,res)=>{
-  res.render('maindashboard.ejs',{schools:req.schools,children:req.count.children,buses:req.count.buses,parents:req.count.parents,schoolno:req.count.schoolno});
+app.get('/menupage',getSchools,countDetails,devicestates,(req,res)=>{
+  res.render('maindashboard.ejs',{schools:req.schools,children:req.count.children,buses:req.count.buses,parents:req.count.parents,schoolno:req.count.schoolno,result:req.result});
 });
 app.post('/addSchool',isLoggedIn,(req,res)=>{
   var body=_.pick(req.body,['name','username','address','password','number','email']);
@@ -230,13 +252,23 @@ app.get('/getSchoolNotification',(req,res)=>{
 
 });
 
+//---------------------------
+//routes for modifying school and parents
+//--------------------
+//----for parents
+app.post('/deleteSchool',(req,res)=>{
+   if (school.removeSchool(req.body.schoolname)){
+     res.redirect("/menupage");
+   }
+});
+
 
 //----------------------------
 //Map Routes
 //---------------------
 
 app.get('/mappage',(req,res)=>{
-  res.render('map.ejs');
+  res.render('secret.ejs');
 });
 
 //-----------

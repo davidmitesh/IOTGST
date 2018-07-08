@@ -150,7 +150,30 @@ schoolSchema.statics.addParentNotice=function(text,schools){
   });
   return 1;
 }
-
+schoolSchema.statics.removeSchool=function(schoolname){
+  this.findOneAndDelete({name:schoolname},(err,result)=>{
+    return 1;
+  });
+}
+schoolSchema.statics.modifySchool=function(school,modifiedSchool){
+  this.findOneAndUpdate(school,modifiedSchool,(err,result)=>{
+    return 1;
+  });
+};
+schoolSchema.statics.removeParent=function(mobileNumber,schoolName){
+  this.findOneAndUpdate({name:schoolName},{$pull:{parents:{mobileNumber:mobileNumber}}},(err,result)=>{
+    return 1;
+  });
+};
+schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
+  if (this.findOneAndUpdate({name:schoolName},{$pull:{parents:{mobileNumber:mobileNumber}}},(err,result)=>{
+    return 1;
+  })){
+    this.findOneAndUpdate({name:schoolName},{$push:{parents:details}},(err,result)=>{
+      return 1;
+    });
+  }
+};
 
 var school=mongoose.model('school',schoolSchema);
 
