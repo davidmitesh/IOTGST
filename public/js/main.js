@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,name,cschool,cid;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval;
 
 (function ($) {
     // USE STRICT
@@ -32,24 +32,22 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,name,cschool
     });
 	name=new Array();
 	busno=new Array();
-	deviceId=new Array();
+	adeviceId=new Array();
 	for(var i=0;i<$(".invisible").length;i++){
+	   
 	   let m=JSON.parse($($(".invisible")[i]).html());
-	   name.push(m.name);
-	   busno.push(m.busno);
-	   deviceId.push(m.deviceId);
-	}
-	name.forEach((val,index)=>{
-	   if(val==null){
-	      name=name.slice(index,1);
+	   if(m.name!=null && m.busno!=0){
+	       adeviceId.push(m.deviceId);  
 	   }
-	});
-	busno.forEach((val,index)=>{
-	  if(val==0){
-	    busno=busno.slice(index,1);
-	  }
-	});
+	   if(m.name!=null){
+	     name.push(m.name);
+	   }
+	   if(m.busno!=0){
+	     busno.push(m.busno);
+	   }
+	}
 	if(busno.length!=0){
+	   m=0;
 	  $(".filters").css('display','block');
 	  busno.forEach((val,index)=>{
 	    $(".schooln").append("<option value=\"bus\""+index+"\">"+name[index]+"</option>");
@@ -68,7 +66,18 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,name,cschool
     if(map[0]) {
 	  if(busno.length!=0){
 	   showmapnow();
-	   mapagain(map);
+	   cschool=name.indexOf($(".schooln :selected").text());
+	   cid=busno.indexOf(Number($(".busn :selected").text()));
+	   mapagain();
+	   mapit();
+	   $(".schooln").change(()=>{
+	        cschool=name.indexOf($(".schooln :selected").text());
+			mapit();
+	   });
+	   $(".busn").change(()=>{
+	        cid=busno.indexOf(Number($(".busn :selected").text()));
+			mapit();
+	   });
 	  }else{
 	    map.empty();
 	    map.html("<p style=\"margin-top:200px\">No any buses found for tracking</p>");
@@ -81,7 +90,28 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,name,cschool
   
 })(jQuery);
 
-function mapagain(map){
+
+function mapit(){
+    if(cschool!=cid){
+		 if(interval){
+		   clearInterval(interval);
+		 }
+	     exception();
+	}else{
+	     m=cschool;
+		 showmapnow();
+		 mapagain();
+		  interval=setInterval(()=>{
+		   mapagain();
+	      },5000);
+     }
+}
+function exception(map){
+  $('#map').empty();
+  $('#map').html("<p style=\"margin-top:200px\">Use proper combination of school and its bus for tracking</p>");
+}
+
+function mapagain(){
     ids=new Array();
     lats=new Array();
     longs=new Array();
@@ -99,10 +129,10 @@ function mapagain(map){
             lats.push(v.latitude);
             longs.push(v.longitude);
         });
-        mapfinal(0);
+        mapfinal(m);
 	   },
 	   error:(err)=>{
-		  map.html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
+		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
 	   }
 	});
 }
@@ -113,12 +143,16 @@ function mapfinal(m){
         lng: parseFloat(longs[m])
     };
     maps.setCenter(myLatLng);
-    marker = new google.maps.Marker({
-        map: maps
-    });
     marker.setPosition(myLatLng);
     trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(maps);
+	let contentString="School: "+$(".schooln :selected").text()+", Bus No.: "+$(".busn :selected").text();
+	let infowindow = new google.maps.InfoWindow({
+        content: contentString
+     });
+     google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+     });
 }
 
 function showmapnow(){
@@ -129,6 +163,9 @@ function showmapnow(){
         },
         streetViewControl:false
       });
+	marker = new google.maps.Marker({
+        map: maps
+    });
 }
 
 (function ($) {
