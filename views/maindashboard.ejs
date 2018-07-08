@@ -76,7 +76,7 @@
                       </li>
                       <li class="has-sub">
                           <a class="js-arrow" href="#">
-                              <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">All Device States
+                              <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">Assign Device
                               </span></a>
 
                       </li>
@@ -202,7 +202,7 @@
                             </div>
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item card-1" id="card-4">
-                                    <h2 class="number" style="color:white;"><%=children %></h2>
+                                    <h2 class="number" style="color:white;"><%=children%></h2>
                                     <span class="desc" style="color:white;">Children</span>
                                     <div class="icon">
                                         <i class="fa fa-users"></i>
@@ -224,7 +224,7 @@
                                 <!-- USER DATA-->
                                 <div class="user-data m-b-40" id="shadow">
                                     <h3 class="title-3 m-b-30">
-                                        <i class="zmdi zmdi-account-calendar"></i>Mean Data</h3>
+                                        <i class="zmdi zmdi-map"></i>Mean Data</h3>
 
                                     <div class="table-responsive table-data" style="height:525px;">
                                         <table class="table">
@@ -355,9 +355,9 @@
 							   <div class="m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
 							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Parent Data
-										<span style="float:right" ><button onclick="newschool()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New School</button></span>
+										<span style="float:right" ><button onclick="newparent()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New Parent</button></span>
 							    </h3>
-                                <table class="table table-striped" style="border-style:hidden;">
+                                <table class="table" style="border-style:hidden;">
                                     <thead id="taHead" style="background-color:#FFFFFF;">
                                         <tr>
                                             <td style="padding-left:30px;">Name</td>
@@ -369,21 +369,72 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow" style="background-color:#FFFFFF; border-style:hidden;">
-                                        <tr>
-                                            <td style="padding-left:30px;">Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-											 <td><i class="far fa-edit" onclick="peditdata()"></i></td>
-											<td><i class="fa fa-trash" onclick="pdeletedata()"></i></td>
+                                        <tr class="mn">
+										  <%if(schools.length==0){%>
+											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
+									     <%}else{%>
+										    <%schools.forEach(function(school,index){%>
+											  <%if(school.parents.length==0){%>
+											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
+											  <%}else{%>
+											     <%for(var i=0;i<school.parents.length;i++){%>
+												    <td style="padding-left:30px;"><%=school.parents[i].parentName%></td>
+													<td><%=school.name%></td>
+													<%for (var j=0;j<school.parents[i].children.length;j++){%>
+													  <td><%=school.parents[i].children[j].childName%></td>
+													<%}%>
+													<td><%=school.parents[i].mobileNumber%></td>
+													<td><%=school.parents[i].emailAddress%></td>
+													<td><%=school.parents[i].address%></td>
+												 <td><i class="far fa-edit" onclick="peditdata()"></i></td>
+											     <td><i class="fa fa-trash" onclick="pdeletedata('<%=school.parents[i].mobileNumber%>','<%=school.name%>')"></i></td>
+											   <%}%>
+											  <%}%>
+											<%})%>
+										 <%}%>
                                         </tr>
                                         
                                     </tbody>
                                 </table>
 							   </div>
                             </div>
+							
+							<div class="col-xl-12">
+							   <div class="m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Devices Data
+										<span style="float:right" ><button class="btn btn-primary pull-right" data-target="#devicestates" data-toggle="modal" id="but_add" style="margin-right:30px;">Assign Device</button></span>
+							    </h3>
+							<table class="table " style="border-style:hidden;">
+                                   <thead id="taHead" style="background-color:#FFFFFF;">
+                                          <tr>
+                                              <td style="padding-left:30px;">DeviceId</th>
+                                               <td>Name of School</th>
+                                               <td>Bus Number</th>
+                                          </tr>
+                                    </thead>
+                                          <tbody >
+                                             <% result.forEach(function(doc){ %>
+                                                          <tr style="background-color:#FFFFFF; border-style:hidden;" class="mn">
+
+                                                          <td style="padding-left:50px;"><%= doc.deviceId%></td>
+														  
+														  <%if(doc.name==null){%>
+														     <td>Unassigned</td>
+														  <%}else{%>
+                                                             <td><%= doc.name %></td>
+														  <%}%>
+														  
+														  <%if(doc.busno==0){%>
+														     <td>Unassigned</td>
+														  <%}else{%>
+                                                            <td><%= doc.busno%></td>
+                                                          <%}%>
+														  <td><i class="far fa-edit" onclick="assigndata('<%=doc.busno%>','<%=doc.name%>','<%=doc.deviceId%>')"></i></td>
+                                                        </tr>
+                                             <% }) %>
+                                          </tbody>
+                                 </table>
 							
                         </div>
                     </div>
@@ -413,76 +464,42 @@
                 </div>
             </div>
             <!--End Modal Boxes (Edit School)-->
-			<div class="modal fade" id="devicestates">
+			           <div class="modal fade" id="devicestates">
                                 <div class="modal-dialog modal-lg">
-                                    <div class="modal-content schoolsList">
-                                        <div class="modal-header">
-                                            <span>List of Available Devices</span>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row" id="schoolsInfoList">
-                                                <table class="table table-striped" id="makeEditable">
-                                                    <thead id="taHead">
-                                                        <tr>
-                                                            <th scope="col">S.N.</th>
-                                                            <th scope="col">DeviceId</th>
-                                                            <th scope="col">Name of School</th>
-                                                            <th scope="col">Bus Number</th>
-                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tableOverflow">
-
-                                                        <% result.forEach(function(doc){ %>
-                                                          <tr>
-                                                          <th scope="row"><%=1+result.findIndex(function(sch){return sch===doc})%></th>
-
-                                                          <td><%= doc.deviceId%></td>
-														  
-														  <%if(doc.name==null){%>
-														     <td>Unassigned</td>
-														  <%}else{%>
-                                                             <td><%= doc.name %></td>
-														  <%}%>
-														  
-														  <%if(doc.busno==0){%>
-														     <td>Unassigned</td>
-														  <%}else{%>
-                                                            <td><%= doc.busno%></td>
-                                                          <%}%>
-                                                        </tr>
-                                                          <% }) %>
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
-
-                                    </div>
+								<div class="modal-content" id="shadow">
+                                  <div class="modal-header"><span style="font-size:18px;">Assign Device</span></div>
+                                   <div class="modal-body text-center" id="overflowControl">
+                                   <form role="form text-center" action='/busNumberWithDevice' method='POST' id="dform">
+                                    <input type="number" id="did" name="deviceid" style="margin-top:20px;" class="form-control" placeholder="Enter deviceID here"/>
+                                    <input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/>        
+                                    <input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number"/>
+                                    <button type="submit" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
+                                </form>
 
                                 </div>
+								<div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
                             </div>
+						  </div>
+						 </div>
 
             <!--Modal Boxes (Edit Parents Info)-->
             <div class="modal fade" id="editParent">
                 <div class="modal-dialog modal-lg" style="height:500px;">
                     <div class="modal-content" id="shadow">
-                        <div class="modal-header"><span style="font-size:18px;">Add New Parent</span></div>
+                        <div class="modal-header"><span style="font-size:18px;" id="headip">Add New Parent</span></div>
                         <div class="modal-body text-center" id="overflowControl">
                             
-                            <div class="row text-center" id="addParent">
-                                <form role="form text-center" action='/addParent' method='POST' >
-                                    <input type="text" name="parentname" class="form-control" placeholder="Enter Parent Name">
-                                    <input type="text" name="mobilenumber" class="form-control" placeholder="Enter Phone Number">
-                                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
-                                    <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
-                                    <input type="text" name="childname" class="form-control" placeholder="Enter childname">
-                                    <input type="text" name="schoolname" class="form-control" placeholder="Enter school name">
-                                    <input type="number" name="busnumber" style="margin-top:10px;" class="form-control" placeholder="Enter bus number">
+                            <div class="row">
+                                <form role="form" method='POST' id="pform" >
+                                    <input type="text" id="y1" name="parentname" style="margin-top:20px;" class="form-control" placeholder="Enter Parent Name">
+                                    <input type="text" id="y2" name="mobilenumber" style="margin-top:20px"  class="form-control" placeholder="Enter Phone Number">
+                                    <input type="text" id="y3" name="address" style="margin-top:20px"  class="form-control" placeholder="Enter Address">
+                                    <input type="email" id="y4" name="email" style="margin-top:20px"  class="form-control" placeholder="Enter Email Address">
+                                    <input type="text" id="y5" name="childname" style="margin-top:20px"  class="form-control" placeholder="Enter childname">
+                                    <input type="text" id="y6" name="schoolname" style="margin-top:20px"  class="form-control" placeholder="Enter school name">
+                                    <input type="hidden" id="y7" name="busnumber" style="margin-top:20px"  style="margin-top:10px;" class="form-control" value=0>
 
-                                    <button type="submit" class="btn btn-outline-primary btn-lg" style="margin-top:20px;" value="submit">Submit</button>
+                                    <button type="submit" id="addp" style="margin-top:20px"  class="btn btn-outline-primary btn-lg" style="margin-top:20px;" value="submit">Submit</button>
                                 </form>
                             </div>
                         </div>

@@ -151,17 +151,17 @@ schoolSchema.statics.addParentNotice=function(text,schools){
   return 1;
 }
 schoolSchema.statics.removeSchool=function(schoolName){
-  this.findOneAndDelete({name:schoolName},(err,result)=>{
+  return this.findOneAndDelete({name:schoolName},(err,result)=>{
     return 1;
   });
 }
 schoolSchema.statics.modifySchool=function(schoolName,modifiedSchool){
-  this.findOneAndUpdate({name:schoolName},modifiedSchool,(err,result)=>{
+  return this.findOneAndUpdate({name:schoolName},modifiedSchool,(err,result)=>{
     return 1;
   });
 };
 schoolSchema.statics.removeParent=function(mobileNumber,schoolName){
-  this.findOneAndUpdate({name:schoolName},{$pull:{parents:{mobileNumber:mobileNumber}}},(err,result)=>{
+  return this.findOneAndUpdate({name:schoolName},{$pull:{parents:{mobileNumber:mobileNumber}}},(err,result)=>{
     return 1;
   });
 };

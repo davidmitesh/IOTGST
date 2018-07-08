@@ -174,7 +174,6 @@ app.get('/addparentpage',(req,res)=>{
 });//
 app.post('/addParent',(req,res)=>{
   var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
-  console.log(body);
   school.findOne({name:body.schoolname},(err,doc)=>{
     doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:{childName:body.childname,busNumber:body.busnumber}});
     doc.childrenNumber+=1;
@@ -258,7 +257,7 @@ app.get('/getSchoolNotification',(req,res)=>{
 //--------------------
 //----for schools
 app.post('/modifySchool',(req,res)=>{
-  if (req.body.password=null){
+  if (req.body.password==null){
     var body=_.pick(req.body,['name','username','address','emailAddress','contactNumber']);
   }else{
 	  var body=_.pick(req.body,['name','password','username','address','emailAddress','contactNumber']);

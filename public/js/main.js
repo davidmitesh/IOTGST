@@ -98,7 +98,7 @@ function mapit(){
 		 }
 	     exception();
 	}else{
-	     m=cschool;
+	     m=cid;
 		 showmapnow();
 		 mapagain();
 		  interval=setInterval(()=>{
@@ -371,4 +371,33 @@ function newschool(){
    $("#z6").attr("name","email");
    $("#adds").text("Add");
    $("#editSchool").modal('show');
+}
+
+function assigndata(number,name,id){
+   $("#dform").trigger('reset');
+   $("#did").val(id);
+   if(name!=null){
+     $("#sid").val(name);
+   }
+   if(number!=0){
+     $("#bid").val(number);
+   }
+   $("#devicestates").modal('show');
+}
+
+function newparent(){
+   $("#pform").trigger('reset');
+   $('#pform').attr('action','/addParent');
+   $("#headip").text("Add New Parent");
+   $("#addp").text("Add");
+   $("#editParent").modal('show');
+}
+
+function pdeletedata(number,name){
+    $.post("/deleteParent",{mobilenumber:parseInt(number),schoolname:name});
+	window.location.reload();
+}
+
+function peditdata(){
+
 }
