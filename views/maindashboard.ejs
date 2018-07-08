@@ -68,7 +68,7 @@
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Edit Parent Info
+                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Add New Parent
                              </span>
                             </a>
 
@@ -350,6 +350,41 @@
                                 </table>
 								</div>
 							</div>
+							
+							<div class="col-xl-12">
+							   <div class="m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Parent Data
+										<span style="float:right" ><button onclick="newschool()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New School</button></span>
+							    </h3>
+                                <table class="table table-striped" style="border-style:hidden;">
+                                    <thead id="taHead" style="background-color:#FFFFFF;">
+                                        <tr>
+                                            <td style="padding-left:30px;">Name</td>
+                                            <td>School Name</td>
+                                            <td>Children</td>
+                                            <td>Contact Number</td>
+                                            <td>Email</td>
+                                            <td>Address</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow" style="background-color:#FFFFFF; border-style:hidden;">
+                                        <tr>
+                                            <td style="padding-left:30px;">Amar Bahadur</td>
+                                            <td>Eden National Secondary Boarding School</td>
+                                            <td>5</td>
+                                            <td>9863699695</td>
+                                            <td>cruze.alex@gmail.com</td>
+                                            <td>Swayambhu, Kathmandu</td>
+											 <td><i class="far fa-edit" onclick="peditdata()"></i></td>
+											<td><i class="fa fa-trash" onclick="pdeletedata()"></i></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+							   </div>
+                            </div>
+							
                         </div>
                     </div>
                 </div>
@@ -379,13 +414,9 @@
             </div>
             <!--End Modal Boxes (Edit School)-->
 			<div class="modal fade" id="devicestates">
-                                 <div class="modal-dialog modal-lg" style="height:450px;" id="f1">
-                                    <div class="modal-content" id="shadow">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content schoolsList">
                                         <div class="modal-header">
-										<div class="row justify-content-center">
-                                <div class="col"><button class="btn btn-success active" onclick="addDevice()">+ Associate device with bus </button></div>
-                                
-                            </div>
                                             <span>List of Available Devices</span>
                                         </div>
                                         <div class="modal-body">
@@ -426,30 +457,19 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-											
                                         </div>
-										 <div class="row" id="addDevice">
-                                <form role="form text-center" action='/busNumberWithDevice' method='POST'>
-                                    <input type="text" name="deviceid" class="form-control" placeholder="Enter deviceID here"/>
-                                    <input type="text" name="schoolname" class="form-control" placeholder="Enter School name"/>
-                                   
-                                    <input type="number" name="busnumber" class="form-control" placeholder="Enter Bus Number"/>
-                                   
-                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Associate</button>
-                                </form>
-                            </div>
-                                        
+                                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
 
                                     </div>
 
                                 </div>
                             </div>
-              
+
             <!--Modal Boxes (Edit Parents Info)-->
             <div class="modal fade" id="editParent">
                 <div class="modal-dialog modal-lg" style="height:500px;">
                     <div class="modal-content" id="shadow">
-                        <div class="modal-header"><span style="font-size:18px;">Edit Parent Info</span></div>
+                        <div class="modal-header"><span style="font-size:18px;">Add New Parent</span></div>
                         <div class="modal-body text-center" id="overflowControl">
                             
                             <div class="row text-center" id="addParent">
@@ -464,50 +484,6 @@
 
                                     <button type="submit" class="btn btn-outline-primary btn-lg" style="margin-top:20px;" value="submit">Submit</button>
                                 </form>
-                            </div>
-                            <div class="row" id="modifyParent">
-                                <table class="table table-striped" id="makeEditable">
-                                    <thead id="taHead">
-                                        <tr>
-                                            <th scope="col">S.N.</th>
-                                            <th scope="col">Parents</th>
-                                            <th scope="col">Schools</th>
-                                            <th scope="col">Children</th>
-                                            <th scope="col">Contact Number</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Address</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableOverflow">
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                         <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
@@ -607,11 +583,6 @@
             document.getElementById('addParent').style.display = "none";
             document.getElementById('removeParent').style.display = "none";
             document.getElementById('modifyParent').style.display = "inline-block";
-        }
-		 function addDevice() {
-            document.getElementById('addParent').style.display = "none";
-            document.getElementById('removeParent').style.display = "none";
-            document.getElementById('addDevice').style.display = "inline-block";
         }
 
     </script>

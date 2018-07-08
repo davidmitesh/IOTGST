@@ -347,24 +347,28 @@ function deletedata(name){
 }
 
 function editdata(name,uname,address,email,number){
-    $("#sform").trigger('reset');
-   //$('#sform').attr('action',
+   $("#sform").trigger('reset');
+   $('#sform').attr('action','/modifySchool');
    $("#z1").val(name);
    $("#z2").val(uname);
    $("#z3").attr("placeholder","Enter New School Password");
    $("#z4").val(number);
+   $("#z4").attr("name","contactNumber");
    $("#z5").val(address);
    $("#z6").val(email);
+   $("#z6").attr("name","emailAddress");
    $("#headis").text("Edit School Data Below");
    $("#adds").text("Edit");
    $("#editSchool").modal('show');
 }
 
 function newschool(){
-    $("#sform").trigger('reset');
+   $("#sform").trigger('reset');
    $('#sform').attr('action','/addSchool');
    $("#headis").text("Add New School");
    $("#z3").attr("placeholder","Enter School Password");
+   $("#z4").attr("name","number");
+   $("#z6").attr("name","email");
    $("#adds").text("Add");
    $("#editSchool").modal('show');
 }

@@ -258,7 +258,11 @@ app.get('/getSchoolNotification',(req,res)=>{
 //--------------------
 //----for schools
 app.post('/modifySchool',(req,res)=>{
-  var body=_.pick(req.body,['name','password','username','address','emailAddress','contactNumber']);
+  if (req.body.password=null){
+    var body=_.pick(req.body,['name','username','address','emailAddress','contactNumber']);
+  }else{
+	  var body=_.pick(req.body,['name','password','username','address','emailAddress','contactNumber']);
+  }
   if (school.modifySchool(body.name,body)){
     res.redirect('/menupage');
   }
