@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,name,cschool,cid;
 
 (function ($) {
     // USE STRICT
@@ -30,24 +30,49 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer;
              $(".btn-outline-danger").click();
       }
     });
-  
+	name=new Array();
+	busno=new Array();
+	deviceId=new Array();
+	for(var i=0;i<$(".invisible").length;i++){
+	   let m=JSON.parse($($(".invisible")[i]).html());
+	   name.push(m.name);
+	   busno.push(m.busno);
+	   deviceId.push(m.deviceId);
+	}
+	name.forEach((val,index)=>{
+	   if(val==null){
+	      name=name.slice(index,1);
+	   }
+	});
+	busno.forEach((val,index)=>{
+	  if(val==0){
+	    busno=busno.slice(index,1);
+	  }
+	});
+	if(busno.length!=0){
+	  $(".filters").css('display','block');
+	  busno.forEach((val,index)=>{
+	    $(".schooln").append("<option value=\"bus\""+index+"\">"+name[index]+"</option>");
+		$(".busn").append("<option value=\"device\""+index+"\">"+val+"</option>");
+	  });
+	}else{
+	   $(".filters").css('display','none');
+	}
+	
   })(jQuery);
+
 (function ($) {
-  // USE STRICT
   "use strict";
-   
-  // Map
   try {
     var map = $('#map');
     if(map[0]) {
-	 $.get('/getAllDevicesState').then((res)=>{
-	   //alert(JSON.stringify(res));
+	  if(busno.length!=0){
 	   showmapnow();
 	   mapagain(map);
-	 },(err)=>{
-		 console.log(err);
-	 });
-       //map here
+	  }else{
+	    map.empty();
+	    map.html("<p style=\"margin-top:200px\">No any buses found for tracking</p>");
+	  }
     }
   } catch (error) {
     console.log(error);

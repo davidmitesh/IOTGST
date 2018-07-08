@@ -37,7 +37,11 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CTkkgRzwcS21LzhOAQti-IHrg0sXkN0"></script>
 </head>
 
+
 <body class="animsition">
+   <% result.forEach(function(doc){ %>
+      <p class="invisible" style="display:none;"><%=JSON.stringify(doc)%></p>
+    <% }) %>
     <div class="page-wrapper">
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar2" id="shadow">
@@ -54,7 +58,7 @@
                 </div>
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
+                        <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-institution"></i><span data-target="#listSchools" data-toggle="modal" role="button">ALL SCHOOLS
                                 </span></a>
@@ -76,9 +80,9 @@
 
                         </li>
                       </li>
-                      <li class="active has-sub">
+                      <li class="has-sub">
                           <a class="js-arrow" href="#">
-                              <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">ALL DEVICES STATES
+                              <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">All Device States
                               </span></a>
 
                       </li>
@@ -167,61 +171,7 @@
                     </div>
                 </div>
             </header>
-<<<<<<< HEAD
-    
-=======
-            <aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
-                <div class="row text-center justify-content-center" style="width:100%;">
-                    <div class="col-12" style="width:100%;">
-                        <center> <span class="text-center" style="padding-left:40px;display:inline-block;color:black;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span></center>
-                    </div>
-                </div>
-                <div class="menu-sidebar2__content js-scrollbar2">
-                    <div class="account2">
-                        <div class="image img-cir img-120">
-                            <img src="images/icon/avatar-big-01.jpg" alt="John Doe" />
-                        </div>
-                        <h4 class="name">Alex Bhattaraii</h4>
-                        <a href="#">Sign out</a>
-                    </div>
-                    <nav class="navbar-sidebar2">
-                        <ul class="list-unstyled navbar__list">
-                            <li class="active has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fas fa-institution"></i><span data-target="#listSchools" data-toggle="modal" role="button">All Schools
-                                </span></a>
-                            </li>
 
-                            <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fas fa-building"></i><span data-target="#editSchool" data-toggle="modal" role="button">Edit School Info</span>
-
-                            </a>
-
-                            </li>
-                            <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Edit Parent Info
-                             </span>
-                            </a>
-                            </li>
-                            <li class="active has-sub">
-                                <a class="js-arrow" href="#">
-                                <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">All Schools
-                                </span></a>
-                            </li>
-
-                        </ul>
-                    </nav>
-                </div>
-            </aside>
-            <!-- END HEADER DESKTOP-->
-
-            <!-- BREADCRUMB-->
-
-            <!-- END BREADCRUMB-->
-
-            <!-- STATISTIC-->
 
             <section class="statistic" style="margin-top:40px;">
                 <div class="section__content section__content--p30">
@@ -292,8 +242,12 @@
                                                     <td>Parents</td>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="mtable">
+											  <%if(schools.length==0){%>
+											     <tr ><td colspan="4" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any school data found for tracking</td></tr>
+											  <%}else{%>
                                               <%schools.forEach(function(school){%>
+											   
                                                 <tr>
 
                                                     <td>
@@ -325,7 +279,7 @@
                                                 </tr>
 
                                             <%  })  %>
-
+                                            <%}%>
                                             </tbody>
                                         </table>
                                     </div>
@@ -339,23 +293,19 @@
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Map Data</h3>
                                     <div class="filters">
-                                        <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
-                                            <select class="js-select2" name="property">
-                                                <option selected="selected">Schools</option>
-                                                <option value="">Pulchowk Campus</option>
-                                                <option value="">KMC</option>
+                               
+										<div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                                            <select class="js-select2 schooln" name="property">
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
                                         <div class="rs-select2--dark rs-select2--sm rs-select2--border">
-                                            <select class="js-select2 au-select-dark" name="time">
-                                                <option selected="selected">Buses</option>
-                                                <option value="">Bus 12</option>
-                                                <option value="">Bus 11</option>
+                                            <select class="js-select2 au-select-dark busn" name="time">
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
-                                    </div>
+                                    
+									</div>
                                     <div class="map-wrap m-t-45 m-b-80">
                                         <div id="map" style="height: 370px; width:100%;" class="text-center"></div>
                                     </div>
@@ -369,7 +319,7 @@
             </section>
             <!--Modal Boxes (Edit School)-->
             <div class="modal fade" id="editSchool">
-                <div class="modal-dialog modal-lg" id="f1">
+                <div class="modal-dialog modal-lg" style="height:450px;" id="f1">
                     <div class="modal-content" id="shadow">
                         <div class="modal-header"><span style="font-size:18px;">Edit School Info</span></div>
                         <div class="modal-body text-center" id="overflowControl">
@@ -405,17 +355,16 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow">
+									
                                      <% schools.forEach(function(school){%>
-									  <tr >
+									    <tr>
                                             <th scope="row"><%=1+schools.findIndex(function(sch){return sch===school})%></th>
-                                            <td><%=school.name%></td>
+											<td><%=school.name%></td>
                                             <td><%=school.buses.length%></td>
                                             <td><%=school.childrenNumber%></td>
                                             <td><%=school.parents.length%></td>
                                         </tr>
 									 <%})%>  
-									  
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -487,7 +436,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content schoolsList">
                                         <div class="modal-header">
-                                            <span>List of Schools</span>
+                                            <span>List of Available Devices</span>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row" id="schoolsInfoList">
@@ -508,9 +457,18 @@
                                                           <th scope="row"><%=1+result.findIndex(function(sch){return sch===doc})%></th>
 
                                                           <td><%= doc.deviceId%></td>
-                                                          <td><%= doc.name %></td>
-                                                          <td><%= doc.busno%></td>
-                                                          
+														  
+														  <%if(doc.name==null){%>
+														     <td>Unassigned</td>
+														  <%}else{%>
+                                                             <td><%= doc.name %></td>
+														  <%}%>
+														  
+														  <%if(doc.busno==0){%>
+														     <td>Unassigned</td>
+														  <%}else{%>
+                                                            <td><%= doc.busno%></td>
+                                                          <%}%>
                                                         </tr>
                                                           <% }) %>
 
@@ -528,7 +486,7 @@
 
             <!--Modal Boxes (Edit Parents Info)-->
             <div class="modal fade" id="editParent">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-lg" style="height:500px;">
                     <div class="modal-content" id="shadow">
                         <div class="modal-header"><span style="font-size:18px;">Edit Parent Info</span></div>
                         <div class="modal-body text-center" id="overflowControl">
@@ -545,9 +503,9 @@
                                     <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
                                     <input type="text" name="childname" class="form-control" placeholder="Enter childname">
                                     <input type="text" name="schoolname" class="form-control" placeholder="Enter school name">
-                                    <input type="number" name="busnumber" class="form-control" placeholder="Enter bus number">
+                                    <input type="number" name="busnumber" style="margin-top:10px;" class="form-control" placeholder="Enter bus number">
 
-                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Submit</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" style="margin-top:20px;" value="submit">Submit</button>
                                 </form>
                             </div>
                             <div class="row" id="removeParent">
@@ -668,8 +626,11 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow">
-
+                                      <%if(schools.length==0){%>
+											     <tr ><td colspan="8" class="text-center">No any school data found</td></tr>
+									  <%}else{%>
                                         <% schools.forEach(function(school){ %>
+										  
                                           <tr>
                                           <th scope="row"><%=1+schools.findIndex(function(sch){return sch===school})%></th>
 
@@ -683,8 +644,7 @@
                                           <td><%= school.address%></td>
                                         </tr>
                                           <% }) %>
-
-
+                                      <%}%> 
                                     </tbody>
                                 </table>
                             </div>
@@ -703,13 +663,14 @@
 
     </div>
     <footer class="footer" id="shadow">
-        <div class="container text-center" id="footerContent">
-            <span class="text-center">Copyright reserved
+        <div class="container" id="footerContent">
+           <!--span class="text-center">
+			Copyright reserved
 			  <script>
 			     var date=new Date();
 				 document.write(date.getFullYear());
 			  </script>
-			</span>
+			 </span-->
         </div>
     </footer>
 
@@ -748,6 +709,7 @@
     <script>
         function addSchool() {
             document.getElementById('addSchool').style.display = "inline-block";
+			document.getElementById('addSchool').style.height="450px";
             document.getElementById('removeSchool').style.display = "none";
             document.getElementById('modifySchool').style.display = "none";
             document.getElementsByTagName('form').style.width = "100%";
@@ -767,6 +729,7 @@
 
         function addParent() {
             document.getElementById('addParent').style.display = "inline-block";
+			document.getElementById('addParent').style.height="500px";
             document.getElementById('removeParent').style.display = "none";
             document.getElementById('modifyParent').style.display = "none";
             document.getElementsByTagName('form').style.width = "100%";
@@ -789,26 +752,20 @@
         $('#makeEditable').SetEditable({
             $addButton: $('#but_add')
         });
-<<<<<<< HEAD
 		
 		$("#tableOverflow tr").click(function(){
-   $(this).addClass('selected').siblings().removeClass('selected');    
-   var value=$(this).find('td:first').html();
-   $.post("/deleteSchool",{
-   schoolname:value},
-    function(data,status){
-	alert("completed");})   
-});
+           $(this).addClass('selected').siblings().removeClass('selected');    
+           var value=$(this).find('td:first').html();
+           $.post("/deleteSchool",{schoolname:value},function(data,status){
+	       });   
+       });
 
 $('.ok').on('click', function(e){
     alert($("#tableOverflow tr.selected td:first").html());
 });
 
     </script>
-=======
    </script>
->>>>>>> 325a55a8302ee66d85b618a4bd6a1a111b0d15a2
 </body>
 
 </html>
-<!-- end document--> -->

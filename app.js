@@ -222,8 +222,8 @@ app.get('/getAllDevicesState',(req,res)=>{
     axios.get(enAddressUrl).then((response)=>{
       let allDevices=response.data;
       _.forEach(allDevices,function(device){
-        if (!(_.includes(livedevices,device.id))) {
-          result.push({name:null,busno:0,deviceId:device.id});
+        if (!(_.includes(livedevices,device.deviceId))) {
+          result.push({name:null,busno:0,deviceId:device.deviceId});
         }
       });
       res.send(result);
