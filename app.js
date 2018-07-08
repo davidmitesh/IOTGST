@@ -49,14 +49,14 @@ app.get('/register',(req,res)=>{
 });
 //add post method to signup
 app.post('/signup',(req,res)=>{
-console.log(req.body);
+//console.log(req.body);
   user.register(new user({username: req.body.username}),req.body.password,function(err,result){
     if (err){
-      console.log(err);
+      //console.log(err);
       return res.render('register.ejs');
     }
     passport.authenticate('local')(req,res,function(){
-      console.log('hey');
+      //console.log('hey');
       res.redirect('/menupage');
     });
   });
@@ -95,7 +95,7 @@ function countDetails(req,res,next){
       s=0,
       schoolchildnumber=[];
   school.find({service:'GST'},(err,schools)=>{
-    console.log(schools);
+    //console.log(schools);
     _.map(schools,function(school){
       c+=school.childrenNumber;
       b+=school.buses.length;
@@ -152,7 +152,7 @@ app.post('/addSchool',isLoggedIn,(req,res)=>{
 // newSchool.parents.push({mobileNumber:2222,parentName:'ganga',childName:'sita'});
 newSchool.save((err,doc)=>{
 
-  console.log("succed");
+  //console.log("succed");
   res.redirect('/menupage');
 });
 });
@@ -178,7 +178,7 @@ app.post('/addParent',(req,res)=>{
     doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:{childName:body.childname,busNumber:body.busnumber}});
     doc.childrenNumber+=1;
     school.findOneAndUpdate({name:body.schoolname},doc,()=>{
-      console.log("successfully updated");
+      //console.log("successfully updated");
         res.redirect('/menupage');
     });
   });
@@ -295,5 +295,5 @@ app.get('/mappage',(req,res)=>{
 //port listenners
 //--------------
 app.listen(8080,()=>{
-  console.log("server is up");
+  //console.log("server is up");
 });
