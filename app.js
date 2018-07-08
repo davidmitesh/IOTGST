@@ -256,14 +256,30 @@ app.get('/getSchoolNotification',(req,res)=>{
 //---------------------------
 //routes for modifying school and parents
 //--------------------
-//----for parents
+//----for schools
+app.post('/modifySchool',(req,res)=>{
+  var body=_.pick(req.body,['name','password','username','address','emailAddress','contactNumber']);
+  if (school.modifySchool(body.name,body)){
+    res.redirect('/menupage');
+  }
+});
 app.post('/deleteSchool',(req,res)=>{
    if (school.removeSchool(req.body.schoolname)){
-     res.status(200).send("completed");
+     res.redirect('/menupage');
    }
 });
-
-
+//--------for parents
+app.post('/modifyParent',(req,res)=>{
+  var body=_.pick(req,body,['mobileNumber','parentName','address','emailAddress','children']);
+  if (school.modifyParent(body.mobileNumber,req.body.schoolname,body)){
+    res.redirect('/menupage');
+  }
+});
+app.post('/deleteParent',(req,res)=>{
+  if (school.removeParent(req.body.mobilenumber,req.body.schoolname)){
+    res.redirect('/menupage');
+  }
+});
 //----------------------------
 //Map Routes
 //---------------------

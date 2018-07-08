@@ -150,13 +150,13 @@ schoolSchema.statics.addParentNotice=function(text,schools){
   });
   return 1;
 }
-schoolSchema.statics.removeSchool=function(schoolname){
-  this.findOneAndDelete({name:schoolname},(err,result)=>{
+schoolSchema.statics.removeSchool=function(schoolName){
+  this.findOneAndDelete({name:schoolName},(err,result)=>{
     return 1;
   });
 }
-schoolSchema.statics.modifySchool=function(school,modifiedSchool){
-  this.findOneAndUpdate(school,modifiedSchool,(err,result)=>{
+schoolSchema.statics.modifySchool=function(schoolName,modifiedSchool){
+  this.findOneAndUpdate({name:schoolName},modifiedSchool,(err,result)=>{
     return 1;
   });
 };
