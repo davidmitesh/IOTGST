@@ -106,6 +106,7 @@ body {
     color: #666;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+	overflow-y:scroll;
 }
 
 h1,
@@ -14638,4 +14639,7 @@ section {
 
 .vue-lists ul, .vue-lists ol {
     padding-left: 30px;
+}
+.mn:hover{
+  cursor:pointer;
 }

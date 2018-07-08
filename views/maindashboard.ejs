@@ -67,7 +67,7 @@
 
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-building"></i><span data-target="#editSchool" data-toggle="modal" role="button">Edit School Info</span>
+                                <i class="fas fa-building"></i><span data-target="#editSchool" data-toggle="modal" role="button">Add new School</span>
 
                             </a>
 
@@ -230,7 +230,7 @@
                                 <!-- USER DATA-->
                                 <div class="user-data m-b-40" id="shadow">
                                     <h3 class="title-3 m-b-30">
-                                        <i class="zmdi zmdi-account-calendar"></i>School Data</h3>
+                                        <i class="zmdi zmdi-account-calendar"></i>Mean Data</h3>
 
                                     <div class="table-responsive table-data" style="height:525px;">
                                         <table class="table">
@@ -245,7 +245,7 @@
                                             </thead>
                                             <tbody id="mtable">
 											  <%if(schools.length==0){%>
-											     <tr ><td colspan="4" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any school data found for tracking</td></tr>
+											     <tr ><td colspan="4" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any mean data found</td></tr>
 											  <%}else{%>
                                               <%schools.forEach(function(school){%>
 											   
@@ -314,6 +314,47 @@
                                 </div>
                                 <!-- END MAP DATA-->
                             </div>
+							
+						<div class="col-xl-12">
+						   <div class="m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+						     
+						     <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>School Data
+										<span style="float:right" ><button data-target="#editSchool" data-toggle="modal" role="button" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New School</button></span>
+							 </h3>
+       
+								<table class="table table-striped" style="border-style:hidden;">
+                                    <thead style="background-color:#FFFFFF;" >
+                                        <tr>
+                                            <td style="padding-left:50px;">Name</td>
+                                            <td>Username</td>
+                                            <td>Password</td>
+                                            <td>Address</td>
+											<td>Email</td>
+											<td>Phone Number</td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableOverflow">
+									 <%if(schools.length==0){%>
+											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any school data found</td></tr>
+									<%}else{%>
+                                     <%schools.forEach(function(school){%>
+									    <tr style="border-style:hidden;" class="mn">
+											<td style="padding-left:50px;"><%=school.name%></td>
+                                            <td><%=school.username%></td>
+                                            <td>-</td>
+                                            <td><%=school.address%></td>
+											<td style="width:20px;"><%=school.emailAddress%></td>
+											<td><%=school.contactNumber%></td>
+											<td><i class="far fa-edit"></i></td>
+                                        </tr>
+									 <%})%>
+									<%}%>
+                                    </tbody>
+                                </table>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -322,13 +363,9 @@
             <div class="modal fade" id="editSchool">
                 <div class="modal-dialog modal-lg" style="height:450px;" id="f1">
                     <div class="modal-content" id="shadow">
-                        <div class="modal-header"><span style="font-size:18px;">Edit School Info</span></div>
+                        <div class="modal-header"><span style="font-size:18px;">Add New School</span></div>
                         <div class="modal-body text-center" id="overflowControl">
-                            <div class="row justify-content-center">
-                                <div class="col"><button class="btn btn-success active" onclick="addSchool()">+ Add </button></div>
-                                <div class="col"><button class="btn btn-danger" onclick="removeSchool()">+ Remove </button></div>
-                                <div class="col"><button class="btn btn-warning" onclick="modifySchool()">+ Modify </button></div>
-                            </div>
+                            
                             <div class="row" id="addSchool">
                                 <form role="form text-center" action='/addSchool' method='POST'>
                                     <input type="text" name="name" class="form-control" placeholder="Enter School Name"/>
@@ -340,47 +377,6 @@
                                         <input type="email" name="email" class="form-control" placeholder="Enter School Email Address"/>
                                     </div>
                                     <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Add</button>
-                                </form>
-                            </div>
-                            <div class="row" id="removeSchool">
-                                <table class="table table-striped" id="makeEditable">
-                                    <thead id="taHead">
-                                        <tr>
-                                            <th scope="col">S.N.</th>
-                                            <th scope="col">School</th>
-                                            <th scope="col">Buses</th>
-                                            <th scope="col">Children</th>
-                                            <th scope="col">Parents</th>
-                                            <th scope="col"><span style="float:right"><button class="btn btn-primary pull-right" id="but_add">Add New Row</button></span></th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableOverflow">
-									
-                                     <% schools.forEach(function(school){%>
-									    <tr>
-                                            <th scope="row"><%=1+schools.findIndex(function(sch){return sch===school})%></th>
-											<td><%=school.name%></td>
-                                            <td><%=school.buses.length%></td>
-                                            <td><%=school.childrenNumber%></td>
-                                            <td><%=school.parents.length%></td>
-                                        </tr>
-									 <%})%>  
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="row" id="modifySchool">
-                                <form role="form text-center" action='/addSchool' method='POST'>
-                                    <input type="text" name="name" class="form-control" placeholder="Enter School Name to modify"/>
-                                    <input type="text" name="username" class="form-control" placeholder="Enter School Username"/>
-                                    <input type="password" name="password" class="form-control" style="margin-top:5px; margin-bottom:5px;" placeholder="Enter School Password"/>
-                                    <input type="text" name="number" class="form-control" placeholder="Enter School Contact Number"/>
-                                    <input type="text" name="address" class="form-control" placeholder="Enter School Address"/>
-                                    <div class="form-group">
-                                        <input type="email" name="email" class="form-control" placeholder="Enter School Email Address"/>
-                                    </div>
-                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Modify Schools Details</button>
                                 </form>
                             </div>
                         </div>
@@ -528,75 +524,24 @@
             <!--Modal Boxes (Edit Parents Info)-->
 
             <!--Modal Boxes (List Schools)-->
-            <div class="modal fade" id="listSchools">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content schoolsList">
-                        <div class="modal-header">
-                            <span>List of Schools</span>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row" id="schoolsInfoList">
-                                <table class="table table-striped" id="makeEditable">
-                                    <thead id="taHead">
-                                        <tr>
-                                            <th scope="col">S.N.</th>
-                                            <th scope="col">Schools</th>
-                                            <th scope="col">Buses</th>
-                                            <th scope="col">Parents</th>
-                                            <th scope="col">Children</th>
-                                            <th scope="col">Contact Number</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Address</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableOverflow">
-                                      <%if(schools.length==0){%>
-											     <tr ><td colspan="8" class="text-center">No any school data found</td></tr>
-									  <%}else{%>
-                                        <% schools.forEach(function(school){ %>
-										  
-                                          <tr>
-                                          <th scope="row"><%=1+schools.findIndex(function(sch){return sch===school})%></th>
-
-                                          <td><%= school.name%></td>
-                                          <td><%= school.buses.length %></td>
-                                          <td><%= school.parents.length%></td>
-                                          <td><%= school.childrenNumber%>
-                                        </td>
-                                          <td><%= school.contactNumber %></td>
-                                          <td><%= school.emailAddress%></td>
-                                          <td><%= school.address%></td>
-                                        </tr>
-                                          <% }) %>
-                                      <%}%> 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
-
-                    </div>
-
-                </div>
-            </div>
-
+            
             <!--Modal Boxes (List Schools)-->
             <!-- END PAGE CONTAINER-->
         </div>
 
 
     </div>
-    <footer class="footer" id="shadow">
+    <!--footer class="footer" id="shadow">
         <div class="container" id="footerContent">
-           <!--span class="text-center">
+           <span class="text-center">
 			Copyright reserved
 			  <script>
 			     var date=new Date();
 				 document.write(date.getFullYear());
 			  </script>
-			 </span-->
+			 </span>
         </div>
-    </footer>
+    </footer-->
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
