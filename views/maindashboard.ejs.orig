@@ -75,13 +75,6 @@
                             </a>
 
                         </li>
-                      </li>
-                      <li class="active has-sub">
-                          <a class="js-arrow" href="#">
-                              <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">ALL DEVICES STATES
-                              </span></a>
-
-                      </li>
 
                     </ul>
                 </nav>
@@ -207,7 +200,7 @@
                             </li>
                             <li class="active has-sub">
                                 <a class="js-arrow" href="#">
-                                <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">All Schools
+                                <i class="fas fa-institution"></i><span data-target="#allDevicesDetails" data-toggle="modal" role="button">Get all devices Details
                                 </span></a>
                             </li>
 
@@ -405,21 +398,30 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow">
-                                     <% schools.forEach(function(school){%>
-									  <tr >
-                                            <th scope="row"><%=1+schools.findIndex(function(sch){return sch===school})%></th>
-                                            <td><%=school.name%></td>
-                                            <td><%=school.buses.length%></td>
-                                            <td><%=school.childrenNumber%></td>
-                                            <td><%=school.parents.length%></td>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
                                         </tr>
-									 <%})%>  
-									  
-                                        
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>Pulchowk Campus</td>
+                                            <td>100</td>
+                                            <td>1000</td>
+                                            <td>150</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            
                             <div class="row" id="modifySchool">
                                 <table class="table table-striped" id="makeEditable">
                                     <thead id="taHead">
@@ -483,49 +485,6 @@
                 </div>
             </div>
             <!--End Modal Boxes (Edit School)-->
-			<div class="modal fade" id="devicestates">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content schoolsList">
-                                        <div class="modal-header">
-                                            <span>List of Schools</span>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row" id="schoolsInfoList">
-                                                <table class="table table-striped" id="makeEditable">
-                                                    <thead id="taHead">
-                                                        <tr>
-                                                            <th scope="col">S.N.</th>
-                                                            <th scope="col">DeviceId</th>
-                                                            <th scope="col">Name of School</th>
-                                                            <th scope="col">Bus Number</th>
-                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="tableOverflow">
-
-                                                        <% result.forEach(function(doc){ %>
-                                                          <tr>
-                                                          <th scope="row"><%=1+result.findIndex(function(sch){return sch===doc})%></th>
-
-                                                          <td><%= doc.deviceId%></td>
-                                                          <td><%= doc.name %></td>
-                                                          <td><%= doc.busno%></td>
-                                                          
-                                                        </tr>
-                                                          <% }) %>
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
             <!--Modal Boxes (Edit Parents Info)-->
             <div class="modal fade" id="editParent">
                 <div class="modal-dialog modal-lg">
@@ -789,25 +748,7 @@
         $('#makeEditable').SetEditable({
             $addButton: $('#but_add')
         });
-<<<<<<< HEAD
-		
-		$("#tableOverflow tr").click(function(){
-   $(this).addClass('selected').siblings().removeClass('selected');    
-   var value=$(this).find('td:first').html();
-   $.post("/deleteSchool",{
-   schoolname:value},
-    function(data,status){
-	alert("completed");})   
-});
-
-$('.ok').on('click', function(e){
-    alert($("#tableOverflow tr.selected td:first").html());
-});
-
-    </script>
-=======
    </script>
->>>>>>> 325a55a8302ee66d85b618a4bd6a1a111b0d15a2
 </body>
 
 </html>
