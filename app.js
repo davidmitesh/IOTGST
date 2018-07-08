@@ -36,7 +36,6 @@ passport.deserializeUser(user.deserializeUser());
 //Routes
 //------------
 app.get('/',isLoggedIn,(req,res)=>{
-  console.log(req);
   res.render('menupage.ejs');
 });
 
@@ -260,7 +259,7 @@ app.get('/getSchoolNotification',(req,res)=>{
 //----for parents
 app.post('/deleteSchool',(req,res)=>{
    if (school.removeSchool(req.body.schoolname)){
-     res.redirect("/menupage");
+     res.status(200).send("completed");
    }
 });
 

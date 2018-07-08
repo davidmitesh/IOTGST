@@ -171,6 +171,32 @@
                     </div>
                 </div>
             </header>
+<<<<<<< HEAD
+
+
+            <aside class="menu-sidebar2 js-right-sidebar d-block d-lg-none">
+                <div class="row text-center justify-content-center" style="width:100%;">
+                    <div class="col-12" style="width:100%;">
+                        <center> <span class="text-center" style="padding-left:40px;display:inline-block;color:black;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span></center>
+                    </div>
+                </div>
+                <div class="menu-sidebar2__content js-scrollbar2">
+                    <div class="account2">
+                        <div class="image img-cir img-120">
+                            
+                        </div>
+                        <h4 class="name">Alex Bhattaraii</h4>
+                        <a href="#">Sign out</a>
+                    </div>
+                    <nav class="navbar-sidebar2">
+                        <ul class="list-unstyled navbar__list">
+                            <li class="active has-sub">
+                                <a class="js-arrow" href="#">
+                                <i class="fas fa-institution"></i><span data-target="#listSchools" data-toggle="modal" role="button">All Schools
+                                </span></a>
+                            </li>
+=======
+>>>>>>> 255bda4656eff5672f2f1b3c5b3d34014584d80a
 
 
             <section class="statistic" style="margin-top:40px;">
@@ -370,61 +396,17 @@
                             </div>
                             
                             <div class="row" id="modifySchool">
-                                <table class="table table-striped" id="makeEditable">
-                                    <thead id="taHead">
-                                        <tr>
-                                            <th scope="col">S.N.</th>
-                                            <th scope="col">School</th>
-                                            <th scope="col">Buses</th>
-                                            <th scope="col">Children</th>
-                                            <th scope="col">Parents </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableOverflow">
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Pulchowk Campus</td>
-                                            <td>100</td>
-                                            <td>1000</td>
-                                            <td>150</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Pulchowk Campus</td>
-                                            <td>100</td>
-                                            <td>1000</td>
-                                            <td>150</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Pulchowk Campus</td>
-                                            <td>100</td>
-                                            <td>1000</td>
-                                            <td>150</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4</th>
-                                            <td>Pulchowk Campus</td>
-                                            <td>100</td>
-                                            <td>1000</td>
-                                            <td>150</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">5</th>
-                                            <td>Pulchowk Campus</td>
-                                            <td>100</td>
-                                            <td>1000</td>
-                                            <td>150</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">6</th>
-                                            <td>Pulchowk Campus</td>
-                                            <td>100</td>
-                                            <td>1000</td>
-                                            <td>150</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <form role="form text-center" action='/addSchool' method='POST'>
+                                    <input type="text" name="name" class="form-control" placeholder="Enter School Name to modify"/>
+                                    <input type="text" name="username" class="form-control" placeholder="Enter School Username"/>
+                                    <input type="password" name="password" class="form-control" style="margin-top:5px; margin-bottom:5px;" placeholder="Enter School Password"/>
+                                    <input type="text" name="number" class="form-control" placeholder="Enter School Contact Number"/>
+                                    <input type="text" name="address" class="form-control" placeholder="Enter School Address"/>
+                                    <div class="form-group">
+                                        <input type="email" name="email" class="form-control" placeholder="Enter School Email Address"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Modify Schools Details</button>
+                                </form>
                             </div>
                         </div>
                         <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
@@ -508,49 +490,16 @@
                                     <button type="submit" class="btn btn-outline-primary btn-lg" style="margin-top:20px;" value="submit">Submit</button>
                                 </form>
                             </div>
-                            <div class="row" id="removeParent">
-                                <table class="table table-striped" id="makeEditable">
-                                    <thead id="taHead">
-                                        <tr>
-                                            <th scope="col">S.N.</th>
-                                            <th scope="col">Parents</th>
-                                            <th scope="col">Schools</th>
-                                            <th scope="col">Children</th>
-                                            <th scope="col">Contact Number</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Address </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableOverflow">
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Amar Bahadur</td>
-                                            <td>Eden National Secondary Boarding School<br />Modern Era Higher Secondary School</td>
-                                            <td>5</td>
-                                            <td>9863699695</td>
-                                            <td>cruze.alex@gmail.com</td>
-                                            <td>Swayambhu, Kathmandu</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="row text-center" id="removeParent">
+                                <form role="form text-center" action='/addParent' method='POST' >
+                      
+                                    <input type="text" name="mobilenumber" class="form-control" placeholder="Enter Phone Number to remove">
+                                    
+                                    <input type="text" name="schoolname" class="form-control" placeholder="Enter school name">
+                                    
+
+                                    <button type="submit" class="btn btn-outline-primary btn-lg" value="submit">Remove Parent</button>
+                                </form>
                             </div>
                             <div class="row" id="modifyParent">
                                 <table class="table table-striped" id="makeEditable">
@@ -752,6 +701,10 @@
         $('#makeEditable').SetEditable({
             $addButton: $('#but_add')
         });
+<<<<<<< HEAD
+
+=======
+>>>>>>> 255bda4656eff5672f2f1b3c5b3d34014584d80a
 		
 		$("#tableOverflow tr").click(function(){
            $(this).addClass('selected').siblings().removeClass('selected');    
@@ -760,11 +713,13 @@
 	       });   
        });
 
-$('.ok').on('click', function(e){
-    alert($("#tableOverflow tr.selected td:first").html());
-});
+
 
     </script>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 255bda4656eff5672f2f1b3c5b3d34014584d80a
    </script>
 </body>
 
