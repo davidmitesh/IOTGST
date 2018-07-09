@@ -66,12 +66,12 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
     if(map[0]) {
 	  if(busno.length!=0){
 	   showmapnow();
-	   cschool=name.indexOf($(".schooln :selected").text());
+	   //cschool=name.indexOf($(".schooln :selected").text());
 	   cid=busno.indexOf(Number($(".busn :selected").text()));
 	   mapagain();
 	   mapit();
 	   $(".schooln").change(()=>{
-	        cschool=name.indexOf($(".schooln :selected").text());
+	        //cschool=name.indexOf($(".schooln :selected").text());
 			mapit();
 	   });
 	   $(".busn").change(()=>{
@@ -92,13 +92,19 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 
 
 function mapit(){
-    if(cschool!=cid){
+	let d=false;
+	name.forEach((val,index)=>{
+	  if(val==$(".schooln :selected").text() && busno[index]==Number($(".busn :selected").text())){
+	      m=index;
+		  d=true;
+	  }
+	});
+    if(d==false){
 		 if(interval){
 		   clearInterval(interval);
 		 }
 	     exception();
 	}else{
-	     m=cid;
 		 showmapnow();
 		 mapagain();
 		  interval=setInterval(()=>{

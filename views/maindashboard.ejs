@@ -369,11 +369,11 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow" style="background-color:#FFFFFF; border-style:hidden;">
-                                        <tr class="mn">
-										  <%if(schools.length==0){%>
+                                        <%if(schools.length==0){%>
 											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
 									     <%}else{%>
-										    <%schools.forEach(function(school,index){%>
+										 <%schools.forEach(function(school,index){%>
+										<tr class="mn">
 											  <%if(school.parents.length==0){%>
 											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
 											  <%}else{%>
@@ -390,10 +390,9 @@
 											     <td><i class="fa fa-trash" onclick="pdeletedata('<%=school.parents[i].mobileNumber%>','<%=school.name%>')"></i></td>
 											   <%}%>
 											  <%}%>
-											<%})%>
-										 <%}%>
                                         </tr>
-                                        
+										<%})%>
+                                       <%}%>            
                                     </tbody>
                                 </table>
 							   </div>
