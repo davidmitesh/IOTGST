@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool;
 
 (function ($) {
     // USE STRICT
@@ -46,6 +46,25 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	     busno.push(m.busno);
 	   }
 	}
+	
+	let data=JSON.parse($("#schoos").html());
+	if(data.length!=0){
+	for(var i=0;i<data.length;i++){
+	     if(data[i].parents.length==0){
+		      bool=true;
+		 }else{
+		     bool=false;
+			 break;
+		 }
+	 }
+	 if(bool==true){
+	     $("#nops").show();
+		 $("#nopi").hide();
+	 }else{
+	     $("#nops").hide();
+		 $("#nopi").show();   
+	 }
+	}
 	if(busno.length!=0){
 	   m=0;
 	  $(".filters").css('display','block');
@@ -66,16 +85,12 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
     if(map[0]) {
 	  if(busno.length!=0){
 	   showmapnow();
-	   //cschool=name.indexOf($(".schooln :selected").text());
-	   cid=busno.indexOf(Number($(".busn :selected").text()));
 	   mapagain();
 	   mapit();
 	   $(".schooln").change(()=>{
-	        //cschool=name.indexOf($(".schooln :selected").text());
 			mapit();
 	   });
 	   $(".busn").change(()=>{
-	        cid=busno.indexOf(Number($(".busn :selected").text()));
 			mapit();
 	   });
 	  }else{
@@ -131,11 +146,11 @@ function mapagain(){
        success:(res)=>{
 		    JSON.parse(JSON.stringify(res)).forEach((val)=>{
             let v=JSON.parse(JSON.stringify(val));
-            ids.push(v.id);
+            ids.push(v.deviceId);
             lats.push(v.latitude);
             longs.push(v.longitude);
         });
-        mapfinal(m);
+        mapfinal(ids.indexOf(adeviceId[m]));
 	   },
 	   error:(err)=>{
 		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
@@ -143,10 +158,10 @@ function mapagain(){
 	});
 }
 
-function mapfinal(m){
+function mapfinal(g){
     myLatLng={
-        lat: parseFloat(lats[m]), 
-        lng: parseFloat(longs[m])
+        lat: parseFloat(lats[g]), 
+        lng: parseFloat(longs[g])
     };
     maps.setCenter(myLatLng);
     marker.setPosition(myLatLng);

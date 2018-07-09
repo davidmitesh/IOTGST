@@ -316,8 +316,8 @@
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>School Data
 										<span style="float:right" ><button onclick="newschool()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New School</button></span>
 							 </h3>
-       
-								<table class="table table-striped" style="border-style:hidden;">
+                              <div class="table-responsive table-data" style="height:525px;">
+								<table class="table" style="border-style:hidden;">
                                     <thead style="background-color:#FFFFFF;" >
                                         <tr>
                                             <td style="padding-left:30px;">Name</td>
@@ -349,14 +349,17 @@
                                     </tbody>
                                 </table>
 								</div>
+								</div>
 							</div>
-							
+							<p id="schoos" style="display:none;"><%=JSON.stringify(schools)%></p>
 							<div class="col-xl-12">
 							   <div class="m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
 							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Parent Data
 										<span style="float:right" ><button onclick="newparent()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New Parent</button></span>
 							    </h3>
+								
+								<div class="table-responsive table-data" style="height:525px;">
                                 <table class="table" style="border-style:hidden;">
                                     <thead id="taHead" style="background-color:#FFFFFF;">
                                         <tr>
@@ -369,14 +372,16 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow" style="background-color:#FFFFFF; border-style:hidden;">
+									   
                                         <%if(schools.length==0){%>
-											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
+											     <tr><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
 									     <%}else{%>
+										 
+                                           <tr id="nops"><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
+                                         									  
 										 <%schools.forEach(function(school,index){%>
-										<tr class="mn">
-											  <%if(school.parents.length==0){%>
-											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
-											  <%}else{%>
+										<tr class="mn" id="nopi">
+											  
 											     <%for(var i=0;i<school.parents.length;i++){%>
 												    <td style="padding-left:30px;"><%=school.parents[i].parentName%></td>
 													<td><%=school.name%></td>
@@ -389,12 +394,13 @@
 												 <td><i class="far fa-edit" onclick="peditdata()"></i></td>
 											     <td><i class="fa fa-trash" onclick="pdeletedata('<%=school.parents[i].mobileNumber%>','<%=school.name%>')"></i></td>
 											   <%}%>
-											  <%}%>
                                         </tr>
 										<%})%>
+										
                                        <%}%>            
                                     </tbody>
                                 </table>
+								</div>
 							   </div>
                             </div>
 							
@@ -404,6 +410,7 @@
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Devices Data
 										<span style="float:right" ><button class="btn btn-primary pull-right" data-target="#devicestates" data-toggle="modal" id="but_add" style="margin-right:30px;">Assign Device</button></span>
 							    </h3>
+						    <div class="table-responsive table-data" style="height:525px;">
 							<table class="table " style="border-style:hidden;">
                                    <thead id="taHead" style="background-color:#FFFFFF;">
                                           <tr>
@@ -434,6 +441,7 @@
                                              <% }) %>
                                           </tbody>
                                  </table>
+								</div>
 							
                         </div>
                     </div>
