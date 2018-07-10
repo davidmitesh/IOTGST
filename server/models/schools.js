@@ -6,7 +6,8 @@ const passportLocalMongoose=require('passport-local-mongoose');
 
 var busSchema=new mongoose.Schema({
   busNumber:{
-    type:Number
+    type:String,
+	default:"0"
   },
   deviceId:{
     type:Number
@@ -17,7 +18,8 @@ var childSchema=new mongoose.Schema({
     type:String
   },
   busNumber:{
-    type:Number
+    type:String,
+	default:"0"
   }
 });
 var notificationSchema=new mongoose.Schema({

@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1;
 
 (function ($) {
     // USE STRICT
@@ -409,6 +409,11 @@ function assigndata(number,name,id){
    $("#devicestates").modal('show');
 }
 
+function newassign(){
+   $("#dform").trigger('reset');
+   $("#devicestates").modal('show');
+}
+
 function newparent(){
    $("#pform").trigger('reset');
    $('#pform').attr('action','/addParent');
@@ -417,11 +422,36 @@ function newparent(){
    $("#editParent").modal('show');
 }
 
+function peditdata(parentname,school,children,number,email,address){
+   $("#pform").trigger('reset');
+   $("#pform").attr("action","/addParent");
+   $("#headip").text("Edit Parent Below");
+   JSON.parse(children).forEach((val,index)=>{
+      let n=index+1;
+	  $("#y5"+n).val(val.childName);
+   });
+   $("#y1").val(parentname);
+   $("#y2").val(number);
+   $("#y3").val(address);
+   $("#y4").val(email);
+   $("#y6").val(school);
+   $("#addp").text("Edit");
+   $("#editParent").modal('show');
+}
+
 function pdeletedata(number,name){
     $.post("/deleteParent",{mobilenumber:parseInt(number),schoolname:name});
 	window.location.reload();
 }
 
-function peditdata(){
-
+function fexpand(){
+	  tt++;
+      $("#tt").append("<input type=\"text\" id=\"y5"+tt+"\" name=\"childname\" style=\"margin-top:20px; width:35%; float:left; margin-right:10px;\"  class=\"form-control\" placeholder=\"Enter childname\"><input type=\"text\" id=\"y7"+tt+"\" name=\"busnumber\" style=\"margin-top:20px; width:58%\"  style=\"margin-top:10px;\" class=\"form-control\" placeholder=\"Enter bus number (Keep empty if not fixed)\"><i class=\"fas fa-minus\" style=\"float:right; margin-top:-30px;\" id=\"i"+tt+"\" onclick=\"fdexpand("+tt+")\" style=\"width:10%;\"></i>");
 }
+
+function fdexpand(a){
+  $("#y5"+a).remove();
+  $("#y7"+a).remove();
+  $("#i"+a).remove();
+}
+

@@ -181,6 +181,7 @@ app.get('/addparentpage',(req,res)=>{
 });//
 app.post('/addParent',(req,res)=>{
   var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
+  //console.log(body);
   school.findOne({name:body.schoolname},(err,doc)=>{
     doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:{childName:body.childname,busNumber:body.busnumber}});
     doc.childrenNumber+=1;

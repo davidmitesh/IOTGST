@@ -68,7 +68,7 @@
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fa fa-user"></i><span data-target="#editParent" data-toggle="modal" role="button">Add New Parent
+                                <i class="fa fa-user"></i><span onclick="newparent()" role="button">Add New Parent
                              </span>
                             </a>
 
@@ -76,7 +76,7 @@
                       </li>
                       <li class="has-sub">
                           <a class="js-arrow" href="#">
-                              <i class="fas fa-institution"></i><span data-target="#devicestates" data-toggle="modal" role="button">Assign Device
+                              <i class="fas fa-institution"></i><span onclick="newassign()"role="button">Assign Device
                               </span></a>
 
                       </li>
@@ -391,7 +391,7 @@
 													<td><%=school.parents[i].mobileNumber%></td>
 													<td><%=school.parents[i].emailAddress%></td>
 													<td><%=school.parents[i].address%></td>
-												 <td><i class="far fa-edit" onclick="peditdata()"></i></td>
+												 <td><i class="far fa-edit" onclick="peditdata('<%=school.parents[i].parentName%>','<%=school.name%>','<%=JSON.stringify(school.parents[i].children)%>','<%=school.parents[i].mobileNumber%>','<%=school.parents[i].emailAddress%>','<%=school.parents[i].address%>')"></i></td>
 											     <td><i class="fa fa-trash" onclick="pdeletedata('<%=school.parents[i].mobileNumber%>','<%=school.name%>')"></i></td>
 											   <%}%>
                                         </tr>
@@ -431,7 +431,7 @@
                                                              <td><%= doc.name %></td>
 														  <%}%>
 														  
-														  <%if(doc.busno==0){%>
+														  <%if(doc.busno=="0"){%>
 														     <td>Unassigned</td>
 														  <%}else{%>
                                                             <td><%= doc.busno%></td>
@@ -477,9 +477,23 @@
                                   <div class="modal-header"><span style="font-size:18px;">Assign Device</span></div>
                                    <div class="modal-body text-center" id="overflowControl">
                                    <form role="form text-center" action='/busNumberWithDevice' method='POST' id="dform">
-                                    <input type="number" id="did" name="deviceid" style="margin-top:20px;" class="form-control" placeholder="Enter deviceID here"/>
-                                    <input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/>        
-                                    <input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number"/>
+                                    <!--input type="number" id="did" name="deviceid" style="margin-top:20px;" class="form-control" placeholder="Enter deviceID here"/-->
+                                    <select name="deviceid" id="did" style="width:100%; margin-top:15px;" class="form-control" required>
+									  <option value="" selected>Choose DeviceId</option>
+									  <% result.forEach(function(doc){ %>
+									         <option value="<%=doc.deviceId%>"><%=doc.deviceId%></option>
+									  <%})%>
+									 </select>
+									<!--input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/-->
+									
+									<select name="schoolname" id="sid" style="width:100%; margin-top:15px;" class="form-control" required>
+									  <option value="" selected>Choose School</option>
+									  <%schools.forEach(function(school,index){%>
+									    <option value="<%=school.name%>"><%=school.name%></option>
+									  <%})%>
+									</select>
+                                    
+									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number"/>
                                     <button type="submit" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
                                 </form>
 
@@ -493,21 +507,39 @@
             <div class="modal fade" id="editParent">
                 <div class="modal-dialog modal-lg" style="height:500px;">
                     <div class="modal-content" id="shadow">
-                        <div class="modal-header"><span style="font-size:18px;" id="headip">Add New Parent</span></div>
+                        <div class="modal-header"><span style="font-size:18px;" id="headip" onclick="padd(0)">Add New Parent</span></div>
                         <div class="modal-body text-center" id="overflowControl">
                             
                             <div class="row">
+							
                                 <form role="form" method='POST' id="pform" >
-                                    <input type="text" id="y1" name="parentname" style="margin-top:20px;" class="form-control" placeholder="Enter Parent Name">
-                                    <input type="text" id="y2" name="mobilenumber" style="margin-top:20px"  class="form-control" placeholder="Enter Phone Number">
-                                    <input type="text" id="y3" name="address" style="margin-top:20px"  class="form-control" placeholder="Enter Address">
-                                    <input type="email" id="y4" name="email" style="margin-top:20px"  class="form-control" placeholder="Enter Email Address">
-                                    <input type="text" id="y5" name="childname" style="margin-top:20px"  class="form-control" placeholder="Enter childname"><i class="fas fa-plus"></i>
-                                    <input type="text" id="y6" name="schoolname" style="margin-top:20px"  class="form-control" placeholder="Enter school name">
+								  <div style="margin-left:20px; margin-right:30px;">
+                                    <input type="text" id="y1" name="parentname" style="margin-top:20px;" class="form-control" placeholder="Enter Parent Name" required>
+                                    <input type="tel" id="y2" name="mobilenumber" style="margin-top:20px"  class="form-control" placeholder="Enter Phone Number" required>
+                                    <input type="text" id="y3" name="address" style="margin-top:20px"  class="form-control" placeholder="Enter Address" required>
+  
+                                    <!--input type="text" id="y6" name="schoolname" style="margin-top:20px"  class="form-control" placeholder="Enter school name"-->
+									<select name="schoolname" id="y6" style="width:100%; margin-top:15px;" class="form-control" required>
+									  <option value="" selected>Choose School Here</option>
+									  <%schools.forEach(function(school,index){%>
+									    <option value="<%=school.name%>"><%=school.name%></option>
+									  <%})%>
+									</select>
+									<span id="tt">
+									 
+									 <input type="text" id="y51" name="childname" style="margin-top:20px; width:35%; float:left; margin-right:10px;"  class="form-control" placeholder="Enter childname" required><input type="text" id="y71" name="busnumber" style="margin-top:20px; width:58%"  style="margin-top:10px;" class="form-control" placeholder="Enter bus number (Keep empty if not fixed)">
+                                     <i class="fas fa-plus" style="float:right; margin-top:-30px;" id="i1" onclick="fexpand()" style="width:10%;"></i>
+									 
+									</span>
+									
+									
+									<input type="email" id="y4" name="email" style="margin-top:20px"  class="form-control" placeholder="Enter Email Address" required>
                                     <!--input type="hidden" id="y7" name="busnumber" style="margin-top:20px"  style="margin-top:10px;" class="form-control" value=0-->
-
-                                    <button type="submit" id="addp" style="margin-top:20px"  class="btn btn-outline-primary btn-lg" style="margin-top:20px;" value="submit">Submit</button>
-                                </form>
+                                     
+                                    <button type="submit" id="addp" style="margin-top:20px"  class="btn btn-outline-primary btn-lg" style="margin-top:20px;">Submit</button>
+                                </div>
+								</form>
+							 
                             </div>
                         </div>
                         <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>

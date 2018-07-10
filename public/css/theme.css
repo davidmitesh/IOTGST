@@ -14643,3 +14643,10 @@ section {
 .mn:hover{
   cursor:pointer;
 }
+#tt i:hover,#y6:hover,select:hover{
+   cursor:pointer;
+}
+#tt i{
+    color:#4286f4;
+}
+
