@@ -178,7 +178,7 @@ function mapfinal(g){
 
 function showmapnow(){
     maps = new google.maps.Map(document.getElementById('map'), {
-        zoom: 20,
+        zoom: 25,
         zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER
         },
