@@ -13,6 +13,13 @@ let {school}= require('./server/models/schools.js');
 let path = require("path");
 let cors=require('cors');
 let app=express();
+app.use(function (req, res, next){
+  if (req.headers['x-forwarded-proto'] === 'https') {
+    res.redirect('http://' + req.hostname + req.url);
+  } else {
+    next();
+  }
+});
 app.use(cors());
 app.use(require('express-session')({
  secret: "hey you,yes you!",
