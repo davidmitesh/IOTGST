@@ -406,6 +406,8 @@ function newschool(){
 
 function assigndata(number,name,id){
    $("#isu").hide();
+   $("#am").css("float","right");
+   $("#amm").show();
    $("#dform").trigger('reset');
    //$("#dform").attr("action","/busNumberWithDevice");
    if($("#did option[value='"+id+"']").length==0){
@@ -430,6 +432,7 @@ function assigndata(number,name,id){
 function newassign(){
    $("#amm").hide();
    $("#isu").hide();
+   $("#am").css("float","center");
    $("#dform").trigger('reset');
    //$("#dform").attr("action","/busNumberWithDevice");
    $("#el").show();
