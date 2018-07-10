@@ -462,12 +462,12 @@
                             
                             <div class="row" id="addSchool">
                                 <form role="form text-center" method='POST' id="sform">
-                                    <input type="text" name="name"  class="form-control" id="z1" placeholder="Enter School Name" autocomplete="off"/>
-                                    <input type="text" name="username" class="form-control" id="z2" placeholder="Enter School Username" autocomplete="off"/>
-                                    <input type="password" name="password" class="form-control" id="z3" autocomplete="off" style="margin-top:10px;" placeholder="Enter School Password"/>
-                                    <input type="number" name="number" class="form-control" id="z4" autocomplete="off" style="margin-top:20px;" placeholder="Enter School Contact Number"/>
-                                    <input type="text" name="address" class="form-control" style="margin-top:20px;" id="z5" autocomplete="off" placeholder="Enter School Address"/>
-                                    <input type="email" name="email" class="form-control" id="z6" autocomplete="off" placeholder="Enter School Email Address"/>
+                                    <input type="text" name="name"  class="form-control" id="z1" placeholder="Enter School Name" />
+                                    <input type="text" name="username" class="form-control" id="z2" placeholder="Enter School Username" />
+                                    <input type="password" name="password" class="form-control" id="z3"  style="margin-top:10px;" placeholder="Enter School Password"/>
+                                    <input type="number" name="number" class="form-control" id="z4"  style="margin-top:20px;" placeholder="Enter School Contact Number"/>
+                                    <input type="text" name="address" class="form-control" style="margin-top:20px;" id="z5"  placeholder="Enter School Address"/>
+                                    <input type="email" name="email" class="form-control" id="z6"  placeholder="Enter School Email Address"/>
                                     <button type="submit" class="btn btn-outline-primary btn-lg" value="submit" id="adds">Add</button>
                                 </form>
                             </div>
@@ -487,7 +487,7 @@
                                     <select name="deviceid" id="did" style="width:100%; margin-top:15px;" class="form-control" required>
 									  <option id="el" value="" selected>Choose DeviceId</option>
 									  
-									  <%let m; for(let i=0;i<result.length;i++){%>
+									  <%let m,n; for(let i=0;i<result.length;i++){%>
 									      <%if(result[i].busno.length==0 || result[i].busno=="0"){ m=true;%>
 									         <option value="<%=result[i].deviceId%>"><%=result[i].deviceId%></option>
 										  <%}else{ m=false%>
@@ -502,15 +502,22 @@
 									<!--input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/-->
 									
 									<select name="schoolname" id="sid" style="width:100%; margin-top:15px;" class="form-control" required>
-									  <option value="" selected>Choose School</option>
+									  
+									  <%if(schools.length!=0){%>
+									     <option value="" selected>Choose School Here</option>
+									  <%}else{ n=false;%>
+									      <option value="" selected>No school found to assign devices</option>
+									  <%}%>
 									  <%schools.forEach(function(school,index){%>
 									    <option value="<%=school.name%>"><%=school.name%></option>
 									  <%})%>
 									</select>
                                     
 									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number" required/>
-                                    <button type="submit" id="am" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
-                                    <%if(m==false){%>
+                                    
+									<p id="isu" style="margin-top:30px; display:none;"></p>
+									<button type="submit" onclick="checksame()" id="am" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
+                                    <%if(m==false || n==false){%>
 									  <script>
 										    document.getElementById("el").style.display="none";
 											document.getElementById("am").disabled=true;
@@ -541,7 +548,11 @@
   
                                     <!--input type="text" id="y6" name="schoolname" style="margin-top:20px"  class="form-control" placeholder="Enter school name"-->
 									<select name="schoolname" id="y6" style="width:100%; margin-top:15px;" class="form-control" required>
-									  <option value="" selected>Choose School Here</option>
+									  <%if(schools.length!=0){%>
+									     <option value="" selected>Choose School Here</option>
+									  <%}else{%>
+									      <option value="" selected>No school found to add parents</option>
+									  <%}%>
 									  <%schools.forEach(function(school,index){%>
 									    <option value="<%=school.name%>"><%=school.name%></option>
 									  <%})%>

@@ -281,10 +281,11 @@ app.post('/deleteSchool',(req,res)=>{
 });
 //--------for parents
 app.post('/modifyParent',(req,res)=>{
-  var body=_.pick(req,body,['mobileNumber','parentName','address','emailAddress','children']);
-  if (school.modifyParent(body.mobileNumber,req.body.schoolname,body)){
+  var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname']);
+  console.log(body);
+  /*if (school.modifyParent(body.mobileNumber,req.body.schoolname,body)){
     res.redirect('/menupage');
-  }
+  }*/
 });
 app.post('/deleteParent',(req,res)=>{
   if (school.removeParent(req.body.mobilenumber,req.body.schoolname)){

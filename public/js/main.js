@@ -404,13 +404,16 @@ function newschool(){
 }
 
 function assigndata(number,name,id){
+   $("#isu").hide();
    $("#dform").trigger('reset');
+   //$("#dform").attr("action","/busNumberWithDevice");
    if($("#did option[value='"+id+"']").length==0){
       $("#did").append("<option value=\""+id+"\">"+id+"</option>");
 	  $("#did").val(id);
 	  $("#ullu").text("Sorry no other empty devices found for assigning");
 	  $("#am").removeAttr('disabled');
    }else{
+	 $("#el").hide();
      $("#did").val(id);
    }
    if(name!=null){
@@ -423,7 +426,10 @@ function assigndata(number,name,id){
 }
 
 function newassign(){
+   $("#isu").hide();
    $("#dform").trigger('reset');
+   //$("#dform").attr("action","/busNumberWithDevice");
+   $("#el").show();
    $("#devicestates").modal('show');
 }
 
@@ -469,5 +475,24 @@ function fdexpand(a){
   $("#y5"+a).remove();
   $("#y7"+a).remove();
   $("#i"+a).remove();
+}
+
+function checksame(){
+  let m=false;
+  busno.forEach((val,index)=>{
+   if(val==$("#bid").val().toString() && name[index]==$("#sid").val().toString()){
+       m=true;
+   }
+  });
+  
+  if(m==true){
+    $("#devicestates").submit(function(e){
+          e.preventDefault();
+		  $("#isu").text("The bus numbered "+$("#bid").val().toString()+" of school "+$("#sid").val().toString()+" has already been assigned by another device");
+		  $("#isu").show();
+       });
+  }else{
+      $("#devicestates").unbind('submit').submit();
+   }
 }
 
