@@ -112,7 +112,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 function mapit(){
 	let d=false;
 	name.forEach((val,index)=>{
-	  if(val==$(".schooln :selected").text() && busno[index]==Number($(".busn :selected").text())){
+	  if(val==$(".schooln :selected").text() && busno[index]==$(".busn :selected").text()){
 	      m=index;
 		  d=true;
 	  }
@@ -162,27 +162,28 @@ function mapagain(){
 }
 
 function mapfinal(g){
+	let contentString;
     myLatLng={
         lat: parseFloat(lats[g]), 
         lng: parseFloat(longs[g])
     };
-	/*let geocoder = new google.maps.Geocoder;
-	geocoder.geocode({'location': myLatLng}, function(results, status) {
-	  if (status === 'OK') {
-	     alert(results[0].formatted_address);
-	  }
-	});*/
-    maps.setCenter(myLatLng);
+	let geocoder = new google.maps.Geocoder;
+	maps.setCenter(myLatLng);
     marker.setPosition(myLatLng);
     trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(maps);
-	let contentString="School: "+$(".schooln :selected").text()+", Bus No.: "+$(".busn :selected").text();
-	let infowindow = new google.maps.InfoWindow({
-        content: contentString
-     });
-     google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
-     });
+	geocoder.geocode({'location': myLatLng}, function(results, status) {
+	  if (status === 'OK') {
+	     contentString=results[0].formatted_address;
+		 let infowindow = new google.maps.InfoWindow({
+           content: contentString
+         });
+       google.maps.event.addListener(marker, 'click', function() {
+         infowindow.open(map,marker);
+        });
+	  }
+	});
+	
 }
 
 function showmapnow(){
@@ -411,10 +412,11 @@ function assigndata(number,name,id){
       $("#did").append("<option value=\""+id+"\">"+id+"</option>");
 	  $("#did").val(id);
 	  $("#ullu").text("Sorry no other empty devices found for assigning");
-	  $("#am").removeAttr('disabled');
+	  $("#am").attr('disabled','disabled');
    }else{
 	 $("#el").hide();
      $("#did").val(id);
+	 $("#am").removeAttr('disabled');
    }
    if(name!=null){
      $("#sid").val(name);
@@ -426,11 +428,16 @@ function assigndata(number,name,id){
 }
 
 function newassign(){
+   $("#amm").hide();
    $("#isu").hide();
    $("#dform").trigger('reset');
    //$("#dform").attr("action","/busNumberWithDevice");
    $("#el").show();
    $("#devicestates").modal('show');
+}
+
+function unassign(){
+
 }
 
 function newparent(){

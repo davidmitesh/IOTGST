@@ -284,17 +284,20 @@
                             </div>
                             <div class="col-xl-12">
                                 <!-- MAP DATA-->
-                                <div class="map-data m-b-40" style="height:630px;" id="shadow">
+                                <div class="map-data m-b-40" style="height:750px;" id="shadow">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Map Data</h3>
                                     <div class="filters">
-                               
-										<div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                                        
+										<label>School Name</label>
+										<div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border" style="width:100%;">
                                             <select class="js-select2 schooln" name="property">
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+										
+										<label style="margin-top:30px;">Bus Number</label>
+                                        <div class="rs-select2--dark rs-select2--sm rs-select2--border" style="width:100%;">
                                             <select class="js-select2 au-select-dark busn" name="time">
                                             </select>
                                             <div class="dropDownSelect2"></div>
@@ -375,10 +378,10 @@
                                     <tbody id="tableOverflow" style="background-color:#FFFFFF; border-style:hidden;">
 									   
                                         <%if(schools.length==0){%>
-											     <tr><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
+											     <tr><td colspan="7" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
 									     <%}else{%>
 										 
-                                           <tr id="nops"><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
+                                           <tr id="nops"><td colspan="7" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
                                          									  
 										 <%schools.forEach(function(school,index){%>
 										<tr class="mn" id="nopi">
@@ -485,19 +488,20 @@
                                    <form role="form text-center" action='/busNumberWithDevice' method='POST' id="dform">
                                     <!--input type="number" id="did" name="deviceid" style="margin-top:20px;" class="form-control" placeholder="Enter deviceID here"/-->
                                     <select name="deviceid" id="did" style="width:100%; margin-top:15px;" class="form-control" required>
-									  <option id="el" value="" selected>Choose DeviceId</option>
+									  
 									  
 									  <%let m,n; for(let i=0;i<result.length;i++){%>
 									      <%if(result[i].busno.length==0 || result[i].busno=="0"){ m=true;%>
 									         <option value="<%=result[i].deviceId%>"><%=result[i].deviceId%></option>
-										  <%}else{ m=false%>
+										  <%}else{ m=false;%>
 										  <%}%>
 									  <%}%>
 									  
 									  <%if(m==false){%>
 									     <option selected value="" id="ullu">Sorry no empty devices found for assigning</option>
+									  <%}else{%>
+									     <option id="el" value="" selected>Choose DeviceId</option>
 									  <%}%>
-									 
 									 </select>
 									<!--input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/-->
 									
@@ -516,10 +520,14 @@
 									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number" required/>
                                     
 									<p id="isu" style="margin-top:30px; display:none;"></p>
+									<button type="button" onclick="unassign()" id="amm" style="margin-top:20px; float:left;" class="btn btn-outline-danger btn-lg">Unassign</button>
 									<button type="submit" onclick="checksame()" id="am" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
-                                    <%if(m==false || n==false){%>
+             
+									<%if(m==false || n==false){%>
 									  <script>
+									      if(document.getElementById("el")!=null){
 										    document.getElementById("el").style.display="none";
+											}
 											document.getElementById("am").disabled=true;
 									  </script>
 									<%}%>
