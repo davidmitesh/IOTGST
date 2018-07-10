@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "NODE_ENV=production node build/app.js",
-    "heroku-postbuild": "npm run build"
+	"start":"node app.js"
   },
   "author": "",
   "license": "ISC",
