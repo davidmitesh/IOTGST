@@ -69,8 +69,11 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	   m=0;
 	  $(".filters").css('display','block');
 	  busno.forEach((val,index)=>{
-	    $(".schooln").append("<option value=\"bus\""+index+"\">"+name[index]+"</option>");
 		$(".busn").append("<option value=\"device\""+index+"\">"+val+"</option>");
+	  });
+	  var name1=[...new Set(name)];
+	  name1.forEach((val,index)=>{
+	    $(".schooln").append("<option value=\"bus\""+index+"\">"+name1[index]+"</option>");
 	  });
 	}else{
 	   $(".filters").css('display','none');
