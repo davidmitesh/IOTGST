@@ -7,7 +7,7 @@ const express=                require('express'),
       user=                   require('./server/models/user.js'),
       _=require('lodash'),
       axios=require('axios');
-     const   enAddressUrl='http://admin:admin@35.200.173.47/api/positions';
+     const   enAddressUrl='http://admin:admin@35.200.251.179/api/positions';
 
 let {school}= require('./server/models/schools.js');
 let path = require("path");

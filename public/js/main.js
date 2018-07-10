@@ -140,7 +140,7 @@ function mapagain(){
     lats=new Array();
     longs=new Array();
 	$.ajax({
-       url:"http://admin:admin@35.200.173.47/api/positions",
+       url:"http://admin:admin@35.200.251.179/api/positions",
 	   crossDomain: true,
        type:"GET",
 	   xhrFields: {
