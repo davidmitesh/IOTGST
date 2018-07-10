@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,which;
 
 (function ($) {
     // USE STRICT
@@ -166,6 +166,12 @@ function mapfinal(g){
         lat: parseFloat(lats[g]), 
         lng: parseFloat(longs[g])
     };
+	/*let geocoder = new google.maps.Geocoder;
+	geocoder.geocode({'location': myLatLng}, function(results, status) {
+	  if (status === 'OK') {
+	     alert(results[0].formatted_address);
+	  }
+	});*/
     maps.setCenter(myLatLng);
     marker.setPosition(myLatLng);
     trafficLayer = new google.maps.TrafficLayer();
@@ -399,7 +405,14 @@ function newschool(){
 
 function assigndata(number,name,id){
    $("#dform").trigger('reset');
-   $("#did").val(id);
+   if($("#did option[value='"+id+"']").length==0){
+      $("#did").append("<option value=\""+id+"\">"+id+"</option>");
+	  $("#did").val(id);
+	  $("#ullu").text("Sorry no other empty devices found for assigning");
+	  $("#am").removeAttr('disabled');
+   }else{
+     $("#did").val(id);
+   }
    if(name!=null){
      $("#sid").val(name);
    }
@@ -424,11 +437,14 @@ function newparent(){
 
 function peditdata(parentname,school,children,number,email,address){
    $("#pform").trigger('reset');
-   $("#pform").attr("action","/addParent");
+   $("#pform").attr("action","/modifyParent");
    $("#headip").text("Edit Parent Below");
    JSON.parse(children).forEach((val,index)=>{
       let n=index+1;
 	  $("#y5"+n).val(val.childName);
+	  if(val.busNumber.length!=0){
+	      $("#y7"+n).val(val.busNumber);
+	  }
    });
    $("#y1").val(parentname);
    $("#y2").val(number);

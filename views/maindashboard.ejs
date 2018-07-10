@@ -365,7 +365,8 @@
                                         <tr>
                                             <td style="padding-left:30px;">Name</td>
                                             <td>School Name</td>
-                                            <td>Children</td>
+                                            <td>Child Name</td>
+											<td>Bus Number</td>
                                             <td>Contact Number</td>
                                             <td>Email</td>
                                             <td>Address</td>
@@ -387,6 +388,11 @@
 													<td><%=school.name%></td>
 													<%for (var j=0;j<school.parents[i].children.length;j++){%>
 													  <td><%=school.parents[i].children[j].childName%></td>
+													  <%if(school.parents[i].children[j].busNumber.length==0){%>
+													    <td>Unassigned</td>
+													  <%}else{%>
+													    <td><%=school.parents[i].children[j].busNumber%></td>
+													  <%}%>
 													<%}%>
 													<td><%=school.parents[i].mobileNumber%></td>
 													<td><%=school.parents[i].emailAddress%></td>
@@ -431,7 +437,7 @@
                                                              <td><%= doc.name %></td>
 														  <%}%>
 														  
-														  <%if(doc.busno=="0"){%>
+														  <%if(doc.busno.length==0 || doc.busno=="0"){%>
 														     <td>Unassigned</td>
 														  <%}else{%>
                                                             <td><%= doc.busno%></td>
@@ -479,10 +485,19 @@
                                    <form role="form text-center" action='/busNumberWithDevice' method='POST' id="dform">
                                     <!--input type="number" id="did" name="deviceid" style="margin-top:20px;" class="form-control" placeholder="Enter deviceID here"/-->
                                     <select name="deviceid" id="did" style="width:100%; margin-top:15px;" class="form-control" required>
-									  <option value="" selected>Choose DeviceId</option>
-									  <% result.forEach(function(doc){ %>
-									         <option value="<%=doc.deviceId%>"><%=doc.deviceId%></option>
-									  <%})%>
+									  <option id="el" value="" selected>Choose DeviceId</option>
+									  
+									  <%let m; for(let i=0;i<result.length;i++){%>
+									      <%if(result[i].busno.length==0 || result[i].busno=="0"){ m=true;%>
+									         <option value="<%=result[i].deviceId%>"><%=result[i].deviceId%></option>
+										  <%}else{ m=false%>
+										  <%}%>
+									  <%}%>
+									  
+									  <%if(m==false){%>
+									     <option selected value="" id="ullu">Sorry no empty devices found for assigning</option>
+									  <%}%>
+									 
 									 </select>
 									<!--input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/-->
 									
@@ -493,9 +508,15 @@
 									  <%})%>
 									</select>
                                     
-									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number"/>
-                                    <button type="submit" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
-                                </form>
+									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number" required/>
+                                    <button type="submit" id="am" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
+                                    <%if(m==false){%>
+									  <script>
+										    document.getElementById("el").style.display="none";
+											document.getElementById("am").disabled=true;
+									  </script>
+									<%}%>
+								</form>
 
                                 </div>
 								<div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
