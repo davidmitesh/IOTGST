@@ -109,6 +109,33 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 })(jQuery);
 
 
+function downloadreport(){
+    let data="http://admin:admin@35.200.251.179/api/reports/summary?";
+	ids.forEach((val)=>{
+	    data+="deviceId="+val.toString()+"&";
+	});
+	data+="from="+$("#date").val().split("-").reverse().join("-")+"&";
+	data+="to="+$("#date1").val().split("-").reverse().join("-");
+	
+  $.ajax({
+       url:data,
+	   crossDomain: true,
+       type:"GET",
+	   xhrFields: {
+        withCredentials: true
+       },
+       success:(res)=>{
+		    $.post("/csv",{data:JSON.stringify(res)}).then((response)=>{
+				window.location.href="/data/report.csv";
+			});
+	   },
+	   error:(err)=>{
+		  $("#addy").css("height","400px");
+		  $("#erru").css("display","block");
+	   }
+	});
+}
+
 function mapit(){
 	let d=false;
 	name.forEach((val,index)=>{

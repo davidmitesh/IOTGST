@@ -1,3 +1,4 @@
+let filePath;
 const express=                require('express'),
       passport=               require('passport'),
       bodyParser=             require('body-parser'),
@@ -12,6 +13,8 @@ const express=                require('express'),
 let {school}= require('./server/models/schools.js');
 let path = require("path");
 let cors=require('cors');
+let jsonexport = require('jsonexport');
+let fs=require('fs');
 let app=express();
 app.use(function (req, res, next){
   if (req.headers['x-forwarded-proto'] === 'https') {
@@ -172,6 +175,16 @@ app.post('/schoollogin',(req,res)=>{
     res.render('schooldashboard.ejs');
   }).catch((e)=>{
     res.status(400).send();
+  });
+});
+
+
+app.post("/csv",(req,res)=>{
+   filePath=__dirname+"/public/data/report.csv";
+   jsonexport(JSON.parse(req.body["data"]),function(err, csv){
+    fs.writeFile(filePath,csv, function (err) {
+       res.send(JSON.stringify({status:"OK"}));
+    });
   });
 });
 

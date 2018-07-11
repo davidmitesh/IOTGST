@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start":"node app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,8 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
+    "jsonexport": "^2.2.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "mongoose": "^5.2.1",
