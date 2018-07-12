@@ -194,7 +194,6 @@ app.get('/addparentpage',(req,res)=>{
 });//
 app.post('/addParent',(req,res)=>{
   var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
-  //console.log(body);
   school.findOne({name:body.schoolname},(err,doc)=>{
     doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:{childName:body.childname,busNumber:body.busnumber}});
     doc.childrenNumber+=1;
@@ -294,11 +293,26 @@ app.post('/deleteSchool',(req,res)=>{
 });
 //--------for parents
 app.post('/modifyParent',(req,res)=>{
+  
   var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname']);
-  console.log(body);
-  /*if (school.modifyParent(body.mobileNumber,req.body.schoolname,body)){
+  //console.log(body);
+  /*if (school.modifyParent(body.mobileNumber,body.schoolname,body)){
     res.redirect('/menupage');
   }*/
+  let body1={},num;
+  body1["mobileNumber"]=body["mobilenumber"];
+  body1["parentName"]=body["parentname"];
+  body1["address"]=body["address"];
+  body1["emailAddress"]=body["email"];
+  body1["children"]={};
+  body1["children"]["childName"]=body["childname"];
+  body1["children"]["busNumber"]=body["busnumber"];
+  if(typeof req.body["onum"]==string){
+      num=Number(req.body["onum"]);
+  }else{
+      num=Number(req.body["onum"][0]);
+  }
+  school.modifyParent(num,body.schoolname,body1);
 });
 app.post('/deleteParent',(req,res)=>{
   if (school.removeParent(req.body.mobilenumber,req.body.schoolname)){

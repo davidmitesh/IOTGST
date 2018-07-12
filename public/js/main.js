@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,which;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg;
 
 (function ($) {
     // USE STRICT
@@ -186,6 +186,8 @@ function mapagain(){
 		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
 	   }
 	});
+	
+	//$('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
 }
 
 function mapfinal(g){
@@ -482,11 +484,27 @@ function peditdata(parentname,school,children,number,email,address){
    $("#pform").trigger('reset');
    $("#pform").attr("action","/modifyParent");
    $("#headip").text("Edit Parent Below");
+   
    JSON.parse(children).forEach((val,index)=>{
-      let n=index+1;
-	  $("#y5"+n).val(val.childName);
-	  if(val.busNumber.length!=0){
-	      $("#y7"+n).val(val.busNumber);
+	  fg=val.childName.split(",");
+	  lg=val.busNumber.split(",");
+	  
+	   $("#y51").val(fg[0]);
+	   $("#y71").val(lg[0]);
+	  
+	  if(fg.length!=1){
+	  for(let i=1;i<fg.length;i++){
+	    let j=i+1;
+		if(!$("#y5"+j).length){
+	      $("#tt").append("<input type=\"text\" id=\"y5"+j+"\" name=\"childname\" style=\"margin-top:20px; width:35%; float:left; margin-right:10px;\"  class=\"form-control\" placeholder=\"Enter childname\"><input type=\"text\" id=\"y7"+j+"\" name=\"busnumber\" style=\"margin-top:20px; width:58%\" class=\"form-control\" placeholder=\"Enter bus number (Keep empty if not fixed)\"><i class=\"fas fa-minus\" style=\"float:right; margin-top:-30px;\" id=\"i"+j+"\" onclick=\"fdexpand("+j+")\" style=\"width:10%;\"></i>");
+		}
+		$("#y5"+j).val(fg[i]);
+	    $("#y7"+j).val(lg[i]);
+	  }
+	  }else{
+		if($("#tt input").length>1){
+	     $("#tt>input:gt(1)").remove();
+		}		 
 	  }
    });
    $("#y1").val(parentname);
@@ -494,6 +512,7 @@ function peditdata(parentname,school,children,number,email,address){
    $("#y3").val(address);
    $("#y4").val(email);
    $("#y6").val(school);
+   //$("#pform").append("<input type=\"hidden\"  name=\"onum\" value=\""+number+"\">");
    $("#addp").text("Edit");
    $("#editParent").modal('show');
 }
@@ -505,7 +524,7 @@ function pdeletedata(number,name){
 
 function fexpand(){
 	  tt++;
-      $("#tt").append("<input type=\"text\" id=\"y5"+tt+"\" name=\"childname\" style=\"margin-top:20px; width:35%; float:left; margin-right:10px;\"  class=\"form-control\" placeholder=\"Enter childname\"><input type=\"text\" id=\"y7"+tt+"\" name=\"busnumber\" style=\"margin-top:20px; width:58%\"  style=\"margin-top:10px;\" class=\"form-control\" placeholder=\"Enter bus number (Keep empty if not fixed)\"><i class=\"fas fa-minus\" style=\"float:right; margin-top:-30px;\" id=\"i"+tt+"\" onclick=\"fdexpand("+tt+")\" style=\"width:10%;\"></i>");
+      $("#tt").append("<input type=\"text\" id=\"y5"+tt+"\" name=\"childname\" style=\"margin-top:20px; width:35%; float:left; margin-right:10px;\"  class=\"form-control\" placeholder=\"Enter childname\"><input type=\"text\" id=\"y7"+tt+"\" name=\"busnumber\" style=\"margin-top:20px; width:58%\" class=\"form-control\" placeholder=\"Enter bus number (Keep empty if not fixed)\"><i class=\"fas fa-minus\" style=\"float:right; margin-top:-30px;\" id=\"i"+tt+"\" onclick=\"fdexpand("+tt+")\" style=\"width:10%;\"></i>");
 }
 
 function fdexpand(a){
@@ -531,5 +550,56 @@ function checksame(){
   }else{
       $("#devicestates").unbind('submit').submit();
    }
+}
+
+
+function show(n){
+  switch(n){
+    case 0:
+	 $(".user-data").show(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 break;
+	case 1:
+	  break;
+	case 2:
+	  break;
+	case 3:
+	  break;
+	case 4:
+	  break;
+	case 5:
+	  break;
+	case 6:
+	   break;
+	case 7:
+	   break;
+  }
+}
+
+function addn(){
+  $.ajax({
+       url:"http://admin:admin@35.200.251.179/api/devices",
+	   crossDomain: true,
+       type:"POST",
+	   xhrFields: {
+        withCredentials: true
+       },
+       success:(res)=>{
+		    JSON.parse(JSON.stringify(res)).forEach((val)=>{
+            let v=JSON.parse(JSON.stringify(val));
+            ids.push(v.deviceId);
+            lats.push(v.latitude);
+            longs.push(v.longitude);
+        });
+        mapfinal(ids.indexOf(adeviceId[m]));
+	   },
+	   error:(err)=>{
+		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
+	   }
+	});
 }
 
