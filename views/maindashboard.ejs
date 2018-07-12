@@ -383,7 +383,9 @@
                                             <td>Address</td>
 											<td>Email</td>
 											<td>Phone Number</td>
-
+                                            <td>Number of buses</td>
+											<td>Number of parents</td>
+											<td>Number of children</td>
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow">
@@ -398,6 +400,9 @@
                                             <td><%=school.address%></td>
 											<td style="width:20px;"><%=school.emailAddress%></td>
 											<td><%=school.contactNumber%></td>
+											<td><%=school.buses.length%></td>
+											<td><%=school.parents.length%></td>
+											<td><%=school.childrenNumber%></td>
 											<td><i class="far fa-edit" onclick="editdata('<%=school.name%>','<%=school.username%>','<%=school.address%>','<%=school.emailAddress%>','<%=school.contactNumber%>')"></i></td>
 											<td><i class="fa fa-trash" onclick="deletedata('<%=school.name%>')"></i></td>
                                         </tr>
@@ -532,8 +537,8 @@
 							<table class="table " style="border-style:hidden;">
                                    <thead id="taHead" style="background-color:#FFFFFF;">
                                           <tr>
-                                               <td style="padding-left:50px;">Child Name</td>
-                                               <td>Parent Name</td>
+                                               <td style="padding-left:50px;">Bus Number</td>
+                                               <td>School Name</td>
                                           </tr>
                                     </thead>
                                           <tbody >
@@ -582,9 +587,7 @@
 										 
                                              <%schools.forEach(function(school,index){%>
 											     
-												 <%if (school.parents.length==0){%>
-												     <tr><td colspan="3" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any children data found</td></tr>
-												 <% break;}else{%>
+												 
 											     <%for(var i=0;i<school.parents.length;i++){%>
 		                                            
 													
@@ -601,7 +604,7 @@
 													  <%}%>
 											      
 												 <%}%>
-											   <%}%>
+											   
 										<%})%>
 										<%}%> 
 											 
