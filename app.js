@@ -311,6 +311,7 @@ app.post('/modifyParent',(req,res)=>{
 
   var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname']);
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
+<<<<<<< HEAD
   school.findOneAndUpdate({service:'GST'},{$pull:{parents:{parentName:body.parentname}}},(err,doc)=>{
     if (_.isArray(body.childname))
     {for (i=0;i<body.childname.length;i++){
@@ -327,6 +328,25 @@ app.post('/modifyParent',(req,res)=>{
     res.send("check console.");
   });
 })
+=======
+  
+  
+});
+
+
+app.post('/unassign',(req,res)=>{
+   var body=_.pick(req.body,['deviceId','schoolName','busNumber']);
+   if(school.unassignbus(body.busNumber,body.schoolName,body)){
+      res.redirect('/menupage');
+   }
+});
+
+app.post('/deleteParent',(req,res)=>{
+  if (school.removeParent(req.body.mobilenumber,req.body.schoolname)){
+    res.redirect('/menupage');
+  }
+
+>>>>>>> dd2e22a259b8f268954e43523c6066c5f19b3f28
 });
 
 //----------------------------

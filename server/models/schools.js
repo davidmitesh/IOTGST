@@ -169,6 +169,39 @@ schoolSchema.statics.removeParent=function(mobileNumber,schoolName){
 };
 
 
+schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
+  
+    /*this.findOneAndUpdate({name:schoolName},{$push:{parents:details}},(err,result)=>{
+      return 1;
+    });*/
+	this.findOne({name:schoolName},(err,result)=>{
+	  let ind;
+	  let m=JSON.parse(JSON.stringify(result.parents));
+	  for(let i=0;i<m.length;i++){
+	     if(m[i].mobileNumber.toString()==mobileNumber.toString()){
+		   ind=i;
+		   break;
+		 }
+	  }
+	  console.log(m[ind]['mobileNumber']);
+	  /*this.findOne({"parents.mobileNumber":Number(m[ind]['mobileNumber'])},(err,result)=>{
+	     console.log(result);
+	  });*/
+	  console.log(details);
+	  /*result.parents.findOne({mobileNumber:mobileNumber},(err,result)=>{
+	    console.log(result);
+	  });*/
+	});
+ 
+};
+
+
+schoolSchema.statics.unassignbus=function(busNumber,schoolName,details){
+   return this.findOneAndUpdate({name:schoolName},{$pull:{buses:{busNumber:busNumber}}},(err,result)=>{
+       return 1;
+   });
+}
+
 var school=mongoose.model('school',schoolSchema);
 var child=mongoose.model('child',childSchema);
 var parent=mongoose.model('parent',parentSchema);
