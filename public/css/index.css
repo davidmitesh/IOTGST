@@ -152,3 +152,11 @@ form {
         max-width:80%;
     }
 }
+
+.user-data,.map-data,.school-data,.parent-data,.device-data,.report-data,.child-data,.bus-data{
+   margin-top:70px;
+}
+
+.report-data{
+   margin-left:20px;
+}

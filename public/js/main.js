@@ -599,8 +599,15 @@ function checksame(){
 
 
 function show(n){
+  for(let i=0;i<$(".has-sub").length;i++){
+     if(i==n){
+	    $("#bar"+i).addClass('active');
+	 }else{
+	    $("#bar"+i).removeClass('active');
+	 }
+  }
   switch(n){
-    case 0:
+    case 0:  //home
 	 $(".statistic").show();
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
@@ -608,48 +615,114 @@ function show(n){
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();
 	 $(".js-right-sidebar").removeClass("show-sidebar");
 	 break;
-	case 1:
-	 
+	case 1: //school
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").show();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();
+	  $(".js-right-sidebar").removeClass("show-sidebar");
 	  break;
-	case 2:
-	  $(".user-data").hide(); //user data is mean data
+	case 2: //buses
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").show();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	  break;
+	case 3: //parents
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
 	 $(".parent-data").show();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
 	  break;
-	case 3:
-	   $(".user-data").hide(); //user data is mean data
-	 $(".map-data").show();
+	case 4: //chidren
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
 	 $(".school-data").hide();
-	 $(".parent-data").show();
+	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
+	 $(".child-data").show();
+	 $(".bus-data").hide();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
 	  break;
-	case 4:
-	  $(".user-data").hide(); //user data is mean data
+	case 5: //reports
+     $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").show();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();	  
+	 $(".js-right-sidebar").removeClass("show-sidebar");
 	  break;
-	case 5:
-	  $(".user-data").hide(); //user data is mean data
+	case 6: //devices
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").show();
 	 $(".report-data").hide();
-	  break;
-	case 6:
-	   
-	   break;
-	case 7:
-	   break;
+	 $(".child-data").hide();
+	 $(".bus-data").hide();  
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	 break;
+	case 7: //map
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").show();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();  
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	 break;
+	case 8://feedback
+	 
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	 break;
+	
+	case 9: //billings
+	
+	$(".js-right-sidebar").removeClass("show-sidebar");
+	break;
+	
+    case 10://settings
+    
+    $(".js-right-sidebar").removeClass("show-sidebar");
+	break;
+	
+	case 11://signout
+	
+	$(".js-right-sidebar").removeClass("show-sidebar");
+	break;
+	
   }
 }
 
@@ -690,4 +763,5 @@ function sadd(){
    $("#yahoo").hide();
    $("#addit").modal("show");
 }
+
 

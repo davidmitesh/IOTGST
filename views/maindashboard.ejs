@@ -73,76 +73,83 @@
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
                         
-						<li class="active has-sub">
+						<li class="has-sub" id="bar0">
                             <a class="js-arrow">
-                                <i class="fas fa-building"></i><span id="bar0" onclick="show(0)" role="button">&nbsp;Home
+                                <i class="fas fa-building"></i><span onclick="show(0)" role="button">&nbsp;Home
                                 </span></a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar1">
                             <a class="js-arrow">
-                                <i class="fas fa-institution"></i><span id="bar1" onclick="show(1)" role="button">Schools
+                                <i class="fas fa-institution"></i><span onclick="show(1)" role="button">Schools
                                 </span></a>
                         </li>
 
-                        <li class="has-sub">
+                        <li class="has-sub" id="bar2">
                             <a class="js-arrow">
-                                <i class="fas fa-bus"></i><span id="bar2" onclick="show(2)" role="button">Buses</span>
+                                <i class="fas fa-bus"></i><span onclick="show(2)" role="button">Buses</span>
                             </a>
                         </li>
                         
-						<li class="has-sub">
+						<li class="has-sub" id="bar3">
                             <a class="js-arrow">
-                                <i class="fa fa-user"></i><span id="bar3" onclick="show(3)" role="button">Parents
+                                <i class="fa fa-user"></i><span onclick="show(3)" role="button">Parents
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar4">
                             <a class="js-arrow">
-                                <i class="fa fa-child"></i><span id="bar4" onclick="show(4)" role="button">&nbsp;Children
+                                <i class="fa fa-child"></i><span onclick="show(4)" role="button">&nbsp;Children
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar5">
                             <a class="js-arrow">
-                                <i class="fa fa-file"></i><span id="bar5" onclick="show(5)" role="button">&nbsp;Reports
+                                <i class="fa fa-file"></i><span onclick="show(5)" role="button">&nbsp;Reports
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar6">
                             <a class="js-arrow">
-                                <i class="fa fa-mobile"></i><span id="bar6" onclick="show(6)" role="button">&nbsp;Devices
+                                <i class="fa fa-mobile"></i><span onclick="show(6)" role="button">&nbsp;Devices
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar7">
                             <a class="js-arrow">
-                                <i class="fa fa-comments"></i><span id="bar7" onclick="show(7)" role="button">Feedbacks
+                                <i class="fa fa-map-marker"></i><span onclick="show(7)" role="button">Live Tracking
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar8">
                             <a class="js-arrow">
-                                <i class="fas fa-rupee-sign"></i><span role="button">&nbsp;&nbsp;Billings
+                                <i class="fa fa-comments"></i><span onclick="show(8)" role="button">Feedbacks
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar9">
                             <a class="js-arrow">
-                                <i class="fas fa-cog"></i><span role="button">&nbsp;Settings
+                                <i class="fas fa-rupee-sign"></i><span onclick="show(9)" role="button">&nbsp;&nbsp;Billings
                              </span>
                             </a>
                         </li>
 						
-						<li class="has-sub">
+						<li class="has-sub" id="bar10">
                             <a class="js-arrow">
-                                <i class="fa fa-fighter-jet"></i><span role="button">Sign Out
+                                <i class="fas fa-cog"></i><span onclick="show(10)" role="button">&nbsp;Settings
+                             </span>
+                            </a>
+                        </li>
+						
+						<li class="has-sub" id="bar11">
+                            <a class="js-arrow">
+                                <i class="fa fa-fighter-jet"></i><span onclick="show(11)" role="button">Sign Out
                              </span>
                             </a>
                         </li>
@@ -188,7 +195,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6 col-lg-3">
-                                <div id="card-1" class="statistic__item card-1" onclick="show(0)">
+                                <div id="card-1" class="statistic__item card-1" onclick="show(1)">
                                     <h2 class="number" style="color:white;"><%=schoolno %></h2>
                                     <span class="desc" style="color:white;">Schools</span>
                                     <div class="icon">
@@ -198,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item card-1" id="card-2" onclick="show(1)">
+                                <div class="statistic__item card-1" id="card-2" onclick="show(2)">
                                     <h2 class="number" style="color:white;"><%=buses %></h2>
                                     <span class="desc" style="color:white;">Buses</span>
                                     <div class="icon">
@@ -207,7 +214,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item card-1" id="card-3" onclick="show(2)">
+                                <div class="statistic__item card-1" id="card-3" onclick="show(3)">
                                     <h2 class="number" style="color:white;"><%=parents %></h2>
                                     <span class="desc" style="color:white;">Parents</span>
                                     <div class="icon">
@@ -216,7 +223,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3">
-                                <div class="statistic__item card-1" id="card-4" onclick="show(3)">
+                                <div class="statistic__item card-1" id="card-4" onclick="show(4)">
                                     <h2 class="number" style="color:white;"><%=children%></h2>
                                     <span class="desc" style="color:white;">Children</span>
                                     <div class="icon">
@@ -229,7 +236,7 @@
 						
 						<div class="row">
 						   <div class="col-md-6 col-lg-3">
-                                <div id="card-5" class="statistic__item card-5" onclick="show(4)">
+                                <div id="card-5" class="statistic__item card-5" onclick="show(5)">
                                     <span class="desc" style="color:white; margin-top:20px;">Reports</span>
                                    
                                 </div>
@@ -237,21 +244,21 @@
 						
 						
 						   <div class="col-md-6 col-lg-3">
-                                <div id="card-6" class="statistic__item card-5" onclick="show(5)">
+                                <div id="card-6" class="statistic__item card-5" onclick="show(6)">
                                     <span class="desc" style="color:white; margin-top:20px;">Devices</span>
                                    
                                 </div>
                             </div>
 							
 							<div class="col-md-6 col-lg-3">
-                                <div id="card-7" class="statistic__item card-5" onclick="show(6)">
+                                <div id="card-7" class="statistic__item card-5" onclick="show(7)">
                                     <span class="desc" style="color:white; margin-top:20px;">Feedback</span>
                                    
                                 </div>
                             </div>
 							
 							<div class="col-md-6 col-lg-3">
-                                <div id="card-8" class="statistic__item card-5" onclick="show(7)">
+                                <div id="card-8" class="statistic__item card-5" onclick="show(8)">
                                     <span class="desc" style="color:white; margin-top:20px;">Billing</span>
                                    
                                 </div>
@@ -482,9 +489,9 @@
 							<table class="table " style="border-style:hidden;">
                                    <thead id="taHead" style="background-color:#FFFFFF;">
                                           <tr>
-                                              <td style="padding-left:30px;">DeviceId</th>
-                                               <td>Name of School</th>
-                                               <td>Bus Number</th>
+                                              <td style="padding-left:30px;">DeviceId</td>
+                                               <td>Name of School</td>
+                                               <td>Bus Number</td>
                                           </tr>
                                     </thead>
                                           <tbody >
@@ -515,6 +522,92 @@
                     </div>
 					
 					
+					<div class="col-xl-12">
+							   <div class="bus-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Buses Data
+										<span style="float:right" ><button class="btn btn-primary pull-right" onclick="busadd()" id="bus_add" style="margin-right:30px;">Add New Bus</button></span>
+							    </h3>
+						    <div class="table-responsive table-data" style="height:525px;">
+							<table class="table " style="border-style:hidden;">
+                                   <thead id="taHead" style="background-color:#FFFFFF;">
+                                          <tr>
+                                               <td style="padding-left:50px;">Child Name</td>
+                                               <td>Parent Name</td>
+                                          </tr>
+                                    </thead>
+                                          <tbody >
+										   <% result.forEach(function(doc){ %>
+                                                          <tr style="background-color:#FFFFFF; border-style:hidden;" class="mn">
+														  
+														  <%if(doc.busno.length!=0 || doc.busno!="0"){%>
+                                                            <td><%= doc.busno%></td>
+                                                          <%}%>
+														  
+														  <td><%=doc.name%></td>
+														  
+														  <td><i class="fa fa-edit" onclick="editchild('<%=doc.busno%>','<%=doc.name%>')"></i></td>
+                                                          <td><i class="fa fa-trash" onclick="deletechild('<%=doc.busno%>','<%=doc.name%>')"></i></td>
+														</tr>
+                                             <% }) %>
+										  
+                                             
+                                          </tbody>
+                                 </table>
+								</div>
+							
+                        </div>
+                    </div>
+					
+					
+					<div class="col-xl-12">
+							   <div class="child-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Children Data
+										<span style="float:right" ><button class="btn btn-primary pull-right" onclick="childadd()" id="chil_add" style="margin-right:30px;">Add New Child</button></span>
+							    </h3>
+						    <div class="table-responsive table-data" style="height:525px;">
+							<table class="table " style="border-style:hidden;">
+                                   <thead id="taHead" style="background-color:#FFFFFF;">
+                                          <tr>
+                                               <td style="padding-left:50px;">Child Name</td>
+											   <td>Parent Name</td>
+											   <td>School Name</td>
+                                          </tr>
+                                    </thead>
+                                          <tbody>
+                                             <%schools.forEach(function(school,index){%>
+											  
+											     <%for(var i=0;i<school.parents.length;i++){%>
+		
+												    
+													<%for (var j=0;j<school.parents[i].children.length;j++){%>
+													    
+														<%for(var k=0;k<school.parents[i].children[j].childName.split(",").length;k++){%>
+														  <tr class="mn" id="nopi">
+														  <td><%=school.parents[i].children[j].childName.split(",")[k]%></td>
+														  <td><%=school.parents[j].parentName%></td>
+													      <td><%=school.name%></td>
+													      <td><i class="far fa-edit" onclick="ceditdata()"></i></td>
+											              <td><i class="fa fa-trash" onclick="cdeletedata()"></i></td>
+														  </tr>
+														<%}%>
+														
+													<%}%>										
+												
+											     
+											   <%}%>
+										<%})%>
+											 
+											 
+                                          </tbody>
+                                 </table>
+								</div>
+							
+                        </div>
+                    </div>
+					
+
 					
   
 					
