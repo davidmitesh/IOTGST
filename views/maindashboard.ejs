@@ -506,7 +506,7 @@
                                                              <td><%= doc.name %></td>
 														  <%}%>
 														  
-														  <%if(doc.busno.length==0 || doc.busno=="0"){%>
+														  <%if(doc.busno.length==0 || doc.busno=="0"||doc.busno!=0){%>
 														     <td>Unassigned</td>
 														  <%}else{%>
                                                             <td><%= doc.busno%></td>
@@ -540,14 +540,14 @@
 										   <% result.forEach(function(doc){ %>
                                                           <tr style="background-color:#FFFFFF; border-style:hidden;" class="mn">
 														  
-														  <%if(doc.busno.length!=0 || doc.busno!="0"){%>
+														  <%if(doc.busno.length!=0 || doc.busno!="0"||doc.busno!=0){%>
                                                             <td><%= doc.busno%></td>
-                                                          <%}%>
-														  
-														  <td><%=doc.name%></td>
+                                                            <td><%=doc.name%></td>
 														  
 														  <td><i class="fa fa-edit" onclick="editchild('<%=doc.busno%>','<%=doc.name%>')"></i></td>
                                                           <td><i class="fa fa-trash" onclick="deletechild('<%=doc.busno%>','<%=doc.name%>')"></i></td>
+														  <%}%>
+														 
 														</tr>
                                              <% }) %>
 										  
@@ -576,13 +576,19 @@
                                           </tr>
                                     </thead>
                                           <tbody>
+										   <%if(schools.length==0){%>
+											     <tr><td colspan="3" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any children data found</td></tr>
+									     <%}else{%>
+										 
                                              <%schools.forEach(function(school,index){%>
-											  
+											     
+												 <%if (school.parents.length==0){%>
+												     <tr><td colspan="3" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any children data found</td></tr>
+												 <% break;}else{%>
 											     <%for(var i=0;i<school.parents.length;i++){%>
-		
-												    
+		                                            
+													
 													<%for (var j=0;j<school.parents[i].children.length;j++){%>
-													    
 														<%for(var k=0;k<school.parents[i].children[j].childName.split(",").length;k++){%>
 														  <tr class="mn" id="nopi">
 														  <td><%=school.parents[i].children[j].childName.split(",")[k]%></td>
@@ -592,13 +598,12 @@
 											              <td><i class="fa fa-trash" onclick="cdeletedata()"></i></td>
 														  </tr>
 														<%}%>
-														
-													<%}%>										
-												
-											     
+													  <%}%>
+											      
+												 <%}%>
 											   <%}%>
 										<%})%>
-											 
+										<%}%> 
 											 
                                           </tbody>
                                  </table>
