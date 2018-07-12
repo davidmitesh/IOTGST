@@ -10,7 +10,7 @@ const express=                require('express'),
       axios=require('axios');
      const   enAddressUrl='http://admin:admin@35.200.251.179/api/positions';
 
-let {school}= require('./server/models/schools.js');
+let {school,child,parent}= require('./server/models/schools.js');
 let path = require("path");
 let cors=require('cors');
 let jsonexport = require('jsonexport');
@@ -293,32 +293,22 @@ app.post('/deleteSchool',(req,res)=>{
 });
 //--------for parents
 app.post('/modifyParent',(req,res)=>{
-  
+
   var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname']);
-  //console.log(body);
-  /*if (school.modifyParent(body.mobileNumber,body.schoolname,body)){
-    res.redirect('/menupage');
-  }*/
-  let body1={},num;
-  body1["mobileNumber"]=body["mobilenumber"];
-  body1["parentName"]=body["parentname"];
-  body1["address"]=body["address"];
-  body1["emailAddress"]=body["email"];
-  body1["children"]={};
-  body1["children"]["childName"]=body["childname"];
-  body1["children"]["busNumber"]=body["busnumber"];
-  if(typeof req.body["onum"]==string){
-      num=Number(req.body["onum"]);
-  }else{
-      num=Number(req.body["onum"][0]);
-  }
-  school.modifyParent(num,body.schoolname,body1);
+  var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
+  school.findOneAndUpdate({service:'GST'},{$pull:{parents:{parentName:body.parentname}}},(err,doc)=>{
+    for (i=0;i<body.childname.length;i++){
+      var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
+      newparent.children.push(childpush);
+    }
+    return 1;
+  }).then(()=>{
+      school.findOneAndUpdate({service:'GST'},{$push:{parents:newparent}},(err,doc)=>{
+    res.send("check console.");
+  });
+})
 });
-app.post('/deleteParent',(req,res)=>{
-  if (school.removeParent(req.body.mobilenumber,req.body.schoolname)){
-    res.redirect('/menupage');
-  }
-});
+
 //----------------------------
 //Map Routes
 //---------------------
