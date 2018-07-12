@@ -553,7 +553,7 @@ function peditdata(parentname,school,children,number,email,address){
    $("#y3").val(address);
    $("#y4").val(email);
    $("#y6").val(school);
-   //$("#pform").append("<input type=\"hidden\"  name=\"onum\" value=\""+number+"\">");
+   $("#pform").append("<input type=\"hidden\"  name=\"oldnumber\" value=\""+number+"\">");
    $("#addp").text("Edit");
    $("#editParent").modal('show');
 }
