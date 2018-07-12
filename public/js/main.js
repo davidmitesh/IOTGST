@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg,ids1,h;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg,ids1,h,infowindow;
 
 (function ($) {
     // USE STRICT
@@ -96,14 +96,12 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
         withCredentials: true
        },
        success:(res)=>{
-		   console.log(res);
 		    JSON.parse(JSON.stringify(res)).forEach((val)=>{
             let v=JSON.parse(JSON.stringify(val));
             ids1.push(v.deviceId);
         });
 
 		$("#cid").empty();
-	    console.log(ids1);
 		ids1.forEach((val)=>{
 		   $("#cid").append("<option value=\""+val+"\">"+val+"</option>");
 	    });
@@ -221,6 +219,7 @@ function mapagain(){
 
 function mapfinal(g){
 	let contentString;
+	infowindow = new google.maps.InfoWindow();
     myLatLng={
         lat: parseFloat(lats[g]),
         lng: parseFloat(longs[g])
@@ -233,10 +232,8 @@ function mapfinal(g){
 	geocoder.geocode({'location': myLatLng}, function(results, status) {
 	  if (status === 'OK') {
 	     contentString=results[0].formatted_address;
-		 let infowindow = new google.maps.InfoWindow({
-           content: contentString
-         });
        google.maps.event.addListener(marker, 'click', function() {
+		 infowindow.setContent(contentString);
          infowindow.open(map,marker);
         });
 	  }
@@ -554,6 +551,7 @@ function peditdata(parentname,school,children,number,email,address){
    $("#y4").val(email);
    $("#y6").val(school);
    $("#pform").append("<input type=\"hidden\"  name=\"oldnumber\" value=\""+number+"\">");
+   $("#pform").append("<input type=\"hidden\" name=\"oldnum\" value=\""+fg.length+"\>");
    $("#addp").text("Edit");
    $("#editParent").modal('show');
 }
@@ -602,6 +600,7 @@ function checksame(){
 function show(n){
   switch(n){
     case 0:
+	
 	 $(".user-data").show(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
@@ -610,16 +609,42 @@ function show(n){
 	 $(".report-data").hide();
 	 break;
 	case 1:
+	 
 	  break;
 	case 2:
+	  $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").show();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
 	  break;
 	case 3:
+	   $(".user-data").hide(); //user data is mean data
+	 $(".map-data").show();
+	 $(".school-data").hide();
+	 $(".parent-data").show();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
 	  break;
 	case 4:
+	  $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").show();
 	  break;
 	case 5:
+	  $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").show();
+	 $(".report-data").hide();
 	  break;
 	case 6:
+	   
 	   break;
 	case 7:
 	   break;
