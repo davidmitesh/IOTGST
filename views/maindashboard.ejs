@@ -587,18 +587,22 @@
 											     <tr><td colspan="3" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any children data found</td></tr>
 									     <%}else{%>
 										 
-                                             <%schools.forEach(function(school,index){%>
+                                             
 											     
+												 <%for(var x=0;x<schools.length;x++){%>
 												 
-											     <%for(var i=0;i<school.parents.length;i++){%>
+												 <%if(schools[x].parents.length==0){%>
+												    <tr><td colspan="3" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any children data found</td></tr>
+												 <%break;}else{%>
+											     <%for(var i=0;i<schools[x].parents.length;i++){%>
 		                                            
 													
-													<%for (var j=0;j<school.parents[i].children.length;j++){%>
-														<%for(var k=0;k<school.parents[i].children[j].childName.split(",").length;k++){%>
+													<%for (var j=0;j<schools[x].parents[i].children.length;j++){%>
+														<%for(var k=0;k<schools[x].parents[i].children[j].childName.split(",").length;k++){%>
 														  <tr class="mn" id="nopi">
-														  <td><%=school.parents[i].children[j].childName.split(",")[k]%></td>
-														  <td><%=school.parents[j].parentName%></td>
-													      <td><%=school.name%></td>
+														  <td><%=schools[x].parents[i].children[j].childName.split(",")[k]%></td>
+														  <td><%=schools[x].parents[j].parentName%></td>
+													      <td><%=schools[x].name%></td>
 													      <td><i class="far fa-edit" onclick="ceditdata()"></i></td>
 											              <td><i class="fa fa-trash" onclick="cdeletedata()"></i></td>
 														  </tr>
@@ -606,8 +610,9 @@
 													  <%}%>
 											      
 												 <%}%>
+												<%}%>
 											   
-										<%})%>
+										<%}%>
 										<%}%> 
 											 
                                           </tbody>
