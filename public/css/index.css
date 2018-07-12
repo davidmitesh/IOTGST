@@ -160,3 +160,8 @@ form {
 .report-data{
    margin-left:20px;
 }
+
+body{
+  font-family:"roboto";
+  font-size:15px;
+}
