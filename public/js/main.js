@@ -618,7 +618,12 @@ function show(n){
 	 $(".report-data").hide();
 	  break;
 	case 3:
-	  
+	   $(".user-data").hide(); //user data is mean data
+	 $(".map-data").show();
+	 $(".school-data").hide();
+	 $(".parent-data").show();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
 	  break;
 	case 4:
 	  $(".user-data").hide(); //user data is mean data
