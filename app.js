@@ -314,6 +314,15 @@ app.post('/modifyParent',(req,res)=>{
   }
   school.modifyParent(num,body.schoolname,body1);
 });
+
+
+app.post('/unassign',(req,res)=>{
+   var body=_.pick(req.body,['deviceId','schoolName','busNumber']);
+   if(school.unassignbus(body.busNumber,body.schoolName,body)){
+      res.redirect('/menupage');
+   }
+});
+
 app.post('/deleteParent',(req,res)=>{
   if (school.removeParent(req.body.mobilenumber,req.body.schoolname)){
     res.redirect('/menupage');

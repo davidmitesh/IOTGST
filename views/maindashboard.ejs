@@ -396,7 +396,7 @@
 							   <div class="device-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
 							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Devices Data
-										<span style="float:right" ><button class="btn btn-danger pull-right" data-toggle="modal" data-target="#addit" id="dev_add" style="margin-right:30px;">Add Device</button></span>
+										<span style="float:right" ><button class="btn btn-danger pull-right" onclick="sadd()" id="dev_add" style="margin-right:30px;">Add Device</button></span>
 										<span style="float:right" ><button class="btn btn-primary pull-right" onclick="newassign()" id="but_add" style="margin-right:30px;">Assign Device</button></span>
 							    </h3>
 						    <div class="table-responsive table-data" style="height:525px;">
@@ -444,7 +444,7 @@
                                 <div class="report-data m-b-40" style="height:350px;" id="shadow addy">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Download Report</h3>
-                                    <div class="filters">
+                                    <div>
                                         
 										<label style="margin-top:20px;">Choose Starting Date&nbsp;</label>
 											<input type="text" id="date" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date" value="01-01-2018"><br/>
@@ -452,7 +452,15 @@
 										
 										<label style="margin-top:30px;">Choose Ending Date&nbsp;&nbsp;&nbsp;</label>
                                              <input type="text" id="date1" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date" value="01-01-2018"><br/>
-                                       <script>
+                                         
+										 <label style="margin-top:30px;">Choose DeviceId&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+										 <select name="cdeviceid" id="cid" style="margin-top:15px;">
+									  
+									  
+									     </select>
+										 
+										 
+									   <script>
 										  $('#date').combodate({
                                               minYear: 2018,
                                               maxYear: new Date().getFullYear(),
@@ -487,9 +495,12 @@
                         <div class="modal-body text-center" id="overflowControl">
                             
                             <div class="row" id="addDevice">
-                                <form role="form" id="sform">
+                                <form role="form" id="deform">
                                     <input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="d1" placeholder="Enter Device Name" />
-                                    <button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="adds">Add</button>
+                                    
+									<p id="yahoo" style=" display:none; margin-top:10px; margin-bottom:10px;"></p>
+									
+									<button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="addde">Add</button>
                                 </form>
                             </div>
                         </div>

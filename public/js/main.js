@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg,ids1,h;
 
 (function ($) {
     // USE STRICT
@@ -86,6 +86,36 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
   try {
     var map = $('#map');
     if(map[0]) {
+	  
+	  ids1=new Array();
+	$.ajax({
+       url:"http://admin:admin@35.200.251.179/api/positions",
+	   crossDomain: true,
+       type:"GET",
+	   xhrFields: {
+        withCredentials: true
+       },
+       success:(res)=>{
+		   console.log(res);
+		    JSON.parse(JSON.stringify(res)).forEach((val)=>{
+            let v=JSON.parse(JSON.stringify(val));
+            ids1.push(v.deviceId);
+        });
+		
+		$("#cid").empty();
+	    console.log(ids1);
+		ids1.forEach((val)=>{
+		   $("#cid").append("<option value=\""+val+"\">"+val+"</option>");
+	    });
+	   
+	   },
+	   error:(err)=>{
+		  $("#cid").empty();
+		  $("#cid").append("<option value=\"\">Could not fetch devices from server</option>");
+	   }
+	 });
+		 
+	  
 	  if(busno.length!=0){
 	   showmapnow();
 	   mapagain();
@@ -111,9 +141,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 
 function downloadreport(){
     let data="http://admin:admin@35.200.251.179/api/reports/summary?";
-	ids.forEach((val)=>{
-	    data+="deviceId="+val.toString()+"&";
-	});
+	data+="deviceId="+$("#cid").val()+"&";
 	data+="from="+$("#date").val().split("-").reverse().join("-")+"&";
 	data+="to="+$("#date1").val().split("-").reverse().join("-");
 	
@@ -150,8 +178,8 @@ function mapit(){
 		 }
 	     exception();
 	}else{
-		 showmapnow();
-		 mapagain();
+		  showmapnow();
+		  h=0;
 		  interval=setInterval(()=>{
 		   mapagain();
 	      },5000);
@@ -180,6 +208,7 @@ function mapagain(){
             lats.push(v.latitude);
             longs.push(v.longitude);
         });
+		
         mapfinal(ids.indexOf(adeviceId[m]));
 	   },
 	   error:(err)=>{
@@ -448,6 +477,7 @@ function assigndata(number,name,id){
 	 $("#el").hide();
      $("#did").val(id);
 	 $("#am").removeAttr('disabled');
+	 //$("#amm").attr('disabled','disabled');
    }
    if(name!=null){
      $("#sid").val(name);
@@ -469,7 +499,18 @@ function newassign(){
 }
 
 function unassign(){
-
+   if($("#did").val().length==0||$("#sid").val().length==0 || $("#bid").val().length==0 || $("#bid").val().indexOf(",")!=-1 || $("#bid").val().indexOf(".")!=-1){
+      $("#isu").text("Please select or input proper values");
+	  $("#isu").show();
+   } 
+   else{
+	   let data={};
+	   data["deviceId"]=$("#did").val();
+	   data["schoolName"]=$("#sid").val();
+	   data["busNumber"]=$("#bid").val();
+       $.post("/unassign",data);
+	   window.location.reload();
+   }
 }
 
 function newparent(){
@@ -535,6 +576,10 @@ function fdexpand(a){
 
 function checksame(){
   let m=false;
+  if($("#bid").val().indexOf(",")!=-1 || $("#bid").val().indexOf(".")!=-1){
+     $("#isu").text("Please select or input proper values");
+	  $("#isu").show();
+  }else{
   busno.forEach((val,index)=>{
    if(val==$("#bid").val().toString() && name[index]==$("#sid").val().toString()){
        m=true;
@@ -550,6 +595,7 @@ function checksame(){
   }else{
       $("#devicestates").unbind('submit').submit();
    }
+ }
 }
 
 
@@ -581,25 +627,40 @@ function show(n){
 }
 
 function addn(){
+  if($("#d1").val().length==0){
+	$("#yahoo").text("Please enter a valid device name");
+    $('#yahoo').show();
+  }else{
+  $('#yahoo').hide();
+  let data={};
+  data["name"]=$("#d1").val();
+  data["uniqueId"]="86696803013"+Math.floor(Math.random()*9999+1000).toString();
   $.ajax({
        url:"http://admin:admin@35.200.251.179/api/devices",
 	   crossDomain: true,
        type:"POST",
+	   headers:{
+	     'Content-Type': 'application/json'
+	   },
+	   data:JSON.stringify(data),
 	   xhrFields: {
         withCredentials: true
        },
        success:(res)=>{
-		    JSON.parse(JSON.stringify(res)).forEach((val)=>{
-            let v=JSON.parse(JSON.stringify(val));
-            ids.push(v.deviceId);
-            lats.push(v.latitude);
-            longs.push(v.longitude);
-        });
-        mapfinal(ids.indexOf(adeviceId[m]));
+		  $("#yahoo").text("The device has been succesfully added.");
+		  $('#yahoo').show();
 	   },
 	   error:(err)=>{
-		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
+		  $("#yahoo").text("An unexpected error arised. Please try again");
+		  $('#yahoo').show();
 	   }
 	});
+  }
+}
+
+function sadd(){
+   $("#deform").trigger('reset');
+   $("#yahoo").hide();
+   $("#addit").modal("show");
 }
 

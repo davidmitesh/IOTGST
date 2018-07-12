@@ -167,6 +167,7 @@ schoolSchema.statics.removeParent=function(mobileNumber,schoolName){
     return 1;
   });
 };
+
 schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
   
     /*this.findOneAndUpdate({name:schoolName},{$push:{parents:details}},(err,result)=>{
@@ -192,6 +193,12 @@ schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
 	});
  
 };
+
+schoolSchema.statics.unassignbus=function(busNumber,schoolName,details){
+   return this.findOneAndUpdate({name:schoolName},{$pull:{buses:{busNumber:busNumber}}},(err,result)=>{
+       return 1;
+   });
+}
 
 var school=mongoose.model('school',schoolSchema);
 
