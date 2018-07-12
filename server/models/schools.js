@@ -163,14 +163,14 @@ schoolSchema.statics.modifySchool=function(schoolName,modifiedSchool){
   });
 };
 schoolSchema.statics.removeParent=function(mobileNumber,schoolName){
-  return this.findOneAndUpdate({name:schoolName},{$pull:{parents:{mobileNumber:mobileNumber}}},(err,result)=>{
+  return this.findOneAndUpdate({name:schoolName},{$pull:{parents:{mobileNumber}}},(err,result)=>{
     return 1;
   });
 };
 
 
 schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
-  
+
     /*this.findOneAndUpdate({name:schoolName},{$push:{parents:details}},(err,result)=>{
       return 1;
     });*/
@@ -192,7 +192,7 @@ schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
 	    console.log(result);
 	  });*/
 	});
- 
+
 };
 
 

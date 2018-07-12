@@ -33,11 +33,11 @@
     <link href="css/theme.css" rel="stylesheet" media="all">
     <link href="css/index.css" rel="stylesheet" media="all">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CTkkgRzwcS21LzhOAQti-IHrg0sXkN0"></script>
-	
+
     <script src="vendor/jquery-3.2.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.16.0/moment.min.js"></script>
 	<script src="https://rawgit.com/vitalets/combodate/master/src/combodate.js"></script>
-	
+
 </head>
 
 
@@ -46,23 +46,23 @@
       <p class="invisible" style="display:none;"><%=JSON.stringify(doc)%></p>
     <% }) %>
     <div class="page-wrapper >
-	    
-		
+
+
         <div class="page-container2">
             <!-- HEADER DESKTOP-->
             <header class="header-desktop2" id="shadow" style="position:fixed;">
                 <div class="section__content section__content--p30" style="width:100%;">
                     <div class="container-fluid">
                         <div class="header-wrap2">
-                            
+
 							<div class="logo1" style="text-align:left; margin-right:75%;">
                                 <span style="color:white;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span>
                             </div>
-							
+
 							<div class="logo d-block d-lg-none">
                                 <span style="color:white;font-size:22px;font-family: 'Bree Serif', serif;">Girl Safety Transport</span>
                             </div>
-							
+
                             <div class="header-button2">
 
                                 <div class="header-button-item has-noti js-item-menu">
@@ -82,7 +82,7 @@
                                 <div class="header-button-item mr-0 js-sidebar-btn" style="margin-right:20px;">
                                     <i class="zmdi zmdi-menu"></i>
                                 </div>
-                                
+
 								<div class="setting-menu js-right-sidebar d-lg-block" id="shadow">
                                     <div class="account-dropdown__body" style="height:200px;">
                                         <div class="account-dropdown__item">
@@ -90,12 +90,12 @@
                                                 <i class="zmdi zmdi-account"></i>Account</a>
                                         </div>
                                         <div class="account-dropdown__item">
-                                            <a href="#">
+                                            <a href="/logout">
                                                 <i class="fa fa-fighter-jet"></i>Log Out</a>
                                         </div>
                                     </div>
                                 </div>
-                            
+
 							</div>
                         </div>
                     </div>
@@ -146,41 +146,41 @@
                                 </div>
                             </div>
                         </div>
-						
-						
+
+
 						<div class="row">
 						   <div class="col-md-6 col-lg-3">
                                 <div id="card-5" class="statistic__item card-5" onclick="show(4)">
                                     <span class="desc" style="color:white; margin-top:20px;">Reports</span>
-                                   
+
                                 </div>
                             </div>
-						
-						
+
+
 						   <div class="col-md-6 col-lg-3">
                                 <div id="card-6" class="statistic__item card-5" onclick="show(5)">
                                     <span class="desc" style="color:white; margin-top:20px;">Devices</span>
-                                   
+
                                 </div>
                             </div>
-							
+
 							<div class="col-md-6 col-lg-3">
                                 <div id="card-7" class="statistic__item card-5" onclick="show(6)">
                                     <span class="desc" style="color:white; margin-top:20px;">Feedback</span>
-                                   
+
                                 </div>
                             </div>
-							
+
 							<div class="col-md-6 col-lg-3">
                                 <div id="card-8" class="statistic__item card-5" onclick="show(7)">
                                     <span class="desc" style="color:white; margin-top:20px;">Billing</span>
-                                   
+
                                 </div>
                             </div>
-							
+
 						</div>
-						
-						
+
+
                     </div>
                 </div>
             </section>
@@ -192,7 +192,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-12">
-                               
+
                                 <div class="user-data m-b-40" id="shadow">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Mean Data</h3>
@@ -210,10 +210,10 @@
                                             </thead>
                                             <tbody id="mtable">
 											  <%if(schools.length==0){%>
-											     <tr ><td colspan="4" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any mean data found</td></tr>
+    											     <tr ><td colspan="4" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any mean data found</td></tr>
 											  <%}else{%>
                                               <%schools.forEach(function(school){%>
-											   
+
                                                 <tr>
 
                                                     <td>
@@ -257,21 +257,21 @@
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Map Data</h3>
                                     <div class="filters">
-                                        
+
 										<label>School Name</label>
 										<div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border" style="width:100%;">
                                             <select class="js-select2 schooln" name="property">
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
-										
+
 										<label style="margin-top:30px;">Bus Number</label>
                                         <div class="rs-select2--dark rs-select2--sm rs-select2--border" style="width:100%;">
                                             <select class="js-select2 au-select-dark busn" name="time">
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
-                                    
+
 									</div>
                                     <div class="map-wrap m-t-45 m-b-80">
                                         <div id="map" style="height: 370px; width:100%;" class="text-center"></div>
@@ -279,10 +279,10 @@
 
                                 </div>
                             </div>
-							
+
 						<div class="col-xl-12">
 						   <div class="school-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
-						     
+
 						     <h3 class="title-3 m-b-30" style="padding-top:30px;">
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>School Data
 										<span style="float:right" ><button onclick="newschool()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New School</button></span>
@@ -322,16 +322,16 @@
 								</div>
 								</div>
 							</div>
-							
+
 							<p id="schoos" style="display:none;"><%=JSON.stringify(schools)%></p>
-							
+
 							<div class="col-xl-12">
 							   <div class="parent-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
 							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Parent Data
 										<span style="float:right" ><button onclick="newparent()" class="btn btn-primary pull-right" id="but_add" style="margin-right:30px;">Add New Parent</button></span>
 							    </h3>
-								
+
 								<div class="table-responsive table-data" style="height:525px;">
                                 <table class="table" style="border-style:hidden;">
                                     <thead id="taHead" style="background-color:#FFFFFF;">
@@ -346,15 +346,15 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableOverflow" style="background-color:#FFFFFF; border-style:hidden;">
-									   
+
                                         <%if(schools.length==0){%>
 											     <tr><td colspan="7" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
 									     <%}else{%>
-										 
+
                                            <tr id="nops"><td colspan="7" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any parents data found</td></tr>
-                                         									  
+
 										 <%schools.forEach(function(school,index){%>
-											  
+
 											     <%for(var i=0;i<school.parents.length;i++){%>
 												 <tr class="mn" id="nopi">
 												    <td style="padding-left:30px;"><%=school.parents[i].parentName%></td>
@@ -382,16 +382,16 @@
 											     <td><i class="fa fa-trash" onclick="pdeletedata('<%=school.parents[i].mobileNumber%>','<%=school.name%>')"></i></td>
 											     </tr>
 											   <%}%>
-                          
+
 										<%})%>
-										
-                                       <%}%>            
+
+                                       <%}%>
                                     </tbody>
                                 </table>
 								</div>
 							   </div>
                             </div>
-							
+
 							<div class="col-xl-12">
 							   <div class="device-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
 							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
@@ -413,13 +413,13 @@
                                                           <tr style="background-color:#FFFFFF; border-style:hidden;" class="mn">
 
                                                           <td style="padding-left:50px;"><%= doc.deviceId%></td>
-														  
+
 														  <%if(doc.name==null){%>
 														     <td>Unassigned</td>
 														  <%}else{%>
                                                              <td><%= doc.name %></td>
 														  <%}%>
-														  
+
 														  <%if(doc.busno.length==0 || doc.busno=="0"){%>
 														     <td>Unassigned</td>
 														  <%}else{%>
@@ -431,75 +431,75 @@
                                           </tbody>
                                  </table>
 								</div>
-							
+
                         </div>
                     </div>
-					
-					
-					
-  
-					
+
+
+
+
+
 					<div class="col-xl-12">
                                 <!-- MAP DATA-->
                                 <div class="report-data m-b-40" style="height:350px;" id="shadow addy">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Download Report</h3>
                                     <div>
-                                        
+
 										<label style="margin-top:20px;">Choose Starting Date&nbsp;</label>
 											<input type="text" id="date" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date" value="01-01-2018"><br/>
-                                        
-										
+
+
 										<label style="margin-top:30px;">Choose Ending Date&nbsp;&nbsp;&nbsp;</label>
                                              <input type="text" id="date1" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date" value="01-01-2018"><br/>
-                                         
+
 										 <label style="margin-top:30px;">Choose DeviceId&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 										 <select name="cdeviceid" id="cid" style="margin-top:15px;">
-									  
-									  
+
+
 									     </select>
-										 
-										 
+
+
 									   <script>
 										  $('#date').combodate({
                                               minYear: 2018,
                                               maxYear: new Date().getFullYear(),
-                                           });  
+                                           });
 										  $('#date1').combodate({
                                               minYear: 2018,
                                               maxYear: new Date().getFullYear()
-                                           });  
+                                           });
 									   </script>
 									   <p id="erru" style="margin-top:30px; display:none;"> Unable to download the report now. May be some server error. Please try again later</p>
 									 <span style="float:right;" ><button onclick="downloadreport()" class="btn btn-primary" id="r_get" style="margin-top:35px;">Download Report</button></span>
-									 
+
 									</div>
-                                    
+
 
                                 </div>
-                                
+
                        </div>
-							
+
 					</div>
-                
+
 				</div>
             </section>
             <!--Modal Boxes (Edit School)-->
-            
-			
-			
+
+
+
 			<div class="modal fade" id="addit">
                 <div class="modal-dialog modal-lg" style="height:450px;" id="f10">
                     <div class="modal-content" id="shadow">
                         <div class="modal-header"><span style="font-size:18px;" id="headis">Add New Device</span></div>
                         <div class="modal-body text-center" id="overflowControl">
-                            
+
                             <div class="row" id="addDevice">
                                 <form role="form" id="deform">
                                     <input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="d1" placeholder="Enter Device Name" />
-                                    
+
 									<p id="yahoo" style=" display:none; margin-top:10px; margin-bottom:10px;"></p>
-									
+
 									<button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="addde">Add</button>
                                 </form>
                             </div>
@@ -508,16 +508,16 @@
                     </div>
                 </div>
             </div>
-			
-			
-			
-			
+
+
+
+
 			<div class="modal fade" id="editSchool">
                 <div class="modal-dialog modal-lg" style="height:450px;" id="f1">
                     <div class="modal-content" id="shadow">
                         <div class="modal-header"><span style="font-size:18px;" id="headis">Add New School</span></div>
                         <div class="modal-body text-center" id="overflowControl">
-                            
+
                             <div class="row" id="addSchool">
                                 <form role="form text-center" method='POST' id="sform">
                                     <input type="text" name="name"  class="form-control" id="z1" placeholder="Enter School Name" />
@@ -543,15 +543,15 @@
                                    <form role="form text-center" action='/busNumberWithDevice' method='POST' id="dform">
                                     <!--input type="number" id="did" name="deviceid" style="margin-top:20px;" class="form-control" placeholder="Enter deviceID here"/-->
                                     <select name="deviceid" id="did" style="width:100%; margin-top:15px;" class="form-control" required>
-									  
-									  
+
+
 									  <%let m,n; for(let i=0;i<result.length;i++){%>
 									      <%if(result[i].busno.length==0 || result[i].busno=="0"){ m=true;%>
 									         <option value="<%=result[i].deviceId%>"><%=result[i].deviceId%></option>
 										  <%}else{ m=false;%>
 										  <%}%>
 									  <%}%>
-									  
+
 									  <%if(m==false){%>
 									     <option selected value="" id="ullu">Sorry no empty devices found for assigning</option>
 									  <%}else{%>
@@ -559,9 +559,9 @@
 									  <%}%>
 									 </select>
 									<!--input type="text" id="sid" name="schoolname" style="margin-top:20px;" class="form-control" placeholder="Enter School name"/-->
-									
+
 									<select name="schoolname" id="sid" style="width:100%; margin-top:15px;" class="form-control" required>
-									  
+
 									  <%if(schools.length!=0){%>
 									     <option value="" selected>Choose School Here</option>
 									  <%}else{ n=false;%>
@@ -571,13 +571,13 @@
 									    <option value="<%=school.name%>"><%=school.name%></option>
 									  <%})%>
 									</select>
-                                    
+
 									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number" required/>
-                                    
+
 									<p id="isu" style="margin-top:30px; display:none;"></p>
 									<button type="button" onclick="unassign()" id="amm" style="margin-top:20px; float:left;" class="btn btn-outline-danger btn-lg">Unassign</button>
 									<button type="submit" onclick="checksame()" id="am" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
-             
+
 									<%if(m==false || n==false){%>
 									  <script>
 									      if(document.getElementById("el")!=null){
@@ -600,15 +600,15 @@
                     <div class="modal-content" id="shadow">
                         <div class="modal-header"><span style="font-size:18px;" id="headip" onclick="padd(0)">Add New Parent</span></div>
                         <div class="modal-body text-center" id="overflowControl">
-                            
+
                             <div class="row">
-							
+
                                 <form role="form" method='POST' id="pform" >
 								  <div style="margin-left:20px; margin-right:30px;">
                                     <input type="text" id="y1" name="parentname" style="margin-top:20px;" class="form-control" placeholder="Enter Parent Name" required>
                                     <input type="tel" id="y2" name="mobilenumber" style="margin-top:20px"  class="form-control" placeholder="Enter Phone Number" required>
                                     <input type="text" id="y3" name="address" style="margin-top:20px"  class="form-control" placeholder="Enter Address" required>
-  
+
                                     <!--input type="text" id="y6" name="schoolname" style="margin-top:20px"  class="form-control" placeholder="Enter school name"-->
 									<select name="schoolname" id="y6" style="width:100%; margin-top:15px;" class="form-control" required>
 									  <%if(schools.length!=0){%>
@@ -621,20 +621,20 @@
 									  <%})%>
 									</select>
 									<span id="tt">
-									 
+
 									 <input type="text" id="y51" name="childname" style="margin-top:20px; width:35%; float:left; margin-right:10px;"  class="form-control" placeholder="Enter childname" required><input type="text" id="y71" name="busnumber" style="margin-top:20px; width:58%"  style="margin-top:10px;" class="form-control" placeholder="Enter bus number (Keep empty if not fixed)">
                                      <i class="fas fa-plus" style="float:right; margin-top:-30px;" id="i1" onclick="fexpand()" style="width:10%;"></i>
-									 
+
 									</span>
-									
-									
+
+
 									<input type="email" id="y4" name="email" style="margin-top:20px"  class="form-control" placeholder="Enter Email Address" required>
                                     <!--input type="hidden" id="y7" name="busnumber" style="margin-top:20px"  style="margin-top:10px;" class="form-control" value=0-->
-                                     
+
                                     <button type="submit" id="addp" style="margin-top:20px"  class="btn btn-outline-primary btn-lg" style="margin-top:20px;">Submit</button>
                                 </div>
 								</form>
-							 
+
                             </div>
                         </div>
                         <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
@@ -644,18 +644,18 @@
             <!--Modal Boxes (Edit Parents Info)-->
 
             <!--Modal Boxes (List Schools)-->
-            
+
             <!--Modal Boxes (List Schools)-->
             <!-- END PAGE CONTAINER-->
         </div>
 
 
     </div>
-    
-	
-	
+
+
+
 	<script src="vendor/bootstrap-4.1/popper.min.js"></script>
-    
+
     <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
     <!-- Vendor JS       -->
     <script src="vendor/slick/slick.min.js"></script>
@@ -714,7 +714,7 @@
         }
 
     </script>
- 
+
 </body>
 
 </html>

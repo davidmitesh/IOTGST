@@ -24,9 +24,9 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
         window.location.href = url;
       }
     });
-    
-	$(document).keydown(function(event) { 
-     if (event.keyCode == 27) { 
+
+	$(document).keydown(function(event) {
+     if (event.keyCode == 27) {
              $(".btn-outline-danger").click();
       }
     });
@@ -34,10 +34,10 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	busno=new Array();
 	adeviceId=new Array();
 	for(var i=0;i<$(".invisible").length;i++){
-	   
+
 	   let m=JSON.parse($($(".invisible")[i]).html());
 	   if(m.name!=null && m.busno!=0){
-	       adeviceId.push(m.deviceId);  
+	       adeviceId.push(m.deviceId);
 	   }
 	   if(m.name!=null){
 	     name.push(m.name);
@@ -46,7 +46,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	     busno.push(m.busno);
 	   }
 	}
-	
+
 	let data=JSON.parse($("#schoos").html());
 	if(data.length!=0){
 	for(var i=0;i<data.length;i++){
@@ -62,7 +62,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 		 $("#nopi").hide();
 	 }else{
 	     $("#nops").hide();
-		 $("#nopi").show();   
+		 $("#nopi").show();
 	 }
 	}
 	if(busno.length!=0){
@@ -78,7 +78,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	}else{
 	   $(".filters").css('display','none');
 	}
-	
+
   })(jQuery);
 
 (function ($) {
@@ -86,7 +86,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
   try {
     var map = $('#map');
     if(map[0]) {
-	  
+
 	  ids1=new Array();
 	$.ajax({
        url:"http://admin:admin@35.200.251.179/api/positions",
@@ -101,21 +101,21 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
             let v=JSON.parse(JSON.stringify(val));
             ids1.push(v.deviceId);
         });
-		
+
 		$("#cid").empty();
 	    console.log(ids1);
 		ids1.forEach((val)=>{
 		   $("#cid").append("<option value=\""+val+"\">"+val+"</option>");
 	    });
-	   
+
 	   },
 	   error:(err)=>{
 		  $("#cid").empty();
 		  $("#cid").append("<option value=\"\">Could not fetch devices from server</option>");
 	   }
 	 });
-		 
-	  
+
+
 	  if(busno.length!=0){
 	   showmapnow();
 	   mapagain();
@@ -135,7 +135,7 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
     console.log(error);
   }
 
-  
+
 })(jQuery);
 
 
@@ -144,7 +144,7 @@ function downloadreport(){
 	data+="deviceId="+$("#cid").val()+"&";
 	data+="from="+$("#date").val().split("-").reverse().join("-")+"&";
 	data+="to="+$("#date1").val().split("-").reverse().join("-");
-	
+
   $.ajax({
        url:data,
 	   crossDomain: true,
@@ -208,21 +208,21 @@ function mapagain(){
             lats.push(v.latitude);
             longs.push(v.longitude);
         });
-		
+
         mapfinal(ids.indexOf(adeviceId[m]));
 	   },
 	   error:(err)=>{
 		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
 	   }
 	});
-	
+
 	//$('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
 }
 
 function mapfinal(g){
 	let contentString;
     myLatLng={
-        lat: parseFloat(lats[g]), 
+        lat: parseFloat(lats[g]),
         lng: parseFloat(longs[g])
     };
 	let geocoder = new google.maps.Geocoder;
@@ -241,7 +241,7 @@ function mapfinal(g){
         });
 	  }
 	});
-	
+
 }
 
 function showmapnow(){
@@ -295,7 +295,7 @@ function showmapnow(){
   try {
     var jscr1 = $('.js-scrollbar1');
     if(jscr1[0]) {
-      const ps1 = new PerfectScrollbar('.js-scrollbar1');      
+      const ps1 = new PerfectScrollbar('.js-scrollbar1');
     }
 
     var jscr2 = $('.js-scrollbar2');
@@ -333,7 +333,7 @@ function showmapnow(){
   // USE STRICT
   "use strict";
 
-  // Dropdown 
+  // Dropdown
   try {
     var menu = $('.js-item-menu');
     var sub_menu_is_showed = -1;
@@ -341,7 +341,7 @@ function showmapnow(){
     for (var i = 0; i < menu.length; i++) {
       $(menu[i]).on('click', function (e) {
         e.preventDefault();
-        $('.js-right-sidebar').removeClass("show-sidebar");        
+        $('.js-right-sidebar').removeClass("show-sidebar");
         if (jQuery.inArray(this, menu) == sub_menu_is_showed) {
           $(this).toggleClass('show-dropdown');
           sub_menu_is_showed = -1;
@@ -392,7 +392,7 @@ function showmapnow(){
       right_sidebar.removeClass("show-sidebar");
 
     });
- 
+
 
   // Sublist Sidebar
   try {
@@ -502,7 +502,7 @@ function unassign(){
    if($("#did").val().length==0||$("#sid").val().length==0 || $("#bid").val().length==0 || $("#bid").val().indexOf(",")!=-1 || $("#bid").val().indexOf(".")!=-1){
       $("#isu").text("Please select or input proper values");
 	  $("#isu").show();
-   } 
+   }
    else{
 	   let data={};
 	   data["deviceId"]=$("#did").val();
@@ -525,14 +525,14 @@ function peditdata(parentname,school,children,number,email,address){
    $("#pform").trigger('reset');
    $("#pform").attr("action","/modifyParent");
    $("#headip").text("Edit Parent Below");
-   
+
    JSON.parse(children).forEach((val,index)=>{
 	  fg=val.childName.split(",");
 	  lg=val.busNumber.split(",");
-	  
+
 	   $("#y51").val(fg[0]);
 	   $("#y71").val(lg[0]);
-	  
+
 	  if(fg.length!=1){
 	  for(let i=1;i<fg.length;i++){
 	    let j=i+1;
@@ -545,7 +545,7 @@ function peditdata(parentname,school,children,number,email,address){
 	  }else{
 		if($("#tt input").length>1){
 	     $("#tt>input:gt(1)").remove();
-		}		 
+		}
 	  }
    });
    $("#y1").val(parentname);
@@ -585,7 +585,7 @@ function checksame(){
        m=true;
    }
   });
-  
+
   if(m==true){
     $("#devicestates").submit(function(e){
           e.preventDefault();
@@ -663,4 +663,3 @@ function sadd(){
    $("#yahoo").hide();
    $("#addit").modal("show");
 }
-

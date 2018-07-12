@@ -148,6 +148,19 @@ function getSchools(req,res,next){
     next();
   });
 };
+//------------------------
+//---middleware for school dashboard
+//---------------
+function checkschool(req,res,next){
+
+  school.findByCredentials(req.body.username,req.body.password).then((user)=>{
+    req.school=user;
+    next();
+  }).catch((e)=>{
+    res.status(400).send();
+  });
+}
+
 // ROUTE to load the addschool page
 app.get('/addschoolpage',isLoggedIn,(req,res)=>{
   res.render('addschool.ejs');
@@ -169,13 +182,8 @@ newSchool.save((err,doc)=>{
 app.get('/schoolloginpage',(req,res)=>{
   res.render('schoolloginpage.ejs');
 });
-app.post('/schoollogin',(req,res)=>{
-  let body=_.pick(req.body,['username','password']);
-  school.findByCredentials(body.username,body.password).then((user)=>{
-    res.render('schooldashboard.ejs');
-  }).catch((e)=>{
-    res.status(400).send();
-  });
+app.post('/schoollogin',checkschool,(req,res)=>{
+  res.render('schooldashboard.ejs',{school:req.school});
 });
 
 
@@ -309,28 +317,35 @@ app.post('/deleteSchool',(req,res)=>{
 //--------for parents
 app.post('/modifyParent',(req,res)=>{
 
-  var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname']);
+  var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname','oldnumber']);
+console.log(body.oldnumber);
+  // body.oldnumber=body.oldnumber[0];
+  // parseInt(body.oldnumber,10);
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
-<<<<<<< HEAD
-  school.findOneAndUpdate({service:'GST'},{$pull:{parents:{parentName:body.parentname}}},(err,doc)=>{
+// console.log(body.oldnumber);
+var finalnumber;
+  school.findOneAndUpdate({service:'GST'},{$pull:{parents:{mobileNumber:body.oldnumber}}},(err,doc)=>{
     if (_.isArray(body.childname))
     {for (i=0;i<body.childname.length;i++){
       var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
       newparent.children.push(childpush);
+
     }}
     else{
       var childpush=new child({busNumber:body.busnumber,childName:body.childname});
       newparent.children.push(childpush);
+      // finalnumber=
     }
+
     return 1;
   }).then(()=>{
       school.findOneAndUpdate({service:'GST'},{$push:{parents:newparent}},(err,doc)=>{
     res.send("check console.");
   });
 })
-=======
-  
-  
+
+
+
 });
 
 
@@ -346,7 +361,7 @@ app.post('/deleteParent',(req,res)=>{
     res.redirect('/menupage');
   }
 
->>>>>>> dd2e22a259b8f268954e43523c6066c5f19b3f28
+
 });
 
 //----------------------------
@@ -357,6 +372,9 @@ app.get('/mappage',(req,res)=>{
   res.render('secret.ejs');
 });
 
+app.get('/school',getSchools,countDetails,devicestates,(req,res)=>{
+  res.render('schooldashboard.ejs',{schools:req.schools,children:req.count.children,buses:req.count.buses,parents:req.count.parents,schoolno:req.count.schoolno,result:req.result});
+});
 //-----------
 //port listenners
 //--------------
