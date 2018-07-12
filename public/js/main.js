@@ -424,6 +424,7 @@ function showmapnow(){
   } catch (error) {
     console.log(error);
   }
+  show(0);
 })(jQuery);
 
 
@@ -600,13 +601,14 @@ function checksame(){
 function show(n){
   switch(n){
     case 0:
-	
-	 $(".user-data").show(); //user data is mean data
+	 $(".statistic").show();
+	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
 	 break;
 	case 1:
 	 

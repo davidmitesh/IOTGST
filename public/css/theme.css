@@ -2290,7 +2290,7 @@ section {
 }
 
 .header-desktop2 {
-    height: 75px;
+    height: 55px;
     background: #4272d7;
     z-index: 1001;
     top: 0;
@@ -2519,10 +2519,12 @@ section {
 
 .setting-menu {
     position: fixed;
-    min-width: 200px;
-    right: -300px;
-    top: 54px;
-	height: calc(20vh);
+    min-width: 270px;
+    right: -290px;
+    top: 45px;
+	height: -webkit-calc(100vh - 55px);
+    height: -moz-calc(100vh - 55px);
+    height: calc(100vh - 55px);
     background: #fff;
     text-align: left;
     -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -2532,6 +2534,7 @@ section {
     -o-transition: all .5s ease;
     -moz-transition: all .5s ease;
     transition: all .5s ease;
+	overflow-y:scroll;
 }
 
 .setting-menu:before {
@@ -2561,7 +2564,8 @@ section {
 }
 
 .show-sidebar {
-    right: 0;
+    left:0;
+	width:20%;
 }
 
 .header-desktop3 {
