@@ -193,10 +193,25 @@ app.get('/addparentpage',(req,res)=>{
   res.render('addparentpage.ejs');
 });//
 app.post('/addParent',(req,res)=>{
+var count=1;
   var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
+  var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
+  if (_.isArray(body.childname))
+  {for (i=0;i<body.childname.length;i++){
+    var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
+    newparent.children.push(childpush);
+
+  }
+  count=body.childname.length;
+}
+  else{
+    var childpush=new child({busNumber:body.busnumber,childName:body.childname});
+    newparent.children.push(childpush);
+  }
   school.findOne({name:body.schoolname},(err,doc)=>{
-    doc.parents.push({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:{childName:body.childname,busNumber:body.busnumber}});
-    doc.childrenNumber+=1;
+
+    doc.parents.push(newparent);
+    doc.childrenNumber+=count;
     school.findOneAndUpdate({name:body.schoolname},doc,()=>{
       //console.log("successfully updated");
         res.redirect('/menupage');
@@ -297,8 +312,13 @@ app.post('/modifyParent',(req,res)=>{
   var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname']);
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
   school.findOneAndUpdate({service:'GST'},{$pull:{parents:{parentName:body.parentname}}},(err,doc)=>{
-    for (i=0;i<body.childname.length;i++){
+    if (_.isArray(body.childname))
+    {for (i=0;i<body.childname.length;i++){
       var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
+      newparent.children.push(childpush);
+    }}
+    else{
+      var childpush=new child({busNumber:body.busnumber,childName:body.childname});
       newparent.children.push(childpush);
     }
     return 1;
