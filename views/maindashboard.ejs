@@ -45,10 +45,10 @@
    <% result.forEach(function(doc){ %>
       <p class="invisible" style="display:none;"><%=JSON.stringify(doc)%></p>
     <% }) %>
-    <div class="page-wrapper >
+    <div class="page-wrapper">
 	    
 		
-        <div class="page-container2">
+        
             <!-- HEADER DESKTOP-->
             <header class="header-desktop2" id="shadow" style="position:fixed;">
                 <div class="section__content section__content--p30" style="width:100%;">
@@ -341,7 +341,7 @@
                             <div class="col-xl-12">
                                 <div class="map-data m-b-40" style="height:750px;" id="shadow ">
                                     <h3 class="title-3 m-b-30">
-                                        <i class="zmdi zmdi-map"></i>Map Data</h3>
+                                        <i class="zmdi zmdi-map"></i>Live Tracking</h3>
                                     <div class="filters">
                                         
 										<label>School Name</label>
@@ -688,6 +688,38 @@
 									<p id="yahoo" style=" display:none; margin-top:10px; margin-bottom:10px;"></p>
 									
 									<button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="addde">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="modal fade" id="busit">
+                <div class="modal-dialog modal-lg" style="height:450px;" id="f10">
+                    <div class="modal-content" id="shadow">
+                        <div class="modal-header"><span style="font-size:18px;" id="headis">Add New Bus</span></div>
+                        <div class="modal-body text-center" id="overflowControl">
+                            
+                            <div class="row" id="addBus">
+                                <form role="form" id="beform">
+                                    <input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="bd1" placeholder="Enter Device Name" />
+                                    
+									<select name="schoolname" id="sd1" style="width:100%; margin-top:15px;" class="form-control" required>
+									  
+									  <%if(schools.length!=0){%>
+									     <option value="" selected>Choose School Here</option>
+									  <%}else{ n=false;%>
+									      <option value="" selected>No school found to add bus</option>
+									  <%}%>
+									  <%schools.forEach(function(school,index){%>
+									    <option value="<%=school.name%>"><%=school.name%></option>
+									  <%})%>
+									</select>
+									
+									
+									<button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="addde1">Add</button>
                                 </form>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg,ids1,h,infowindow;
 
 (function ($) {
+	
     // USE STRICT
     "use strict";
     $(".animsition").animsition({
@@ -30,43 +31,23 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
              $(".btn-outline-danger").click();
       }
     });
-	name=new Array();
 	busno=new Array();
 	adeviceId=new Array();
-	for(var i=0;i<$(".invisible").length;i++){
+	let m=JSON.parse($(".invisible").html());
+	let n=JSON.parse(JSON.stringify(m.buses));
+	n.forEach((val,index)=>{
+	      busno.push(val.busNumber);
+		  adeviceId.push(val.deviceId);
+	});	
+	
+	$("#cid").empty();
+    adeviceId.forEach((val)=>{
+		   $("#cid").append("<option value=\""+val+"\">"+val+"</option>");
+	});
 
-	   let m=JSON.parse($($(".invisible")[i]).html());
-	   if(m.name!=null && m.busno!=0){
-	       adeviceId.push(m.deviceId);
-	   }
-	   if(m.name!=null){
-	     name.push(m.name);
-	   }
-	   if(m.busno!=0){
-	     busno.push(m.busno);
-	   }
-	}
-
-	let data=JSON.parse($("#schoos").html());
-	if(data.length!=0){
-	for(var i=0;i<data.length;i++){
-	     if(data[i].parents.length==0){
-		      bool=true;
-		 }else{
-		     bool=false;
-			 break;
-		 }
-	 }
-	 if(bool==true){
-	     $("#nops").show();
-		 $("#nopi").hide();
-	 }else{
-	     $("#nops").hide();
-		 $("#nopi").show();
-	 }
-	}
-	if(busno.length!=0){
-	   m=0;
+	m=0;
+	/*if(busno.length!=0){
+	  m=0;
 	  $(".filters").css('display','block');
 	  busno.forEach((val,index)=>{
 		$(".busn").append("<option value=\"device\""+index+"\">"+val+"</option>");
@@ -77,7 +58,8 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	  });
 	}else{
 	   $(".filters").css('display','none');
-	}
+	}*/
+	
 
   })(jQuery);
 
@@ -86,8 +68,6 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
   try {
     var map = $('#map');
     if(map[0]) {
-
-	  ids1=new Array();
 	$.ajax({
        url:"http://admin:admin@35.200.251.179/api/positions",
 	   crossDomain: true,
@@ -98,18 +78,11 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
        success:(res)=>{
 		    JSON.parse(JSON.stringify(res)).forEach((val)=>{
             let v=JSON.parse(JSON.stringify(val));
-            ids1.push(v.deviceId);
         });
-
-		$("#cid").empty();
-		ids1.forEach((val)=>{
-		   $("#cid").append("<option value=\""+val+"\">"+val+"</option>");
-	    });
-
-	   },
+       },
 	   error:(err)=>{
 		  $("#cid").empty();
-		  $("#cid").append("<option value=\"\">Could not fetch devices from server</option>");
+		  $("#cid").append("<option value=\"\">Server seems to be not working</option>");
 	   }
 	 });
 
@@ -118,12 +91,12 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	   showmapnow();
 	   mapagain();
 	   mapit();
-	   $(".schooln").change(()=>{
+	   /*$(".schooln").change(()=>{
 			mapit();
 	   });
 	   $(".busn").change(()=>{
 			mapit();
-	   });
+	   });*/
 	  }else{
 	    map.empty();
 	    map.html("<p style=\"margin-top:200px\">No any buses found for tracking</p>");
@@ -163,18 +136,16 @@ function downloadreport(){
 }
 
 function mapit(){
-	let d=false;
+	/*let d=false;
 	name.forEach((val,index)=>{
 	  if(val==$(".schooln :selected").text() && busno[index]==$(".busn :selected").text()){
 	      m=index;
 		  d=true;
 	  }
 	});
-    if(d==false){
-		 if(interval){
+    if(d==false){*/
+    if(interval){
 		   clearInterval(interval);
-		 }
-	     exception();
 	}else{
 		  showmapnow();
 		  h=0;
@@ -206,8 +177,8 @@ function mapagain(){
             lats.push(v.latitude);
             longs.push(v.longitude);
         });
-
-        mapfinal(ids.indexOf(adeviceId[m]));
+        //alert(ids.indexOf(adeviceId[0]));
+        mapfinal();
 	   },
 	   error:(err)=>{
 		  $('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
@@ -217,41 +188,81 @@ function mapagain(){
 	//$('#map').html("<p class=\"text-center\" style=\"margin-top:150px;\">Sorry, Error in map data fetching!!! Please try again later!!!</p>");
 }
 
-function mapfinal(g){
-	let contentString;
-	infowindow = new google.maps.InfoWindow();
-    myLatLng={
-        lat: parseFloat(lats[g]),
-        lng: parseFloat(longs[g])
-    };
+function mapfinal(){
+	
+    
 	let geocoder = new google.maps.Geocoder;
-	maps.setCenter(myLatLng);
-    marker.setPosition(myLatLng);
-    trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(maps);
-	geocoder.geocode({'location': myLatLng}, function(results, status) {
-	  if (status === 'OK') {
-	     contentString=results[0].formatted_address;
-       google.maps.event.addListener(marker, 'click', function() {
-		 infowindow.setContent(contentString);
-         infowindow.open(map,marker);
-        });
+	let contentString;
+	myLatLng=new Array();
+	let aids=new Array();
+	let locs=new Array();
+	let bus=new Array();
+	for(let i=0;i<adeviceId.length;i++){
+	   if(ids.indexOf(adeviceId[i])!=-1){
+	      aids.push(adeviceId[i]);
+		  bus.push(busno[i]);
+	   myLatLng.push({
+	      lat:parseFloat(lats[ids.indexOf(adeviceId[i])]),
+		  lng:parseFloat(longs[ids.indexOf(adeviceId[i])])
+	   });
 	  }
-	});
+	}
+
+    let infowindow = new google.maps.InfoWindow();
+	
+	
+     let latsum=0;
+	 let lngsum=0;
+	 for(let i=0;i<myLatLng.length;i++){
+	    latsum+=myLatLng[i].lat;
+		lngsum+=myLatLng[i].lng;
+	 }
+	 maps.setCenter(new google.maps.LatLng(latsum/myLatLng.length, lngsum/myLatLng.length));
+     
+	
+    
+	for (let i = 0; i < myLatLng.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(myLatLng[i].lat, myLatLng[i].lng),
+		map: maps,
+		/*label: {
+         color: 'blue',
+         fontWeight: 'bold',
+         text: 'Bus No.: '+locs[i]
+       },
+	   icon:{
+	     labelOrigin: new google.maps.Point(myLatLng[i].lat, myLatLng[i].lng+10)
+	   }*/
+      });
+      
+	  geocoder.geocode({'location': myLatLng[i]}, function(results, status) {
+	   if (status === 'OK') {
+	     locs.push(results[0].formatted_address);
+	   }
+	  });  
+	  
+	  
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locs[i]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    
+	}
+  
+  
 
 }
 
 function showmapnow(){
     maps = new google.maps.Map(document.getElementById('map'), {
-        zoom: 18,
+        zoom: 10,
         zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER
         },
         streetViewControl:false
       });
-	marker = new google.maps.Marker({
-        map: maps
-    });
 }
 
 (function ($) {
@@ -608,91 +619,6 @@ function show(n){
   }
   switch(n){
     case 0:  //home
-	 $(".statistic").show();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").hide();
-	 $(".parent-data").hide();
-	 $(".device-data").hide();
-	 $(".report-data").hide();
-	 $(".child-data").hide();
-	 $(".bus-data").hide();
-	 $(".js-right-sidebar").removeClass("show-sidebar");
-	 break;
-	case 1: //school
-	 $(".statistic").hide();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").show();
-	 $(".parent-data").hide();
-	 $(".device-data").hide();
-	 $(".report-data").hide();
-	 $(".child-data").hide();
-	 $(".bus-data").hide();
-	  $(".js-right-sidebar").removeClass("show-sidebar");
-	  break;
-	case 2: //buses
-	 $(".statistic").hide();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").hide();
-	 $(".parent-data").hide();
-	 $(".device-data").hide();
-	 $(".report-data").hide();
-	 $(".child-data").hide();
-	 $(".bus-data").show();
-	 $(".js-right-sidebar").removeClass("show-sidebar");
-	  break;
-	case 3: //parents
-	 $(".statistic").hide();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").hide();
-	 $(".parent-data").show();
-	 $(".device-data").hide();
-	 $(".report-data").hide();
-	 $(".child-data").hide();
-	 $(".bus-data").hide();
-	 $(".js-right-sidebar").removeClass("show-sidebar");
-	  break;
-	case 4: //chidren
-	 $(".statistic").hide();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").hide();
-	 $(".parent-data").hide();
-	 $(".device-data").hide();
-	 $(".report-data").hide();
-	 $(".child-data").show();
-	 $(".bus-data").hide();
-	 $(".js-right-sidebar").removeClass("show-sidebar");
-	  break;
-	case 5: //reports
-     $(".statistic").hide();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").hide();
-	 $(".parent-data").hide();
-	 $(".device-data").hide();
-	 $(".report-data").show();
-	 $(".child-data").hide();
-	 $(".bus-data").hide();	  
-	 $(".js-right-sidebar").removeClass("show-sidebar");
-	  break;
-	case 6: //devices
-	 $(".statistic").hide();
-	 $(".user-data").hide(); //user data is mean data
-	 $(".map-data").hide();
-	 $(".school-data").hide();
-	 $(".parent-data").hide();
-	 $(".device-data").show();
-	 $(".report-data").hide();
-	 $(".child-data").hide();
-	 $(".bus-data").hide();  
-	 $(".js-right-sidebar").removeClass("show-sidebar");
-	 break;
-	case 7: //map
-	 $(".statistic").hide();
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").show();
 	 $(".school-data").hide();
@@ -703,22 +629,75 @@ function show(n){
 	 $(".bus-data").hide();  
 	 $(".js-right-sidebar").removeClass("show-sidebar");
 	 break;
-	case 8://feedback
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	 break;
+	case 1: //buses
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").show();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	  break;
+	case 2: //parents
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").show();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	  break;
+	case 3: //chidren
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").show();
+	 $(".bus-data").hide();
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	  break;
+	case 4: //reports
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").show();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();	  
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	  break;
+	case 5: //devices
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").show();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();  
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	 break;
+	case 6: //feedback
+	 
+	 $(".js-right-sidebar").removeClass("show-sidebar");
+	 break;
+	case 7: //billings
+	 
+	case 8://settings
 	 
 	 $(".js-right-sidebar").removeClass("show-sidebar");
 	 break;
 	
-	case 9: //billings
-	
-	$(".js-right-sidebar").removeClass("show-sidebar");
-	break;
-	
-    case 10://settings
-    
-    $(".js-right-sidebar").removeClass("show-sidebar");
-	break;
-	
-	case 11://signout
+	case 9: //signout
 	window.location.replace("/logout");
 	$(".js-right-sidebar").removeClass("show-sidebar");
 	break;
