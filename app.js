@@ -214,7 +214,7 @@ newSchool.save((err,doc)=>{
 app.get('/schoolloginpage',(req,res)=>{
   res.render('schoolloginpage.ejs');
 });
-app.post('/schoollogin',headerfetch,authenticate,(req,res)=>{
+app.post('/schoollogin',checkschool,(req,res)=>{
   console.log(req.school);
   res.send("succesfully logged into school");
 });
