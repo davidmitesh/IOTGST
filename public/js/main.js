@@ -551,7 +551,7 @@ function peditdata(parentname,school,children,number,email,address){
    $("#y4").val(email);
    $("#y6").val(school);
    $("#pform").append("<input type=\"hidden\"  name=\"oldnumber\" value=\""+number+"\">");
-   $("#pform").append("<input type=\"hidden\" name=\"oldnum\" value=\""+fg.length+"\>");
+   $("#pform").append("<input type=\"hidden\" name=\"oldnum\" value=\""+fg.length+"\">");
    $("#addp").text("Edit");
    $("#editParent").modal('show');
 }
@@ -600,7 +600,7 @@ function checksame(){
 function show(n){
   switch(n){
     case 0:
-	
+
 	 $(".user-data").show(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
@@ -609,7 +609,7 @@ function show(n){
 	 $(".report-data").hide();
 	 break;
 	case 1:
-	 
+
 	  break;
 	case 2:
 	  $(".user-data").hide(); //user data is mean data
@@ -644,7 +644,7 @@ function show(n){
 	 $(".report-data").hide();
 	  break;
 	case 6:
-	   
+
 	   break;
 	case 7:
 	   break;

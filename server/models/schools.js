@@ -79,7 +79,17 @@ var schoolSchema=new mongoose.Schema({
   parents:[parentSchema],
   buses:[busSchema],
   parentnotification:[notificationSchema],
-  schoolnotification:[notificationSchema]
+  schoolnotification:[notificationSchema],
+  tokens:[{
+    access:{
+      type:String,
+      required:true
+    },
+    token:{
+      type:String,
+      required:true
+    }
+  }]
 });
 
 
@@ -92,6 +102,19 @@ return   user.save().then((doc)=>{
   });
 };
 schoolSchema.pre('save',function(next){  //this middleware runs prior to every save function of userSchema instance.
+  if (this.isModified('password')){//only hashes the password if the password is modified ,for other operation
+    //no hashing is done to avoid multiple hashing of passwords
+    bcrypt.genSalt(10,(err,salt)=>{
+      bcrypt.hash(this.password,salt,(err,hash)=>{
+        this.password=hash;
+        next();
+      });
+    });
+  }else{
+    next();
+  }
+});
+schoolSchema.pre('update',function(next){  //this middleware runs prior to every save function of userSchema instance.
   if (this.isModified('password')){//only hashes the password if the password is modified ,for other operation
     //no hashing is done to avoid multiple hashing of passwords
     bcrypt.genSalt(10,(err,salt)=>{
@@ -167,6 +190,35 @@ schoolSchema.statics.removeParent=function(mobileNumber,schoolName){
     return 1;
   });
 };
+schoolSchema.methods.genAuthToken=function(){
+  var access='auth';
+  var token=jwt.sign({_id:this._id.toHexString(),access},'abc123').toString();
+  this.tokens.push({access,token});// using ES6 syntax as opposed to access:access and token:token
+  return this.save().then(()=>{
+    return token
+  });
+};
+
+schoolSchema.methods.removeToken=function(token){
+  return this.update({
+    $pull:{
+      tokens:{token}
+    }
+  });
+};
+schoolSchema.statics.findByToken=function(token){
+  var decoded;
+  try{
+    decoded=jwt.verify(token,'abc123');
+  }catch(e){
+     return Promise.reject();
+  }
+  return this.findOne({
+    _id:decoded._id,
+    'tokens.token':token,//if there is dot in between, you need to wrap in quotes
+    'tokens.access':'auth'
+  });
+};
 
 
 schoolSchema.statics.modifyParent=function(mobileNumber,schoolName,details){
@@ -201,7 +253,7 @@ schoolSchema.statics.unassignbus=function(busNumber,schoolName,details){
        return 1;
    });
 }
-
+schoolSchema.plugin(passportLocalMongoose);
 var school=mongoose.model('school',schoolSchema);
 var child=mongoose.model('child',childSchema);
 var parent=mongoose.model('parent',parentSchema);

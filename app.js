@@ -9,7 +9,7 @@ const express=                require('express'),
       _=require('lodash'),
       axios=require('axios');
      const   enAddressUrl='http://admin:admin@35.200.251.179/api/positions';
-
+var {authenticate}=require('./server/middlewares/authenticate.js');
 let {school,child,parent}= require('./server/models/schools.js');
 let path = require("path");
 let cors=require('cors');
@@ -57,6 +57,7 @@ app.get('/',isLoggedIn,(req,res)=>{
 app.get('/register',(req,res)=>{
   res.render('register.ejs');
 });
+
 //add post method to signup
 app.post('/signup',(req,res)=>{
 //console.log(req.body);
@@ -71,6 +72,8 @@ app.post('/signup',(req,res)=>{
     });
   });
 });
+
+
 //Login Routes
 app.get('/loginpage',(req,res)=>{
   res.render('login.ejs');
@@ -87,6 +90,7 @@ app.get('/logout',(req,res)=>{
   req.logout();
   res.redirect('/');
 });
+//middleware for school login
 
 function isLoggedIn(req,res,next){
   if (req.isAuthenticated()){
@@ -138,7 +142,7 @@ function devicestates(req,res,next){
       next();
     });
   });
-}
+};
 //---------------------------------------------------------
 //middleware that returns the total schools array--
 //----------------
@@ -155,12 +159,40 @@ function checkschool(req,res,next){
 
   school.findByCredentials(req.body.username,req.body.password).then((user)=>{
     req.school=user;
-    next();
+    return user.genAuthToken();
+  }).then((token)=>{
+      res.cookie('x-auth',token);
+      next();
   }).catch((e)=>{
     res.status(400).send();
+    res.redirect('/loginpage');
   });
 }
+function headerfetch(req,res,next){
+  var x=req.headers.cookie;
+  x=x+';';
+ console.log(x);
+  var cookieStart=req.headers.cookie.indexOf('x-auth'+"=");
+ console.log(cookieStart);
+var cookieEnd=x.indexOf(';',cookieStart);
+console.log(cookieEnd);
+if (cookieEnd==-1){
+  var c=_.split(x,'=');
+  console.log(c);
+  req.authheader=c[1];
+  next();
 
+}else{
+  var thisCookie=req.headers.cookie.substring(cookieStart,cookieEnd);
+  // console.log(thisCookie);
+  var c=_.split(thisCookie,'=');
+  console.log(c);
+  req.authheader=c[1];
+  next();
+
+
+}
+}
 // ROUTE to load the addschool page
 app.get('/addschoolpage',isLoggedIn,(req,res)=>{
   res.render('addschool.ejs');
@@ -182,11 +214,19 @@ newSchool.save((err,doc)=>{
 app.get('/schoolloginpage',(req,res)=>{
   res.render('schoolloginpage.ejs');
 });
-app.post('/schoollogin',checkschool,(req,res)=>{
-  res.render('schooldashboard.ejs',{school:req.school});
+app.post('/schoollogin',headerfetch,authenticate,(req,res)=>{
+  console.log(req.school);
+  res.send("succesfully logged into school");
 });
 
-
+app.post('/schoollogout',headerfetch,authenticate,(req,res)=>{
+  req.user.removeToken(req.token).then(()=>{
+    res.clearCookie('x-auth',req.token);
+    res.status(200).redirect('/loginpage');
+  },()=>{
+    res.status(400).send();
+  });
+})
 app.post("/csv",(req,res)=>{
    filePath=__dirname+"/public/data/report.csv";
    jsonexport(JSON.parse(req.body["data"]),function(err, csv){
@@ -202,7 +242,7 @@ app.get('/addparentpage',(req,res)=>{
 });//
 app.post('/addParent',(req,res)=>{
 var count=1;
-  var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
+  var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email','type']);
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
   if (_.isArray(body.childname))
   {for (i=0;i<body.childname.length;i++){
@@ -317,38 +357,108 @@ app.post('/deleteSchool',(req,res)=>{
 //--------for parents
 app.post('/modifyParent',(req,res)=>{
 
-  var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname','oldnumber']);
+  var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname','oldnumber','oldnum']);
 console.log(body.oldnumber);
   // body.oldnumber=body.oldnumber[0];
   // parseInt(body.oldnumber,10);
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
-// console.log(body.oldnumber);
+ console.log(body.oldnum);
 var finalnumber;
-  school.findOneAndUpdate({service:'GST'},{$pull:{parents:{mobileNumber:body.oldnumber}}},(err,doc)=>{
+  school.findOneAndUpdate({name:body.schoolname},{$pull:{parents:{mobileNumber:body.oldnumber}}}).then((doc)=>{
+
     if (_.isArray(body.childname))
     {for (i=0;i<body.childname.length;i++){
       var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
       newparent.children.push(childpush);
+      console.log(newparent);
+      finalnumber=doc.childrenNumber-body.oldnum+body.childname.length;
 
-    }}
+    }
+     return {parent:newparent,number:finalnumber};
+  }
     else{
       var childpush=new child({busNumber:body.busnumber,childName:body.childname});
       newparent.children.push(childpush);
-      // finalnumber=
+    finalnumber=doc.childrenNumber-body.oldnum+1;
+     return {parent:newparent,number:finalnumber};
     }
 
-    return 1;
-  }).then(()=>{
-      school.findOneAndUpdate({service:'GST'},{$push:{parents:newparent}},(err,doc)=>{
-    res.send("check console.");
+
+ }).then((data)=>{
+   console.log(data);
+      school.findOneAndUpdate({service:'GST'},{$set:{childrenNumber:data.number},$push:{parents:data.parent}},(err,doc)=>{
+  console.log(doc);
+  res.send('check console');
   });
+}).catch((e)=>{
+  res.status(400).send('something went wrong ...check server');
 })
+});
+//------------------------------
+//routes for children add as per the parent name and schoolname only
+//----------------------------------
+app.post('/addchildren',(req,res)=>{
+  school.find({name:req.body.schoolname}).then((doc)=>{
+    var reqParent=_.find(doc.parents,function(parent){return parent.parentName==req.body.parentname})
+    var newparent=new parent({mobileNumber:reqParent.mobileNumber,parentName:reqParent.parentName,address:reqParent.address,emailAddress:reqParent.emailAddress,children:[]});
+    if (_.isArray(req.body.childname))
+    {for (i=0;i<req.body.childname.length;i++){
+      var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
+      newparent.children.push(childpush);
+      var finalnumber=doc.childrenNumber-body.oldnum+body.childname.length;
 
+    }
+    return {newparent,finalnumber};
+  }
+    else{
+      var childpush=new child({busNumber:body.busnumber,childName:body.childname});
+      newparent.children.push(childpush);
+    var finalnumber=doc.childrenNumber-body.oldnum+1;
 
-
+    }
+    return {newparent,finalnumber};
+  }).then((doc)=>{
+    school.findOneAndUpdate({name:req.body.schoolname},{$set:{childrenNumber:doc.finalnumber},$push:{parents:doc.newparent}},(err,doc)=>{
+  res.redirect("/menupage");
+});
+}).catch((e)=>{
+  res.status(400).send('something went wrong..consult server');
+})
 });
 
+app.post('/modifychildren',(req,res)=>{
+  school.findOneAndUpdate({name:req.body.oldschoolname},{$pull:{parents:{parentName:req.body.oldparentname}}}).then((doc)=>{
+    var reqParent=_.find(doc.parents,function(parent){return parent.parentName==req.body.parentname})
+    var newparent=new parent({mobileNumber:reqParent.mobileNumber,parentName:reqParent.parentName,address:reqParent.address,emailAddress:reqParent.emailAddress,children:[]});
+    if (_.isArray(req.body.childname))
+    {for (i=0;i<req.body.childname.length;i++){
+      var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
+      newparent.children.push(childpush);
+      finalnumber=doc.childrenNumber-body.oldnum+body.childname.length;
 
+    }
+  return {newparent,finalnumber};}
+    else{
+      var childpush=new child({busNumber:body.busnumber,childName:body.childname});
+      newparent.children.push(childpush);
+    finalnumber=doc.childrenNumber-body.oldnum+1;
+    return {newparent,finalnumber};
+    }
+  }).then((doc)=>{
+    school.findOneAndUpdate({name:req.body.schoolname},{$set:{childrenNumber:doc.finalnumber},$push:{parents:doc.newparent}},(err,doc)=>{
+  res.redirect("/menupage");
+});
+}).catch((e)=>{
+  res.status(400).send("hey something went wrong");
+})
+});
+
+app.post('/deletechildren',(req,res)=>{
+  school.findOneAndUpdate({name:req.body.schoolname},{parents:{$pull:{children:{childName:req.body.childname}}},$inc:{childrenNumber:-1}},(err,doc)=>{
+    if (doc){
+      res.send('deleted child');}
+  });
+});
 app.post('/unassign',(req,res)=>{
    var body=_.pick(req.body,['deviceId','schoolName','busNumber']);
    if(school.unassignbus(body.busNumber,body.schoolName,body)){
