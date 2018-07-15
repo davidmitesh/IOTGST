@@ -408,7 +408,7 @@ app.post('/addchildren',(req,res)=>{
       var finalnumber=doc.childrenNumber-body.oldnum+body.childname.length;
 
     }
-    return {newparent,finalnumber};
+   return {parent:newparent,number:finalnumber};
   }
     else{
       var childpush=new child({busNumber:body.busnumber,childName:body.childname});
@@ -416,9 +416,9 @@ app.post('/addchildren',(req,res)=>{
     var finalnumber=doc.childrenNumber-body.oldnum+1;
 
     }
-    return {newparent,finalnumber};
-  }).then((doc)=>{
-    school.findOneAndUpdate({name:req.body.schoolname},{$set:{childrenNumber:doc.finalnumber},$push:{parents:doc.newparent}},(err,doc)=>{
+     return {parent:newparent,number:finalnumber};
+  }).then((data)=>{
+    school.findOneAndUpdate({name:req.body.schoolname},{$set:{childrenNumber:data.number},$push:{parents:data.parent}},(err,doc)=>{
   res.redirect("/menupage");
 });
 }).catch((e)=>{
@@ -437,15 +437,15 @@ app.post('/modifychildren',(req,res)=>{
       finalnumber=doc.childrenNumber-body.oldnum+body.childname.length;
 
     }
-  return {newparent,finalnumber};}
+   return {parent:newparent,number:finalnumber};}
     else{
       var childpush=new child({busNumber:body.busnumber,childName:body.childname});
       newparent.children.push(childpush);
     finalnumber=doc.childrenNumber-body.oldnum+1;
-    return {newparent,finalnumber};
+     return {parent:newparent,number:finalnumber};
     }
-  }).then((doc)=>{
-    school.findOneAndUpdate({name:req.body.schoolname},{$set:{childrenNumber:doc.finalnumber},$push:{parents:doc.newparent}},(err,doc)=>{
+  }).then((data)=>{
+    school.findOneAndUpdate({name:req.body.schoolname},{$set:{childrenNumber:data.number},$push:{parents:data.parent}},(err,doc)=>{
   res.redirect("/menupage");
 });
 }).catch((e)=>{
