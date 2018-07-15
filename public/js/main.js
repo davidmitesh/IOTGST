@@ -1,4 +1,4 @@
-let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,fg,lg,ids1,h,infowindow;
+let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,name,cschool,cid,m,interval,bool,tt=1,mt=1,fg,lg,ids1,h,infowindow,lo;
 
 (function ($) {
     // USE STRICT
@@ -33,9 +33,12 @@ let ids,lats,longs,myLatLng,maps,marker,trafficLayer,busno,deviceId,adeviceId,na
 	name=new Array();
 	busno=new Array();
 	adeviceId=new Array();
+	lo=JSON.parse($(".invisible1").html());
+	
 	for(var i=0;i<$(".invisible").length;i++){
-
+       
 	   let m=JSON.parse($($(".invisible")[i]).html());
+	 
 	   if(m.name!=null && m.busno!=0){
 	       adeviceId.push(m.deviceId);
 	   }
@@ -429,8 +432,11 @@ function showmapnow(){
 
 
 function deletedata(name){
-   $.post("/deleteSchool",{schoolname:name});
-   window.location.reload();
+  $("#confirm").modal('show');
+   document.getElementById("yescon").addEventListener("click",()=>{
+     $.post("/deleteSchool",{schoolname:name});
+     window.location.reload();
+   });
 }
 
 function editdata(name,uname,address,email,number){
@@ -558,8 +564,11 @@ function peditdata(parentname,school,children,number,email,address){
 }
 
 function pdeletedata(number,name){
-    $.post("/deleteParent",{mobilenumber:parseInt(number),schoolname:name});
-	window.location.reload();
+   $("#confirm").modal('show');
+   document.getElementById("yescon").addEventListener("click",()=>{
+     $.post("/deleteParent",{mobilenumber:parseInt(number),schoolname:name});
+	 window.location.reload();
+   });
 }
 
 function fexpand(){
@@ -612,6 +621,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
@@ -623,6 +634,8 @@ function show(n){
 	 $(".statistic").hide();
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".school-data").show();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
@@ -636,6 +649,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
@@ -648,6 +663,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").show();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
@@ -660,6 +677,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
@@ -672,6 +691,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").show();
@@ -684,6 +705,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").hide();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").show();
 	 $(".report-data").hide();
@@ -696,6 +719,8 @@ function show(n){
 	 $(".user-data").hide(); //user data is mean data
 	 $(".map-data").show();
 	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").hide();
 	 $(".parent-data").hide();
 	 $(".device-data").hide();
 	 $(".report-data").hide();
@@ -704,17 +729,37 @@ function show(n){
 	 $(".js-right-sidebar").removeClass("show-sidebar");
 	 break;
 	case 8://feedback
-	 
+	 $(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".feedback-data").show();
+	 $(".billing-data").hide();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();
 	 $(".js-right-sidebar").removeClass("show-sidebar");
 	 break;
 	
 	case 9: //billings
-	
+	$(".statistic").hide();
+	 $(".user-data").hide(); //user data is mean data
+	 $(".map-data").hide();
+	 $(".school-data").hide();
+	 $(".feedback-data").hide();
+	 $(".billing-data").show();
+	 $(".parent-data").hide();
+	 $(".device-data").hide();
+	 $(".report-data").hide();
+	 $(".child-data").hide();
+	 $(".bus-data").hide();
 	$(".js-right-sidebar").removeClass("show-sidebar");
 	break;
 	
     case 10://settings
-    
+    $("#edituserdata").modal('show');
     $(".js-right-sidebar").removeClass("show-sidebar");
 	break;
 	
@@ -763,3 +808,118 @@ function sadd(){
    $("#yahoo").hide();
    $("#addit").modal("show");
 }
+
+
+//new ones
+function busadd(){
+   $("#beform").trigger('reset');
+   $("#headil").text("Add New Bus");
+   $("#addde1").text("Add");
+   $("#beform").attr("action","/busNumberWithDevice");
+   $("#busit").modal('show');
+}
+
+function addn(){
+	if(busno.indexOf($("#bd1").val())!=-1){
+	  $("#beform").submit(function(e){
+          e.preventDefault();
+	      $("#busya").show();
+	  });
+	}else{
+	    $("#beform").unbind('submit').submit();
+	}
+}
+
+function editbus(busnumber,schoolname){
+  $("#beform").trigger('reset');
+  $("#headil").text("Edit Bus Below");
+  $("#addde1").text("Edit");
+  $("#beform").attr("action","/busupdate");
+  $("#bd1").val(busnumber);
+  $("#sd1").val(schoolname);
+  $("#beform").append("<input type=\"hidden\" name=\"oldbus\" value=\""+busnumber+"\"></input>")
+  $("#busit").modal('show');
+}
+
+function deletebus(busnumber,schoolname){
+   $("#confirm").modal('show');
+   document.getElementById("yescon").addEventListener("click",()=>{
+    $("#beform").trigger('reset');
+    $("#beform").attr("action","/busdelete");
+    $("#bd1").val(busnumber);
+    $("#sd1").val(schoolname);
+    $("#beform").submit();
+   });
+}
+
+function childadd(){
+   $("#cheform").trigger('reset');
+   $("#cheform").attr("action","");
+   $("#ch21").css("width","90%");
+   $("#i21").show();
+   $("#childit").modal('show');
+}
+
+function showother(elem){
+   for(let i=0;i<lo.length;i++){
+      if(lo[i].name==elem.value){
+		if(lo[i].parents.length==0){
+		   $("#pd2").append("<option value=\"\">No any parents found under this school</option>");
+		   break;
+		}else{
+	      for(let j=0;j<lo[i].parents.length;j++){
+		      $("#pd2").append("<option value=\""+lo[i].parents[j].parentName+"\">"+lo[i].parents[j].parentName+"</option>");
+			  break;
+		  }
+		}
+	  }
+   }
+   $("#pd2").append("<option value=\"\" selected>Choose Parent Here</option>");
+   $("#pd2").show();
+   $("#ttok").show();
+}
+
+function fexpandok(){
+	  mt++;
+      $("#ttok").append("<input type=\"text\" id=\"ch2"+mt+"\" name=\"childName\" style=\"width:90%; float:left; margin-left:15px; margin-bottom:10px; margin-top:10px;\" class=\"form-control\" placeholder=\"Enter Child Name\" required/>");
+      $("#ttok").append("<i class=\"fas fa-minus\" style=\"float:right; margin-top:-30px; width:10%;\" id=\"i2"+mt+"\" onclick=\"fexpandnok("+mt+")\"></i>")
+}
+
+function fexpandnok(a){
+     $("#ch2"+a).remove();
+	 $("#i2"+a).remove();
+}
+
+function ceditdata(childname,parentname,schoolname){
+   $("#cheform").trigger('reset');
+   $("#cheform").attr("action","");
+   $("#i21").hide();
+   $("#ch21").css("width","95%");
+   $("#ch21").val(childname);
+   $("#s2").val(schoolname);
+   showother(document.getElementById("s2"));
+   $("#pd2").val(parentname);
+   if($("#ttok input").length>1){
+       $("#ttok > input:gt(0)").remove();
+   }
+   $("#ttok .fas").hide();
+   $("#childit").modal('show');
+}
+
+function cdeletedata(childname,parentname,schoolname){
+   $("#confirm").modal('show');
+   document.getElementById("yescon").addEventListener("click",()=>{
+    $("#cheform").trigger('reset');
+    $("#cheform").attr("action","");
+    $("#ch21").val(childname);
+    $("#s2").val(schoolname);
+    $("#pd2").val(parentname);
+    if($("#ttok input").length>1){
+       $("#ttok > input:gt(0)").remove();
+    }
+   
+   //$("#cheform").submit();
+   });
+}
+
+

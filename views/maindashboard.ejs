@@ -45,6 +45,7 @@
    <% result.forEach(function(doc){ %>
       <p class="invisible" style="display:none;"><%=JSON.stringify(doc)%></p>
     <% }) %>
+	  <p class="invisible1" style="display:none;"><%=JSON.stringify(schools)%></p>
     <div class="page-wrapper">
 	    
 		
@@ -338,7 +339,8 @@
 
                                 </div>
                             </div>
-                            <div class="col-xl-12">
+                            
+							<div class="col-xl-12">
                                 <div class="map-data m-b-40" style="height:750px;" id="shadow ">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Live Tracking</h3>
@@ -390,7 +392,7 @@
                                     </thead>
                                     <tbody id="tableOverflow">
 									 <%if(schools.length==0){%>
-											     <tr ><td colspan="6" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any school data found</td></tr>
+											     <tr ><td colspan="9" style="padding-top:150px; padding-bottom:150px; border-style:hidden;" class="text-center">No any school data found</td></tr>
 									<%}else{%>
                                      <%schools.forEach(function(school,index){%>
 									    <tr style="border-style:hidden; background-color:#FFFFFF;" class="mn">
@@ -511,7 +513,7 @@
                                                              <td><%= doc.name %></td>
 														  <%}%>
 														  
-														  <%if(doc.busno.length==0 && doc.busno=="0" && doc.busno==0){%>
+														  <%if(doc.busno.length==0 || doc.busno=="0" || doc.busno==0){%>
 														     <td>Unassigned</td>
 														  <%}else{%>
                                                             <td><%= doc.busno%></td>
@@ -550,8 +552,8 @@
 															<td><%= doc.busno%></td>
                                                             <td><%=doc.name%></td>
 														  
-														  <td><i class="fa fa-edit" onclick="editchild('<%=doc.busno%>','<%=doc.name%>')"></i></td>
-                                                          <td><i class="fa fa-trash" onclick="deletechild('<%=doc.busno%>','<%=doc.name%>')"></i></td>
+														  <td><i class="fa fa-edit" onclick="editbus('<%=doc.busno%>','<%=doc.name%>')"></i></td>
+                                                          <td><i class="fa fa-trash" onclick="deletebus('<%=doc.busno%>','<%=doc.name%>')"></i></td>
 														  </tr>
 														  <%}%>
 														 
@@ -571,7 +573,7 @@
 							   <div class="child-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
 							    <h3 class="title-3 m-b-30" style="padding-top:30px;">
                                         <i class="zmdi zmdi-map" style="padding-left:40px;" ></i>Children Data
-										<span style="float:right" ><button class="btn btn-primary pull-right" onclick="childadd()" id="chil_add" style="margin-right:30px;">Add New Child</button></span>
+										<span style="float:right" ><button class="btn btn-primary pull-right" onclick="childadd()" id="chil_add" style="margin-right:30px;">Add New Children</button></span>
 							    </h3>
 						    <div class="table-responsive table-data" style="height:525px;">
 							<table class="table " style="border-style:hidden;">
@@ -601,10 +603,10 @@
 														<%for(var k=0;k<schools[x].parents[i].children[j].childName.split(",").length;k++){%>
 														  <tr class="mn" id="nopi">
 														  <td><%=schools[x].parents[i].children[j].childName.split(",")[k]%></td>
-														  <td><%=schools[x].parents[j].parentName%></td>
+														  <td><%=schools[x].parents[i].parentName%></td>
 													      <td><%=schools[x].name%></td>
-													      <td><i class="far fa-edit" onclick="ceditdata()"></i></td>
-											              <td><i class="fa fa-trash" onclick="cdeletedata()"></i></td>
+													      <td><i class="far fa-edit" onclick="ceditdata('<%=schools[x].parents[i].children[j].childName.split(",")[k]%>','<%=schools[x].parents[i].parentName%>','<%=schools[x].name%>')"></i></td>
+											              <td><i class="fa fa-trash" onclick="cdeletedata('<%=schools[x].parents[i].children[j].childName.split(",")[k]%>','<%=schools[x].parents[i].parentName%>','<%=schools[x].name%>')"></i></td>
 														  </tr>
 														<%}%>
 													  <%}%>
@@ -622,12 +624,30 @@
                         </div>
                     </div>
 					
-
+                  
+				  <div class="col-xl-12">
+                                <div class="feedback-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+                                    <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;"></i>Feedbacks</h3>
+                                  <div>
+								    <!--main data-->
+								  </div>
+								</div>
+				  </div>
+				  
+				  <div class="col-xl-12">
+                                <div class="billing-data m-b-40" style="background-color:#FFFFFF; padding-bottom:30px;" id="shadow">
+                                    <h3 class="title-3 m-b-30" style="padding-top:30px;">
+                                        <i class="zmdi zmdi-map" style="padding-left:40px;"></i>Billing Datas</h3>
+                                  <div>
+								    <!--main data-->
+								  </div>
+								</div>
+				  </div>
 					
   
 					
 					<div class="col-xl-12">
-                                <!-- MAP DATA-->
                                 <div class="report-data m-b-40" style="height:350px;" id="shadow addy">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-map"></i>Download Report</h3>
@@ -645,6 +665,7 @@
 									  
 									  
 									     </select>
+										 
 										 
 										 
 									   <script>
@@ -671,7 +692,7 @@
                 
 				</div>
             </section>
-            <!--Modal Boxes (Edit School)-->
+            
             
 			
 			
@@ -683,8 +704,11 @@
                             
                             <div class="row" id="addDevice">
                                 <form role="form" id="deform">
-                                    <input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="d1" placeholder="Enter Device Name" />
                                     
+									<input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="d1" placeholder="Enter Device Name" />
+                                    
+                     					<input type="hidden" name="from" value="admin"/>
+									
 									<p id="yahoo" style=" display:none; margin-top:10px; margin-bottom:10px;"></p>
 									
 									<button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="addde">Add</button>
@@ -696,21 +720,22 @@
                 </div>
             </div>
 			
-			<div class="modal fade" id="busit">
-                <div class="modal-dialog modal-lg" style="height:450px;" id="f10">
+			
+			<div class="modal fade" id="childit">
+                <div class="modal-dialog modal-lg" style="height:450px;" id="f12">
                     <div class="modal-content" id="shadow">
-                        <div class="modal-header"><span style="font-size:18px;" id="headis">Add New Bus</span></div>
+                        <div class="modal-header"><span style="font-size:18px;" id="headis">Add New Child</span></div>
                         <div class="modal-body text-center" id="overflowControl">
                             
-                            <div class="row" id="addBus">
-                                <form role="form" id="beform">
-                                    <input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="bd1" placeholder="Enter Device Name" />
+                            <div class="row" id="cheadd">
+                                <form role="form" method="post" id="cheform">
+                                    <!--input type="text" style="width:95%; margin-left:10px; margin-bottom:10px;" name="name"  class="form-control" id="d1" placeholder="Enter Child Name" /-->
                                     
-									<select name="schoolname" id="sd1" style="width:100%; margin-top:15px;" class="form-control" required>
+									<select name="schoolName" onChange="showother(this)" id="s2" style="width:95%; margin-left:15px; margin-top:15px;" class="form-control" required>
 									  
 									  <%if(schools.length!=0){%>
 									     <option value="" selected>Choose School Here</option>
-									  <%}else{ n=false;%>
+									  <%}else{%>
 									      <option value="" selected>No school found to add bus</option>
 									  <%}%>
 									  <%schools.forEach(function(school,index){%>
@@ -718,8 +743,57 @@
 									  <%})%>
 									</select>
 									
+									<select name="parentName" id="pd2" style="width:95%; display:none; margin-left:15px; margin-top:20px;" class="form-control" required>
+									</select>
 									
-									<button type="button" onclick="addn()" class="btn btn-outline-primary btn-lg" value="submit" id="addde1">Add</button>
+									
+                                     
+									
+									<span id="ttok" style="display:none;">
+									  <input type="text" id="ch21" name="childName" style="width:90%; float:left; margin-left:15px; margin-bottom:10px; margin-top:20px;" class="form-control" placeholder="Enter Child Name" required/>
+									  <i class="fas fa-plus" style="float:right; margin-top:-30px; width:10%;" id="i21" onclick="fexpandok()"></i>
+									</span>
+									<!--input type="hidden" name="busNumber" value="0"/-->
+									
+									<input type="hidden" name="from" value="admin"/>
+									
+									<button style="margin-top:10px;" type="submit" class="btn btn-outline-primary btn-lg" value="submit" id="cheadd">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="modal fade" id="busit">
+                <div class="modal-dialog modal-lg" style="height:450px;" id="f10">
+                    <div class="modal-content" id="shadow">
+                        <div class="modal-header"><span style="font-size:18px;" id="headil">Add New Bus</span></div>
+                        <div class="modal-body text-center" id="overflowControl">
+                            
+                            <div class="row" id="addBus">
+                                <form role="form" method="POST" id="beform">
+                                    <input type="text" style="width:95%; margin-left:15px; margin-bottom:10px;" name="busnumber"  class="form-control" id="bd1" placeholder="Enter Bus Number" />
+                                    
+									<select name="schoolname" id="sd1" style="width:95%; margin-left:15px; margin-top:15px;" class="form-control" required>
+									  
+									  <%if(schools.length!=0){%>
+									     <option value="" selected>Choose School Here</option>
+									  <%}else{%>
+									      <option value="" selected>No school found to add bus</option>
+									  <%}%>
+									  <%schools.forEach(function(school,index){%>
+									    <option value="<%=school.name%>"><%=school.name%></option>
+									  <%})%>
+									</select>
+									
+									<input type="hidden" name="deviceid" value="0"/>
+									
+									<input type="hidden" name="from" value="admin"/>
+									
+									<p id="busya" style="margin-top:10px; display:none;">A bus under this number is already found registered</p>
+									<button type="submit" onclick="addn()" style="margin-top:10px;" class="btn btn-outline-primary btn-lg" value="submit" id="addde1">Add</button>
                                 </form>
                             </div>
                         </div>
@@ -753,7 +827,7 @@
                     </div>
                 </div>
             </div>
-            <!--End Modal Boxes (Edit School)-->
+            
 			           <div class="modal fade" id="devicestates">
                                 <div class="modal-dialog modal-lg">
 								<div class="modal-content" id="shadow">
@@ -793,6 +867,8 @@
                                     
 									<input type="text" id="bid" name="busnumber" style="margin-top:20px;" class="form-control" placeholder="Enter Bus Number" required/>
                                     
+									<input type="hidden" name="from" value="admin"/>
+									
 									<p id="isu" style="margin-top:30px; display:none;"></p>
 									<button type="button" onclick="unassign()" id="amm" style="margin-top:20px; float:left;" class="btn btn-outline-danger btn-lg">Unassign</button>
 									<button type="submit" onclick="checksame()" id="am" style="margin-top:20px;" class="btn btn-outline-primary btn-lg" value="submit">Assign</button>
@@ -813,14 +889,14 @@
 						  </div>
 						 </div>
 
-            <!--Modal Boxes (Edit Parents Info)-->
+            
             <div class="modal fade" id="editParent">
                 <div class="modal-dialog modal-lg" style="height:500px;">
                     <div class="modal-content" id="shadow">
-                        <div class="modal-header"><span style="font-size:18px;" id="headip" onclick="padd(0)">Add New Parent</span></div>
+                        <div class="modal-header"><span style="font-size:18px;" id="headip">Add New Parent</span></div>
                         <div class="modal-body text-center" id="overflowControl">
                             
-                            <div class="row">
+                            <div class="row" >
 							
                                 <form role="form" method='POST' id="pform" >
 								  <div style="margin-left:20px; margin-right:30px;">
@@ -849,8 +925,11 @@
 									
 									<input type="email" id="y4" name="email" style="margin-top:20px"  class="form-control" placeholder="Enter Email Address" required>
                                     <!--input type="hidden" id="y7" name="busnumber" style="margin-top:20px"  style="margin-top:10px;" class="form-control" value=0-->
-                                     
-                                    <button type="submit" id="addp" style="margin-top:20px"  class="btn btn-outline-primary btn-lg" style="margin-top:20px;">Submit</button>
+                                    
+                                     <input type="hidden" name="from" value="admin"/>									
+                                    
+									
+									<button type="submit" id="addp" style="margin-top:20px"  class="btn btn-outline-primary btn-lg" style="margin-top:20px;">Submit</button>
                                 </div>
 								</form>
 							 
@@ -860,12 +939,41 @@
                     </div>
                 </div>
             </div>
-            <!--Modal Boxes (Edit Parents Info)-->
-
-            <!--Modal Boxes (List Schools)-->
             
-            <!--Modal Boxes (List Schools)-->
-            <!-- END PAGE CONTAINER-->
+			
+			<div class="modal fade" id="confirm">
+                <div class="modal-dialog">
+                    <div class="modal-content" id="shadow">
+					    <div class="modal-header"><span style="font-size:18px; margin:auto;">Confirmation Alert</span></div>
+                        <div class="modal-body text-center">
+                            <p>Are you sure you want to delete the data?</p>
+                        </div>
+                        <div class="modal-footer">
+						  <button class="btn btn-outline-danger" id="yescon">Yes</button>
+						  <button class="btn btn-outline-danger" data-dismiss="modal">No</button>
+						</div>
+                    </div>
+                </div>
+            </div>
+			
+			
+			<div class="modal fade" id="edituserdata">
+                <div class="modal-dialog modal-lg" style="height:450px;" id="f13">
+                    <div class="modal-content" id="shadow">
+                        <div class="modal-header"><span style="font-size:18px;" id="headis">Edit Login Credentials</span></div>
+                        <div class="modal-body text-center" id="overflowControl">
+                            <div class="row" id="editcred">
+                                <form role="form text-center" action method='POST' id="credform">
+                                    <input type="text" id="credname" name="username" style="margin-top:20px; margin-left:10px; width:95%" class="form-control" placeholder="Enter New Username" required>
+									<input type="password" id="credpass" name="password" style="margin-top:20px; margin-left:10px; width:95%" class="form-control" placeholder="Enter New Password" required>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+			
         </div>
 
 
@@ -876,7 +984,6 @@
 	<script src="vendor/bootstrap-4.1/popper.min.js"></script>
     
     <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
     <script src="vendor/slick/slick.min.js"></script>
     <script src="vendor/wow/wow.min.js"></script>
     <script src="vendor/animsition/animsition.min.js"></script>
@@ -888,7 +995,7 @@
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js"></script>
 
-    <!-- Main JS-->
+  
     <script src="js/main.js"></script>
     <script src="js/bootstable.min.js"></script>
     <script>

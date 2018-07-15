@@ -10,6 +10,7 @@ const express=                require('express'),
       axios=require('axios');
      const   enAddressUrl='http://admin:admin@35.200.251.179/api/positions';
 
+var {authenticate}=require('./server/middlewares/authenticate.js');
 let {school,child,parent}= require('./server/models/schools.js');
 let path = require("path");
 let cors=require('cors');
@@ -76,7 +77,7 @@ app.get('/loginpage',(req,res)=>{
   res.render('login.ejs');
 });
 
-app.post('/',passport.authenticate('local',{
+app.post('/login',passport.authenticate('local',{
   successRedirect:"/menupage",
   failureRedirect:"/loginpage"
 }),(req,res)=>{
@@ -154,20 +155,44 @@ function getSchools(req,res,next){
 
 
 function checkschool(req,res,next){
-  console.log(req.body);
   school.findByCredentials(req.body.username,req.body.password).then((user)=>{
-	req.school=user;
-    next();
+    req.school=user;
+    return user.genAuthToken();
+  }).then((token)=>{
+      res.cookie('x-auth',token);
+      next();
   }).catch((e)=>{
-	console.log(e);
     res.status(400).send();
+    res.redirect('/loginpage');
   });
 }
+function headerfetch(req,res,next){
+  var x=req.headers.cookie;
+  x=x+';';
+ console.log(x);
+  var cookieStart=req.headers.cookie.indexOf('x-auth'+"=");
+ console.log(cookieStart);
+var cookieEnd=x.indexOf(';',cookieStart);
+console.log(cookieEnd);
+if (cookieEnd==-1){
+  var c=_.split(x,'=');
+  console.log(c);
+  req.authheader=c[1];
+  next();
+
+}else{
+  var thisCookie=req.headers.cookie.substring(cookieStart,cookieEnd);
+  // console.log(thisCookie);
+  var c=_.split(thisCookie,'=');
+  console.log(c);
+  req.authheader=c[1];
+  next();
+}
+}
+
+
 
 // ROUTE to load the addschool page
-app.get('/addschoolpage',isLoggedIn,(req,res)=>{
-  res.render('addschool.ejs');
-});
 app.get('/menupage',getSchools,countDetails,devicestates,(req,res)=>{
   res.render('maindashboard.ejs',{schools:req.schools,children:req.count.children,buses:req.count.buses,parents:req.count.parents,schoolno:req.count.schoolno,result:req.result});
 });
@@ -186,7 +211,7 @@ newSchool.save((err,doc)=>{
 
 
 
-app.post('/schoollogin',checkschool,(req,res)=>{
+app.post('/schoollogin',checkschool,getSchools,(req,res)=>{
   var id=new Array();
   axios.get(enAddressUrl).then((response)=>{
       var allDevices=response.data;
@@ -197,6 +222,14 @@ app.post('/schoollogin',checkschool,(req,res)=>{
   });
 });
 
+app.get('/schoollogout',headerfetch,authenticate,(req,res)=>{
+  req.user.removeToken(req.token).then(()=>{
+    res.clearCookie('x-auth',req.token);
+    res.status(200).redirect('/loginpage');
+  },()=>{
+    res.status(400).send();
+  });
+})
 
 app.post("/csv",(req,res)=>{
    filePath=__dirname+"/public/data/report.csv";
@@ -212,28 +245,23 @@ app.get('/addparentpage',(req,res)=>{
   res.render('addparentpage.ejs');
 });//
 app.post('/addParent',(req,res)=>{
-var count=1;
+  var count=1,childpush;
   var body=_.pick(req.body,['mobilenumber','childname','parentname','schoolname','busnumber','address','email']);
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
-  if (_.isArray(body.childname))
-  {for (i=0;i<body.childname.length;i++){
-    var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
+  if(typeof body.childname=="objects"){
+    childpush=new child({busNumber:body.busnumber,childName:body.childname.join(",")});
     newparent.children.push(childpush);
-
-  }
-  count=body.childname.length;
-}
-  else{
-    var childpush=new child({busNumber:body.busnumber,childName:body.childname});
+  }else{
+    childpush=new child({busNumber:body.busnumber,childName:body.childname.join(",")});
     newparent.children.push(childpush);
   }
+  
   school.findOne({name:body.schoolname},(err,doc)=>{
 
     doc.parents.push(newparent);
     doc.childrenNumber+=count;
     school.findOneAndUpdate({name:body.schoolname},doc,()=>{
-      //console.log("successfully updated");
-        res.redirect('/menupage');
+        res.redirect('/');
     });
   });
 });
@@ -245,22 +273,36 @@ res.render('addbus.ejs');
 //--------------------------
 app.post('/busNumberWithDevice',(req,res)=>{
   let body=_.pick(req.body,['deviceid','busnumber','schoolname']);
-  // school.find({buses.deviceId:deviceId,'buses.busNumber':busNumber}).then((result)=>{
-  //   if (!_.size(result)){
-  //     res.status(400).send('Bus number with the selected device id is already assigned');
-  //   }
-    school.findOne({name:body.schoolname}).then((doc)=>{
+    
+	school.findOne({name:body.schoolname}).then((doc)=>{
       doc.buses.push({busNumber:body.busnumber,deviceId:body.deviceid});
       school.findOneAndUpdate({name:body.schoolname},doc,(err,result)=>{
         res.redirect('/menupage');
       });
     });
-  // });
-
 });
-//------------------
-//Get all info about which device Id is matched with which busnumber of particular schools
-//------------------
+
+app.post('/busupdate',(req,res)=>{
+   let body=_.pick(req.body,['deviceid','busnumber','schoolname','oldbus']);
+   
+   school.findOneAndUpdate({name:body.schoolname},{$pull:{buses:{busNumber:body.oldbus}}},(err,result)=>{
+    school.findOne({name:body.schoolname}).then((doc)=>{
+      doc.buses.push({busNumber:body.busnumber,deviceId:body.deviceid});
+      school.findOneAndUpdate({name:body.schoolname},doc,(err,result)=>{
+        res.redirect('/menupage');
+      });
+     });
+   });
+   
+});
+
+app.post('/busdelete',(req,res)=>{
+   let body=_.pick(req.body,['deviceid','busnumber','schoolname']);
+   if(school.unassignbus(body.busnumber,body.schoolname,body)){
+      res.redirect('/menupage');
+   }
+});
+
 app.get('/getAllDevicesState',(req,res)=>{
   let result=[];
   let livedevices=[];
@@ -330,38 +372,42 @@ app.post('/deleteSchool',(req,res)=>{
 app.post('/modifyParent',(req,res)=>{
 
   var body=_.pick(req.body,['mobilenumber','parentname','address','email','childname','busnumber','schoolname','oldnumber']);
-console.log(body.oldnumber);
-  // body.oldnumber=body.oldnumber[0];
-  // parseInt(body.oldnumber,10);
+  if(typeof body.oldnumber=="object"){
+    body.oldnumber=body.oldnumber[0];
+  }
   var newparent=new parent({mobileNumber:body.mobilenumber,parentName:body.parentname,address:body.address,emailAddress:body.email,children:[]});
-// console.log(body.oldnumber);
-var finalnumber;
+
+  console.log(body);
+  var finalnumber;
   school.findOneAndUpdate({service:'GST'},{$pull:{parents:{mobileNumber:body.oldnumber}}},(err,doc)=>{
-    if (_.isArray(body.childname))
-    {for (i=0;i<body.childname.length;i++){
+    if (_.isArray(body.childname)){
+	
+	for (i=0;i<body.childname.length;i++){
       var childpush=new child({busNumber:body.busnumber[i],childName:body.childname[i]});
       newparent.children.push(childpush);
-
-    }}
-    else{
+     }
+	}else{
       var childpush=new child({busNumber:body.busnumber,childName:body.childname});
       newparent.children.push(childpush);
-      // finalnumber=
     }
 
     return 1;
   }).then(()=>{
       school.findOneAndUpdate({service:'GST'},{$push:{parents:newparent}},(err,doc)=>{
-    res.send("check console.");
+          res.redirect("/");
   });
 });
+});
+
+app.post('/modifychild',(req,res)=>{
+  console.log(req.body);
 });
 
 
 app.post('/unassign',(req,res)=>{
    var body=_.pick(req.body,['deviceId','schoolName','busNumber']);
    if(school.unassignbus(body.busNumber,body.schoolName,body)){
-      res.redirect('/');
+      res.redirect('/menupage');
    }
 });
 
@@ -377,9 +423,6 @@ app.post('/deleteParent',(req,res)=>{
 //Map Routes
 //---------------------
 
-app.get('/mappage',(req,res)=>{
-  res.render('secret.ejs');
-});
 
 app.get('/school',getSchools,countDetails,devicestates,(req,res)=>{
   res.render('schooldashboard.ejs',{schools:req.schools,children:req.count.children,buses:req.count.buses,parents:req.count.parents,schoolno:req.count.schoolno,result:req.result});
